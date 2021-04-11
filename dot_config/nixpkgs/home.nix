@@ -10,11 +10,6 @@
       enableBashIntegration = true;
     };
 
-    emacs = {
-      enable = true;
-      package = pkgs.emacsGcc;
-    };
-
     git = {
       enable = true;
       userEmail = "victor@freire.dev.br";
@@ -26,17 +21,14 @@
     ripgrep
     fd
     chezmoi
-    sqlite
+
+    # ledger
+    beancount
+    fava
   ];
 
   home.username = "victor";
   home.homeDirectory = "/home/victor";
-
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-    }))
-  ];
 
   home.stateVersion = "21.05";
 }
