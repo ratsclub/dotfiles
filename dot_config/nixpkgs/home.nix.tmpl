@@ -12,8 +12,24 @@
 
     git = {
       enable = true;
+    
+    {{ if (eq .chezmoi.hostname "personal") }}
       userEmail = "victor@freire.dev.br";
       userName = "Victor Freire";
+    {{ else }}
+      userEmail = "victor.freire@mustti.com.br";
+      userName = "Victor Freire";
+    {{ end }}
+    
+    };
+
+    neovim = {
+      enable = true;
+      vimAlias = true;
+      plugins = with pkgs.vimPlugins; [
+        coc-nvim
+        fzf-vim
+      ];
     };
   };
 
@@ -21,10 +37,14 @@
     ripgrep
     fd
     chezmoi
+    nixpkgs-fmt
 
-    # ledger
+    nodejs
+
+  {{ if (eq .chezmoi.hostname "personal") }}
     beancount
     fava
+  {{ end }}
   ];
 
   home.username = "victor";
