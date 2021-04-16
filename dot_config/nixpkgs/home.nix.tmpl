@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 
 {
-
   xdg.enable = true;
 
   imports = [ ./bash.nix ];
@@ -25,10 +24,13 @@
     neovim = {
       enable = true;
       vimAlias = true;
+      viAlias = true;
+
+      extraConfig = builtins.readFile ../nvim/config.vim;
       plugins = with pkgs.vimPlugins; [
         coc-nvim
         fzf-vim
-	vim-nix
+	    vim-nix
       ];
     };
   };
