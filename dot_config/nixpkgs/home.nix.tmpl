@@ -1,24 +1,23 @@
 { config, pkgs, ... }:
 
 {
+
+  xdg.enable = true;
+
+  imports = [ ./bash.nix ];
+
   programs = {
     bat.enable = true;
     home-manager.enable = true;
 
-    fzf = {
-      enable = true;
-      enableBashIntegration = true;
-    };
-
     git = {
       enable = true;
-    
+      userName = "Victor Freire";
+
     {{ if (eq .chezmoi.hostname "personal") }}
       userEmail = "victor@freire.dev.br";
-      userName = "Victor Freire";
     {{ else }}
       userEmail = "victor.freire@mustti.com.br";
-      userName = "Victor Freire";
     {{ end }}
     
     };
@@ -29,6 +28,7 @@
       plugins = with pkgs.vimPlugins; [
         coc-nvim
         fzf-vim
+	vim-nix
       ];
     };
   };
