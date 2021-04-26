@@ -20,4 +20,6 @@ if [ -d "$HOME/.cargo" ] ; then
         source "$HOME/.cargo/env"
 fi
 
+export EDITOR=emacs
+
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi

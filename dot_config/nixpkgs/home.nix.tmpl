@@ -33,6 +33,11 @@
 	    vim-nix
       ];
     };
+
+    emacs = {
+      enable = true;
+      package = pkgs.emacs-nox;
+    };
   };
 
   home.packages = with pkgs; [
