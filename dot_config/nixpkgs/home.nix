@@ -5,6 +5,7 @@
   
   imports = [ 
     ./bash.nix 
+    ./neovim.nix
   ];
 
   programs = {
@@ -17,17 +18,9 @@
       userEmail = "victor@freire.dev.br";
     };
 
-    neovim = {
+    emacs = {
       enable = true;
-      vimAlias = true;
-      viAlias = true;
-
-      extraConfig = builtins.readFile ../nvim/config.vim;
-      plugins = with pkgs.vimPlugins; [
-        coc-nvim
-        fzf-vim
-        vim-nix
-      ];
+      package = pkgs.emacs-nox;
     };
   };
 
@@ -36,7 +29,6 @@
     fd
     chezmoi
     nixpkgs-fmt
-    nodejs
     beancount
     fava
   ];
