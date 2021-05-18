@@ -2,8 +2,10 @@
 
 {
   xdg.enable = true;
-
-  imports = [ ./bash.nix ];
+  
+  imports = [ 
+    ./bash.nix 
+  ];
 
   programs = {
     bat.enable = true;
@@ -12,13 +14,7 @@
     git = {
       enable = true;
       userName = "Victor Freire";
-
-    {{ if (eq .chezmoi.hostname "personal") }}
       userEmail = "victor@freire.dev.br";
-    {{ else }}
-      userEmail = "victor.freire@mustti.com.br";
-    {{ end }}
-    
     };
 
     neovim = {
@@ -30,14 +26,8 @@
       plugins = with pkgs.vimPlugins; [
         coc-nvim
         fzf-vim
-	    vim-nix
-        haskell-vim
+        vim-nix
       ];
-    };
-
-    emacs = {
-      enable = true;
-      package = pkgs.emacs-nox;
     };
   };
 
@@ -46,17 +36,13 @@
     fd
     chezmoi
     nixpkgs-fmt
-
     nodejs
-
-  {{ if (eq .chezmoi.hostname "personal") }}
     beancount
     fava
-  {{ end }}
   ];
 
-  home.username = "victor";
-  home.homeDirectory = "/home/victor";
+  home.username = "ratsclub";
+  home.homeDirectory = "/home/ratsclub";
 
   home.stateVersion = "21.05";
 }
