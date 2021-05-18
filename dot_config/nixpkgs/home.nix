@@ -5,7 +5,7 @@
   
   imports = [ 
     ./bash.nix 
-    ./programs/neovim/package.nix
+    ./neovim.nix
   ];
 
   programs = {
