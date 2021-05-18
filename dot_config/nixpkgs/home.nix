@@ -5,11 +5,12 @@
   
   imports = [ 
     ./bash.nix 
-    ./neovim.nix
+    ./programs/neovim/package.nix
   ];
 
   programs = {
     bat.enable = true;
+    broot.enable = true;
     home-manager.enable = true;
 
     git = {

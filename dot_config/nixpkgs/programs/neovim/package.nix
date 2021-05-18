@@ -26,7 +26,7 @@ in {
     withPython3 = true;
     withRuby = true;
 
-    extraConfig = builtins.readFile ../nvim/config.vim;
+    extraConfig = builtins.readFile ./init.lua;
 
     plugins = with pkgs.vimPlugins; [
       coc-nvim
