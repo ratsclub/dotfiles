@@ -11,6 +11,9 @@
   programs = {
     bat.enable = true;
     broot.enable = true;
+    exa.enable = true;
+    jq.enable = true;
+
     home-manager.enable = true;
 
     git = {
@@ -18,20 +21,15 @@
       userName = "Victor Freire";
       userEmail = "victor@freire.dev.br";
     };
-
-    emacs = {
-      enable = true;
-      package = pkgs.emacs-nox;
-    };
   };
 
   home.packages = with pkgs; [
-    ripgrep
-    fd
-    chezmoi
-    nixpkgs-fmt
     beancount
+    chezmoi
     fava
+    fd
+    nixpkgs-fmt
+    ripgrep
   ];
 
   home.username = "ratsclub";

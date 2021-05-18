@@ -31,10 +31,14 @@
         ls = "ls --color=auto";
         ll = "ls -l";
         la = "ls -A";
+        lt = "ls --human-readable --size -1 -S --classify";
         l = "ls -CF";
         grep = "grep --color=auto";
         ".." = "cd ..";
+
+        # configuration
         ce = "chezmoi edit $(chezmoi managed --include=files | sed -e 's/^/~\\//' | fzf)";
+        ca = "chezmoi apply -v && home-manager switch";
       };
 
       sessionVariables = {
