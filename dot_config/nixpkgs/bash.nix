@@ -34,6 +34,11 @@
         l = "ls -CF";
         grep = "grep --color=auto";
         ".." = "cd ..";
+        ce = "chezmoi edit $(chezmoi managed --include=files | sed -e 's/^/~\\//' | fzf)";
+      };
+
+      sessionVariables = {
+        EDITOR = "vi";
       };
 
       profileExtra = builtins.readFile ../bash/.profile;
