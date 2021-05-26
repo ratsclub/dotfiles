@@ -1,12 +1,16 @@
 # dotfiles
 
-Repository used to host my dotfiles.
+This is where I host my dotfiles.
 
-## Tools
+<img src="https://img.shields.io/badge/-Nix-informational?style=for-the-badge&logo=NixOS&logoColor=white&color=5277C3" alt="Nix" />
 
-- [chezmoi][]: Dotfile manager.
-- [Nix][]: Package Manager.
-- [Home Manager][]: Environment manager.
+<img src="https://img.shields.io/badge/-Bash-informational?style=for-the-badge&logo=gnu-bash&logoColor=white&color=4EAA25" alt="Gnu Bash" />
+
+<img src="https://img.shields.io/badge/-Neovim-informational?style=for-the-badge&logo=gnu-bash&logoColor=white&color=57A143" alt="Neovim" />
+
+## About
+
+I use [Nix][] as my package manager and [Home Manager][] to manage part of my user environment with the help of [Chezmoi][] to organize and put my dotfiles in place.   
 
 ## Getting Started
 
