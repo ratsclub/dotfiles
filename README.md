@@ -10,7 +10,7 @@ I use [Nix][] as my package manager and [Home Manager][] to manage part of my us
 
 ## Getting Started
 
-You can start using it the following command:
+You can start using it with the following command:
 
 ```shell
 chezmoi init https://github.com/ratsclub/dotfiles
