@@ -2,11 +2,11 @@
 
 This is where I host my dotfiles.
 
-<img src="https://img.shields.io/badge/-Nix-informational?style=for-the-badge&logo=NixOS&logoColor=white&color=5277C3" alt="Nix" />
-
-<img src="https://img.shields.io/badge/-Bash-informational?style=for-the-badge&logo=gnu-bash&logoColor=white&color=4EAA25" alt="Gnu Bash" />
-
-<img src="https://img.shields.io/badge/-Neovim-informational?style=for-the-badge&logo=gnu-bash&logoColor=white&color=57A143" alt="Neovim" />
+<center>
+    <img src="https://img.shields.io/badge/-Nix-informational?style=for-the-badge&logo=NixOS&logoColor=white&color=5277C3" alt="Nix" />
+    <img src="https://img.shields.io/badge/-Bash-informational?style=for-the-badge&logo=gnu-bash&logoColor=white&color=4EAA25" alt="Gnu Bash" />
+    <img src="https://img.shields.io/badge/-Neovim-informational?style=for-the-badge&logo=gnu-bash&logoColor=white&color=57A143" alt="Neovim" />
+</center>
 
 ## About
 
