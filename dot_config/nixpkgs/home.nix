@@ -30,6 +30,7 @@
     fd
     nixpkgs-fmt
     ripgrep
+    zellij
   ];
 
   home.username = "ratsclub";

@@ -2,15 +2,20 @@
 
 let 
   cocSettings = {
-    languageserver = {
+    languageserver = with pkgs; {
       nix = {
-        command = "${pkgs.rnix-lsp}/bin/rnix-lsp";
+        command = "${rnix-lsp}/bin/rnix-lsp";
         filetypes = [ "nix" ];
       };
 
       lua = {
-        command = "${pkgs.luaPackages.lua-lsp}/bin/lua-lsp";
+        command = "${luaPackages.lua-lsp}/bin/lua-lsp";
         filetypes = [ "lua" ];
+      };
+
+      go = {
+        command = "${gopls}/bin/gopls";
+        filetypes = [ "go" ];
       };
     };
   };
