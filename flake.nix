@@ -10,27 +10,21 @@
     };
   };
 
-  outputs = { self, home-manager, nixpkgs, ... }@inputs: {
-
-    # nix build #.nixosConfigurations.thinkpad
-    nixosConfigurations.thinkpad = nixpkgs.lib.nixosSystem rec {
-      system = "x86_64-linux";
-      modules = [ ./hosts/thinkpad ];
-      specialArgs = { inherit inputs system; };
-    };
-
-    homeConfigurations.graphical = home-manager.lib.homeManagerConfiguration rec {
-      configuration = ./home-manager/graphical/home.nix;
-      system = "x86_64-linux";
-      homeDirectory = "/home/ratsclub";
+  outputs = { self, home-manager, nixpkgs, ... }@inputs:
+    let
       username = "ratsclub";
+    in
+    rec
+    {
+      # nix build #.nixosConfigurations.thinkpad
+      nixosConfigurations.thinkpad = nixpkgs.lib.nixosSystem rec {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/thinkpad
+          ./home-manager/home.nix
+          home-manager.nixosModules.home-manager
+        ];
+        specialArgs = { inherit inputs system; };
+      };
     };
-
-    homeConfigurations.headless = home-manager.lib.homeManagerConfiguration rec {
-      configuration = ./home-manager/headless/home.nix;
-      system = "x86_64-linux";
-      homeDirectory = "/home/ratsclub";
-      username = "ratsclub";
-    };
-  };
 }
