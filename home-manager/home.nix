@@ -160,6 +160,11 @@
             "media.navigator.mediadatadecoder_vpx_enabled" = true;
           };
         };
+        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+          privacy-badger
+          ublock-origin
+          bitwarden
+        ];
       };
     };
 
