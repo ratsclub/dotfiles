@@ -19,8 +19,15 @@
       specialArgs = { inherit inputs system; };
     };
 
-    homeConfigurations.home-linux = home-manager.lib.homeManagerConfiguration rec {
-      configuration = ./home-manager/home.nix;
+    homeConfigurations.graphical = home-manager.lib.homeManagerConfiguration rec {
+      configuration = ./home-manager/graphical/home.nix;
+      system = "x86_64-linux";
+      homeDirectory = "/home/ratsclub";
+      username = "ratsclub";
+    };
+
+    homeConfigurations.headless = home-manager.lib.homeManagerConfiguration rec {
+      configuration = ./home-manager/headless/home.nix;
       system = "x86_64-linux";
       homeDirectory = "/home/ratsclub";
       username = "ratsclub";
