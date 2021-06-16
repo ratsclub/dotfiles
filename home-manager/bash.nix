@@ -41,8 +41,8 @@
         EDITOR = "vi";
       };
 
-      profileExtra = builtins.readFile ../../config/bash/.profile;
-      bashrcExtra = builtins.readFile ../../config/bash/.bashrc;
+      profileExtra = builtins.readFile ../config/bash/.profile;
+      bashrcExtra = builtins.readFile ../config/bash/.bashrc;
     };
       
     fzf = {
