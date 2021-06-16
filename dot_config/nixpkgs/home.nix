@@ -2,9 +2,9 @@
 
 {
   xdg.enable = true;
-  
-  imports = [ 
-    ./bash.nix 
+
+  imports = [
+    ./bash.nix
     ./neovim.nix
   ];
 

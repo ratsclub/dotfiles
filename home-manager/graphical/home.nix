@@ -2,11 +2,12 @@
 
 {
   imports = [
-    ./bash.nix
-    ./cli.nix
-    ./git.nix
-    ./neovim.nix
-    ./vscode.nix
+    ../bash.nix
+    ../cli.nix
+    ../git.nix
+    ../neovim.nix
+    ../vscode.nix
+    ../firefox.nix
   ];
 
   programs.home-manager.enable = true;

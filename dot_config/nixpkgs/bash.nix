@@ -48,7 +48,7 @@
       profileExtra = builtins.readFile ../bash/.profile;
       bashrcExtra = builtins.readFile ../bash/.bashrc;
     };
-      
+
     fzf = {
       enable = true;
       enableBashIntegration = true;

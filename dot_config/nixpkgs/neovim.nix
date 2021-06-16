@@ -1,6 +1,6 @@
 { pkgs, config, ... }:
 
-let 
+let
   cocSettings = {
     languageserver = with pkgs; {
       nix = {
@@ -19,7 +19,8 @@ let
       };
     };
   };
-in {
+in
+{
   xdg.configFile."nvim/coc-settings.json".text = builtins.toJSON cocSettings;
 
   programs.neovim = {
@@ -33,7 +34,7 @@ in {
     withRuby = true;
 
     extraConfig = builtins.readFile ../nvim/config.vim;
-    
+
     plugins = with pkgs.vimPlugins; [
       coc-go
       coc-nvim
