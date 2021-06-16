@@ -2,9 +2,10 @@
 
 {
   imports = [
-    ./git.nix
-    ./cli.nix
     ./bash.nix
+    ./cli.nix
+    ./git.nix
+    ./neovim.nix
   ];
 
   programs.home-manager.enable = true;
