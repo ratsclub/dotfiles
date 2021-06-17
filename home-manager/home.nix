@@ -106,6 +106,9 @@
           "window.titleBarStyle" = "custom";
         };
         extensions = with pkgs.vscode-extensions; [
+          # CSharp
+          ms-dotnettools.csharp
+
           # Nix
           jnoortheen.nix-ide
 
