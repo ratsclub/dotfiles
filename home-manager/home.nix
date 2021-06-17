@@ -104,7 +104,6 @@
           "editor.rulers" = [ 80 120 ];
           "workbench.colorTheme" = "Solarized Dark";
           "window.titleBarStyle" = "custom";
-          "window.zoomLevel" = 3;
         };
         extensions = with pkgs.vscode-extensions; [
           # Nix
@@ -118,6 +117,13 @@
 
           # Markdown
           yzhang.markdown-all-in-one
+        ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "Ionide-fsharp";
+            publisher = "Ionide";
+            version = "5.5.5";
+            sha256 = "xrBNiIbZVJ0sGUk/4PudD8kSyX94QkrFtf7Ho/sB0Vs=";
+          }
         ];
       };
     };
