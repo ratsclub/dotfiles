@@ -5,6 +5,7 @@
     [
       ./hardware-configuration.nix
       ../../nixos/user.nix
+      ../../nixos/nix.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -30,13 +31,6 @@
   # Enable the GNOME 3 Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-
-  nix = {
-    package = pkgs.nixUnstable;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
 
   nixpkgs.config = {
     allowUnfree = true;

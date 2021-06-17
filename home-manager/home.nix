@@ -1,7 +1,6 @@
 { pkgs, ... }:
 
 {
-
   home-manager.useUserPackages = true;
   home-manager.useGlobalPkgs = true;
   home-manager.users.ratsclub = {
@@ -12,6 +11,14 @@
       bat.enable = true;
       exa.enable = true;
       jq.enable = true;
+
+      direnv = {
+        enable = true;
+        nix-direnv = {
+          enable = true;
+          enableFlakes = true;
+        };
+      };
 
       git = {
         enable = true;
@@ -79,6 +86,7 @@
           l = "ls -CF";
           grep = "grep --color=auto";
           ".." = "cd ..";
+          mknote = ">$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 8 | head -n 1).md";
         };
 
         sessionVariables = {
@@ -94,6 +102,14 @@
         enableBashIntegration = true;
       };
     };
+
+    home.file.".config/direnv/lib/use_flake.sh".text = ''
+      use_flake() {
+        watch_file flake.nix
+        watch_file flake.lock
+        eval "$(nix print-dev-env --profile "$(direnv_layout_dir)/flake-profile")"
+      }
+    '';
 
     # Visual Studio Code
     programs = {
@@ -136,6 +152,12 @@
             publisher = "foam";
             version = "0.13.7";
             sha256 = "Y2pcd4iXPiuhJdD/9d+tbTJN18O4+kRMqUdOtbx8xy8=";
+          }
+          {
+            name = "markdown-memo";
+            publisher = "svsool";
+            version = "0.3.8";
+            sha256 = "eFiCCXxrOnXwJK1AOMfIDsPGsFG3ArLD1X/uAEH5lRY=";
           }
         ];
       };
@@ -200,3 +222,6 @@
 
 
 }
+
+
+
