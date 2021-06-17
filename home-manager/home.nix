@@ -104,10 +104,14 @@
           "editor.rulers" = [ 80 120 ];
           "workbench.colorTheme" = "Solarized Dark";
           "window.titleBarStyle" = "custom";
+          "workbench.iconTheme" = "file-icons";
         };
         extensions = with pkgs.vscode-extensions; [
           # CSharp
           ms-dotnettools.csharp
+
+          # Icons
+          file-icons.file-icons
 
           # Nix
           jnoortheen.nix-ide
@@ -126,6 +130,12 @@
             publisher = "Ionide";
             version = "5.5.5";
             sha256 = "xrBNiIbZVJ0sGUk/4PudD8kSyX94QkrFtf7Ho/sB0Vs=";
+          }
+          {
+            name = "foam-vscode";
+            publisher = "foam";
+            version = "0.13.7";
+            sha256 = "Y2pcd4iXPiuhJdD/9d+tbTJN18O4+kRMqUdOtbx8xy8=";
           }
         ];
       };
