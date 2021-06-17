@@ -16,9 +16,5 @@ if [ -d "$HOME/.local/bin" ] ; then
         PATH="$HOME/.local/bin:$PATH"
 fi
 
-if [ -d "$HOME/.cargo" ] ; then
-        source "$HOME/.cargo/env"
-fi
-
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi
 export XDG_DATA_DIRS=$HOME/.nix-profile/share:$XDG_DATA_DIRS 
