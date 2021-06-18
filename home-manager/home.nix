@@ -217,8 +217,10 @@
       fd
       nixpkgs-fmt
       ripgrep
-      tdesktop
+
+      bitwarden
       discord
+      tdesktop
     ];
 
     home.stateVersion = "20.09";
