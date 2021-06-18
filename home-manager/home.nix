@@ -118,11 +118,15 @@
         package = pkgs.vscodium;
         userSettings = {
           "editor.rulers" = [ 80 120 ];
-          "workbench.colorTheme" = "Solarized Dark";
+          "workbench.colorTheme" = "GitHub Dark";
           "window.titleBarStyle" = "custom";
           "workbench.iconTheme" = "file-icons";
+          "window.zoomLevel" = 0;
         };
         extensions = with pkgs.vscode-extensions; [
+          # Theme
+          github.github-vscode-theme
+
           # CSharp
           ms-dotnettools.csharp
 
