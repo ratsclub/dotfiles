@@ -148,8 +148,8 @@
           {
             name = "Ionide-fsharp";
             publisher = "Ionide";
-            version = "5.5.5";
-            sha256 = "xrBNiIbZVJ0sGUk/4PudD8kSyX94QkrFtf7Ho/sB0Vs=";
+            version = "5.5.6";
+            sha256 = "CJf535sRmSnhJ+FZY+QUmeMbtIwqr1pFcZBjPTp4bM0=";
           }
           {
             name = "foam-vscode";

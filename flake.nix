@@ -10,10 +10,12 @@
       inputs.nixpkgs.follows = "unstable";
     };
 
+    nixos-hardware.url = github:NixOS/nixos-hardware/master;
+
     nur.url = github:nix-community/NUR;
   };
 
-  outputs = { self, home-manager, nur, nixpkgs, ... }@inputs:
+  outputs = { self, home-manager, nur, nixpkgs, nixos-hardware, ... }@inputs:
     let
       username = "ratsclub";
     in
@@ -24,10 +26,10 @@
         system = "x86_64-linux";
         modules = [
           { nixpkgs.overlays = [ nur.overlay ]; }
-
           ./hosts/thinkpad
           ./home-manager/home.nix
           home-manager.nixosModules.home-manager
+          nixos-hardware.nixosModules.lenovo-thinkpad-t495
         ];
         specialArgs = { inherit inputs system; };
       };
