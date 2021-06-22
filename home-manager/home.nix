@@ -117,10 +117,15 @@
         enable = true;
         package = pkgs.vscodium;
         userSettings = {
+          # auto update tags when edited
+          "editor.linkedEditing" = true;
           "editor.rulers" = [ 80 120 ];
+          "editor.formatOnSave" = true;
+
           "workbench.colorTheme" = "GitHub Dark";
-          "window.titleBarStyle" = "custom";
           "workbench.iconTheme" = "file-icons";
+
+          "window.titleBarStyle" = "custom";
           "window.zoomLevel" = 0;
         };
         extensions = with pkgs.vscode-extensions; [
