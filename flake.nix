@@ -2,12 +2,11 @@
   description = "My NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-21.05";
-    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixos-hardware.url = github:NixOS/nixos-hardware/master;
@@ -22,10 +21,14 @@
     rec
     {
       # nix build #.nixosConfigurations.thinkpad
-      nixosConfigurations.thinkpad = nixpkgs.lib.nixosSystem rec {
+      nixosConfigurations.t495 = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
         modules = [
-          { nixpkgs.overlays = [ nur.overlay ]; }
+          {
+            nixpkgs.overlays = [
+              nur.overlay
+            ];
+          }
           ./hosts/thinkpad
           ./home-manager/home.nix
           home-manager.nixosModules.home-manager
