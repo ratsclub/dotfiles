@@ -126,7 +126,7 @@
           "workbench.iconTheme" = "file-icons";
 
           "window.titleBarStyle" = "custom";
-          "window.zoomLevel" = 0;
+          "window.zoomLevel" = 2;
         };
         extensions = with pkgs.vscode-extensions; [
           # Theme
@@ -134,7 +134,6 @@
 
           # CSharp / FSharp
           ms-dotnettools.csharp
-          ionide.ionide-fsharp
 
           # Icons
           file-icons.file-icons
@@ -145,13 +144,36 @@
           # Go
           golang.Go
 
+          # Python
+          ms-python.python
+
           # Rust
           matklad.rust-analyzer
 
           # Markdown
           yzhang.markdown-all-in-one
-          foam.foam-vscode
-          svsool.markdown-memo
+
+          # Misc
+          eamodio.gitlens
+        ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "Ionide-fsharp";
+            publisher = "Ionide";
+            version = "5.5.6";
+            sha256 = "CJf535sRmSnhJ+FZY+QUmeMbtIwqr1pFcZBjPTp4bM0=";
+          }
+          {
+            name = "foam-vscode";
+            publisher = "foam";
+            version = "0.13.7";
+            sha256 = "Y2pcd4iXPiuhJdD/9d+tbTJN18O4+kRMqUdOtbx8xy8=";
+          }
+          {
+            name = "markdown-memo";
+            publisher = "svsool";
+            version = "0.3.8";
+            sha256 = "eFiCCXxrOnXwJK1AOMfIDsPGsFG3ArLD1X/uAEH5lRY=";
+          }
         ];
       };
     };
@@ -209,14 +231,11 @@
 
       bitwarden
       discord
+      nyxt
       tdesktop
     ];
 
     home.stateVersion = "20.09";
   };
 
-
 }
-
-
-
