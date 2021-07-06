@@ -126,7 +126,7 @@
           "workbench.iconTheme" = "file-icons";
 
           "window.titleBarStyle" = "custom";
-          "window.zoomLevel" = 2;
+          "window.zoomLevel" = 0;
         };
         extensions = with pkgs.vscode-extensions; [
           # Theme
@@ -178,6 +178,12 @@
       };
     };
 
+    # emacs
+    programs.emacs = {
+      enable = true;
+      package = import ../pkgs/emacs.nix { inherit pkgs; };
+    };
+
     # neovim
     programs = {
       neovim = {
@@ -193,7 +199,6 @@
         extraConfig = builtins.readFile ../config/nvim/config.vim;
 
         plugins = with pkgs.vimPlugins; [
-          coc-go
           coc-nvim
           coc-tsserver
           fzf-vim

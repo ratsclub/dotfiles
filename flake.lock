@@ -2,20 +2,19 @@
   "nodes": {
     "home-manager": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1625516974,
-        "narHash": "sha256-hq4eAl7wJoGwjtHCdqItjb81XgjVL5K79NX3jSmNRMA=",
+        "lastModified": 1624228557,
+        "narHash": "sha256-wwOqe73BsrXfRv1PhyXQFNC8iTET50KvE/HitdkRgxs=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "97d183e2e466808f5d7cd1c838815bedd88f37fe",
+        "rev": "35a24648d155843a4d162de98c17b1afd5db51e4",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
+        "ref": "release-21.05",
         "repo": "home-manager",
         "type": "github"
       }
@@ -38,6 +37,20 @@
     },
     "nixpkgs": {
       "locked": {
+        "lastModified": 1625609472,
+        "narHash": "sha256-afkaGpBxTLiYgqDqZQ7zZvBorNxwQJvevsPhTYPiiK0=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "e1bc891aec5e3c5ba26349f9664829b0cbbd18e8",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
         "lastModified": 1625176478,
         "narHash": "sha256-s1RTYNKw7ySyqrZjns9Cq+Nnjpp75ePgL06pgcbIpoA=",
         "owner": "nixos",
@@ -54,11 +67,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1625544541,
-        "narHash": "sha256-nZuEin1D/vJt+22klXaUDyAuXM9lihhufi1VDDtDLIA=",
+        "lastModified": 1625601737,
+        "narHash": "sha256-qzSzWrmSXZPKuBdOBIaR1jNVcQi2ENe3E1f2VcceVQg=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "44d477034e74218101bba6b85b01f6be64a3b3bc",
+        "rev": "c2a0f7566bbeacf3663254e7818a7606e0b09d92",
         "type": "github"
       },
       "original": {
@@ -71,7 +84,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "nur": "nur"
       }
     }

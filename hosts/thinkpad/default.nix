@@ -32,6 +32,8 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
+  virtualisation.docker.enable = true;
+
   nixpkgs.config = {
     allowUnfree = true;
   };
