@@ -235,7 +235,7 @@
       fd
       nixpkgs-fmt
       ripgrep
-
+      gnumake
       bitwarden
       discord
       nyxt
