@@ -181,8 +181,10 @@
     # emacs
     programs.emacs = {
       enable = true;
-      package = import ../pkgs/emacs.nix { inherit pkgs; };
+      package = import ../pkgs/emacs { inherit pkgs; };
     };
+
+    home.file.".config/emacs/init.el".source = ../pkgs/emacs/init.el;
 
     # neovim
     programs = {
