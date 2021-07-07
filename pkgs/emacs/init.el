@@ -36,7 +36,7 @@
 
 ;; keybindings
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "C-c f p") 'my/open-config-file)
+(global-set-key (kbd "C-c f p") 'my/open-config-files)
 
 ;; company
 (use-package company
@@ -86,8 +86,11 @@
 (defvar my/org-agenda-file (concat my/org-directory "/agenda.org"))
 
 ;; my functions
-(defun my/open-config-file ()
+(defun my/open-config-files ()
   "Open my config file.
    This function opens my configuration file"
   (interactive)
-  (find-file user-init-file))
+  (counsel-fzf nil (locate-dominating-file "~/dotfiles" ".git")))
+
+
+
