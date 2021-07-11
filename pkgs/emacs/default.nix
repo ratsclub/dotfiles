@@ -9,6 +9,7 @@ emacsWithPackages
     magit
     smex
     use-package
+    org-roam
 
     # languages
     nix-mode
