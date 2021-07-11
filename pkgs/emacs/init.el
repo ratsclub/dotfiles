@@ -46,6 +46,12 @@
   :init (global-company-mode)
   :commands company-mode)
 
+(use-package magit
+  :bind
+  ("C-c g g" . 'magit-status)
+  ("C-c g F" . 'magit-fetch)
+  ("C-c g f" . 'magit-find-file))
+
 ;; ivy
 (use-package ivy
   :init (ivy-mode 1)
