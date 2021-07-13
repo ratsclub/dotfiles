@@ -127,6 +127,10 @@
 
           "window.titleBarStyle" = "custom";
           "window.zoomLevel" = 0;
+          "terminal.integrated.tabs.enabled" = true;
+          "[html]" = {
+            "editor.defaultFormatter" = "esbenp.prettier-vscode";
+          };
         };
         extensions = with pkgs.vscode-extensions; [
           # Theme
@@ -155,7 +159,14 @@
 
           # Misc
           eamodio.gitlens
+          esbenp.prettier-vscode
         ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "ng-template";
+            publisher = "Angular";
+            version = "12.1.1";
+            sha256 = "sha256-KklXgLj1AuHNqlyiQi89ruPRfIuGHU84pqDmRfX0c1Q=";
+          }
           {
             name = "Ionide-fsharp";
             publisher = "Ionide";
@@ -232,13 +243,15 @@
     };
 
     home.packages = with pkgs; [
-      fd
-      nixpkgs-fmt
-      ripgrep
-      gnumake
       bitwarden
       discord
+      fd
+      gnumake
+      nixpkgs-fmt
       nyxt
+      ripgrep
+      obsidian
+      sqlite
       tdesktop
     ];
 
