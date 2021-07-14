@@ -131,6 +131,7 @@
           "[html]" = {
             "editor.defaultFormatter" = "esbenp.prettier-vscode";
           };
+          "nix.enableLanguageServer" = true;
         };
         extensions = with pkgs.vscode-extensions; [
           # Theme
@@ -249,8 +250,9 @@
       gnumake
       nixpkgs-fmt
       nyxt
-      ripgrep
       obsidian
+      ripgrep
+      rnix-lsp
       sqlite
       tdesktop
     ];
