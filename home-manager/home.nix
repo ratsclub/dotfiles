@@ -190,14 +190,6 @@
       };
     };
 
-    # emacs
-    programs.emacs = {
-      enable = true;
-      package = import ../pkgs/emacs { inherit pkgs; };
-    };
-
-    home.file.".config/emacs/init.el".source = ../pkgs/emacs/init.el;
-
     # neovim
     programs = {
       neovim = {
@@ -244,17 +236,28 @@
     };
 
     home.packages = with pkgs; [
-      bitwarden
+      # book readers
+      calibre
+      foliate
+
+      # chats
       discord
+      tdesktop
+
+      # cli
       fd
       gnumake
+      ripgrep
       nixpkgs-fmt
+      rnix-lsp
+
+      # gui
+      bitwarden
       nyxt
       obsidian
-      ripgrep
-      rnix-lsp
+
+      # other
       sqlite
-      tdesktop
     ];
 
     home.stateVersion = "20.09";
