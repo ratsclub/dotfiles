@@ -13,6 +13,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.useOSProber = true;
   boot.plymouth.enable = true;
+  boot.supportedFilesystems = [ "ntfs" ];
 
   networking.hostName = "t495";
 
@@ -40,4 +41,3 @@
 
   system.stateVersion = "21.05";
 }
-
