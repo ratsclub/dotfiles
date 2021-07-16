@@ -12,23 +12,23 @@
     let
       username = "ratsclub";
     in
-    rec
-    {
-      # nix build #.nixosConfigurations.thinkpad
-      nixosConfigurations.t495 = nixpkgs.lib.nixosSystem rec {
-        system = "x86_64-linux";
-        modules = [
-          {
-            nixpkgs.overlays = [
-              nur.overlay
-            ];
-          }
-          ./hosts/thinkpad
-          ./home-manager/home.nix
-          home-manager.nixosModules.home-manager
-          nixos-hardware.nixosModules.lenovo-thinkpad-t495
-        ];
-        specialArgs = { inherit inputs system; };
+      rec
+      {
+        # nix build #.nixosConfigurations.thinkpad
+        nixosConfigurations.t495 = nixpkgs.lib.nixosSystem rec {
+          system = "x86_64-linux";
+          modules = [
+            {
+              nixpkgs.overlays = [
+                nur.overlay
+              ];
+            }
+            ./hosts/t495
+            ./home-manager/home.nix
+            home-manager.nixosModules.home-manager
+            nixos-hardware.nixosModules.lenovo-thinkpad-t495
+          ];
+          specialArgs = { inherit inputs system; };
+        };
       };
-    };
 }
