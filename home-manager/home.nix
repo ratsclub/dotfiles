@@ -255,9 +255,6 @@
       bitwarden
       nyxt
       obsidian
-
-      # other
-      sqlite
     ];
 
     home.stateVersion = "20.09";
