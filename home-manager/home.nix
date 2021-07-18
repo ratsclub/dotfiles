@@ -6,6 +6,23 @@
   home-manager.users.ratsclub = {
     programs.home-manager.enable = true;
 
+    fonts.fontconfig.enable = true;
+
+    # kitty
+    programs = {
+      kitty = {
+        enable = true;
+        font.package = pkgs.ibm-plex;
+        font.name = "IBM Plex Mono";
+        font.size = 9;
+
+        settings = {
+          window_padding_width = 0;
+          enable_audio_bell = false;
+        };
+      };
+    };
+
     # command-line
     programs = {
       bat.enable = true;
@@ -132,6 +149,7 @@
             "editor.defaultFormatter" = "esbenp.prettier-vscode";
           };
           "nix.enableLanguageServer" = true;
+          "editor.fontFamily" = "IBM Plex Mono";
         };
         extensions = with pkgs.vscode-extensions; [
           # Theme
@@ -250,6 +268,9 @@
       ripgrep
       nixpkgs-fmt
       rnix-lsp
+
+      # fonts
+      ibm-plex
 
       # gui
       bitwarden

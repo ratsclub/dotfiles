@@ -14,6 +14,7 @@
   boot.loader.grub.useOSProber = true;
   boot.plymouth.enable = true;
   boot.supportedFilesystems = [ "ntfs" ];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "t495";
 
