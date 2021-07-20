@@ -1,5 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, inputs, system, ... }:
 
+let
+  unstable = import inputs.unstable {
+    inherit system;
+  };
+in
 {
   home-manager.useUserPackages = true;
   home-manager.useGlobalPkgs = true;
@@ -132,7 +137,7 @@
     programs = {
       vscode = {
         enable = true;
-        package = pkgs.vscodium;
+        package = unstable.vscodium;
         userSettings = {
           # auto update tags when edited
           "editor.linkedEditing" = true;
@@ -151,7 +156,7 @@
           "nix.enableLanguageServer" = true;
           "editor.fontFamily" = "IBM Plex Mono";
         };
-        extensions = with pkgs.vscode-extensions; [
+        extensions = with unstable.vscode-extensions; [
           # Theme
           github.github-vscode-theme
 
@@ -174,35 +179,19 @@
           matklad.rust-analyzer
 
           # Markdown
+          foam.foam-vscode
+          svsool.markdown-memo
           yzhang.markdown-all-in-one
 
           # Misc
           eamodio.gitlens
           esbenp.prettier-vscode
-        ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+        ] ++ unstable.vscode-utils.extensionsFromVscodeMarketplace [
           {
             name = "ng-template";
             publisher = "Angular";
             version = "12.1.1";
             sha256 = "sha256-KklXgLj1AuHNqlyiQi89ruPRfIuGHU84pqDmRfX0c1Q=";
-          }
-          {
-            name = "Ionide-fsharp";
-            publisher = "Ionide";
-            version = "5.5.6";
-            sha256 = "CJf535sRmSnhJ+FZY+QUmeMbtIwqr1pFcZBjPTp4bM0=";
-          }
-          {
-            name = "foam-vscode";
-            publisher = "foam";
-            version = "0.13.7";
-            sha256 = "Y2pcd4iXPiuhJdD/9d+tbTJN18O4+kRMqUdOtbx8xy8=";
-          }
-          {
-            name = "markdown-memo";
-            publisher = "svsool";
-            version = "0.3.8";
-            sha256 = "eFiCCXxrOnXwJK1AOMfIDsPGsFG3ArLD1X/uAEH5lRY=";
           }
         ];
       };

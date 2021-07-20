@@ -16,7 +16,7 @@
   boot.supportedFilesystems = [ "ntfs" ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "t495";
+  networking.hostName = "earth";
 
   # Set your time zone.
   time.timeZone = "America/Sao_Paulo";
