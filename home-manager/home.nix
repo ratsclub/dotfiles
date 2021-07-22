@@ -25,6 +25,11 @@ in
         "org/gnome/desktop/background" = {
           "picture-uri" = "${pkgs.nixos-artwork.wallpapers.nineish-dark-gray}/share/wallpapers/nineish-dark-gray-2020-07-02/contents/images/nix-wallpaper-nineish-dark-gray.png";
         };
+
+        "org/gnome/nautilus/list-view" = {
+          "use-tree-view" = true;
+          "default-zoom-level" = "small";
+        };
       };
     };
 
