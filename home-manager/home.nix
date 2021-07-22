@@ -4,6 +4,7 @@ let
   unstable = import inputs.unstable {
     inherit system;
   };
+  agenix = inputs.agenix.defaultPackage."${system}";
 in
 {
   home-manager.useUserPackages = true;
@@ -12,6 +13,20 @@ in
     programs.home-manager.enable = true;
 
     fonts.fontconfig.enable = true;
+
+    # dconf
+    dconf = {
+      enable = true;
+      settings = {
+        "org/gnome/desktop/peripherals/mouse" = {
+          "left-handed" = true;
+        };
+
+        "org/gnome/desktop/background" = {
+          "picture-uri" = "${pkgs.nixos-artwork.wallpapers.nineish-dark-gray}/share/wallpapers/nineish-dark-gray-2020-07-02/contents/images/nix-wallpaper-nineish-dark-gray.png";
+        };
+      };
+    };
 
     # kitty
     programs = {
@@ -249,6 +264,7 @@ in
       tdesktop
 
       # cli
+      agenix
       aria2
       fd
       gnumake
@@ -267,5 +283,4 @@ in
 
     home.stateVersion = "20.09";
   };
-
 }
