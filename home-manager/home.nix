@@ -160,9 +160,6 @@ in
           # Theme
           github.github-vscode-theme
 
-          # CSharp / FSharp
-          ms-dotnettools.csharp
-
           # Icons
           file-icons.file-icons
 
@@ -252,8 +249,10 @@ in
       tdesktop
 
       # cli
+      aria2
       fd
       gnumake
+      lazygit
       ripgrep
       nixpkgs-fmt
       rnix-lsp
@@ -263,7 +262,6 @@ in
 
       # gui
       bitwarden
-      nyxt
       obsidian
     ];
 
