@@ -4,8 +4,8 @@
   imports =
     [
       ./hardware-configuration.nix
-      ../../nixos/user.nix
       ../../nixos/nix.nix
+      ../../nixos/user.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -36,9 +36,7 @@
 
   virtualisation.docker.enable = true;
 
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
+  nixpkgs.config.allowUnfree = true;
 
   system.stateVersion = "21.05";
 }

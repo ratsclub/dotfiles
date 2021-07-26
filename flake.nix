@@ -19,58 +19,45 @@
     , agenix
     , ...
     }@inputs:
+      let
       {
-        # nix build #.nixosConfigurations.earth
-        nixosConfigurations.earth =
-          let
-            system = "x86_64-linux";
-          in
-            nixpkgs.lib.nixosSystem rec {
-              inherit system;
-              modules = [
-                {
-                  nixpkgs.overlays = [
-                    nur.overlay
-                  ];
-                }
-                agenix.nixosModules.age
-                ./hosts/earth
-                ./home-manager/home.nix
-                home-manager.nixosModules.home-manager
-                nixos-hardware.nixosModules.lenovo-thinkpad-t495
-              ];
-              specialArgs = { inherit inputs system; };
-            };
+      # nix build #.nixosConfigurations.earth
+      nixosConfigurations.earth =
+        let
+          system = "x86_64-linux";
+        in
+          nixpkgs.lib.nixosSystem rec {
+            inherit system;
+            modules = [
 
-        # nix build #.nixosConfigurations.mars
-        nixosConfigurations.mars =
-          let
-            system = "x86_64-linux";
-          in
-            nixpkgs.lib.nixosSystem rec {
-              inherit system;
-              modules = [
-                {
-                  nixpkgs.overlays = [
-                    nur.overlay
-                  ];
-                }
-                ./hosts/mars
-                ./home-manager/home.nix
-                home-manager.nixosModules.home-manager
-                nixos-hardware.nixosModules.lenovo-thinkpad-x230
-              ];
-              specialArgs = { inherit inputs system; };
-            };
+              # configuration.nix
+              ./hosts/earth
 
-        nixosConfigurations.moon =
-          let
-            system = "aarch64-linux";
-          in
-            nixpkgs.lib.nixosSystem rec {
-              inherit system;
-              modules = [];
-              specialArgs = { inherit inputs system; };
-            };
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.ratsclub = import ./home-manager/home.nix {
+                  inherit inputs system;
+                  pkgs = import nixpkgs {
+                    inherit system;
+                    overlays = [
+                      nur.overlay
+                    ];
+                    config = {
+                      allowUnfree = true;
+                    };
+                  };
+                };
+              }
+
+              # hardware
+              nixos-hardware.nixosModules.lenovo-thinkpad-t495
+
+              # agenix
+              agenix.nixosModules.age
+            ];
+            specialArgs = { inherit inputs system; };
+          };
       };
 }
