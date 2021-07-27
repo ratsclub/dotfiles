@@ -186,6 +186,9 @@ in
         # Icons
         pkief.material-icon-theme
 
+        # Angular
+        angular.ng-template
+
         # Nix
         jnoortheen.nix-ide
 
@@ -207,13 +210,6 @@ in
         # Misc
         eamodio.gitlens
         esbenp.prettier-vscode
-      ] ++ unstable.vscode-utils.extensionsFromVscodeMarketplace [
-        {
-          name = "ng-template";
-          publisher = "Angular";
-          version = "12.1.1";
-          sha256 = "sha256-KklXgLj1AuHNqlyiQi89ruPRfIuGHU84pqDmRfX0c1Q=";
-        }
       ];
     };
   };
