@@ -8,6 +8,7 @@ let
     };
   };
   agenix = inputs.agenix.defaultPackage."${system}";
+  wallpaper = "${pkgs.nixos-artwork.wallpapers.nineish-dark-gray}/share/wallpapers/nineish-dark-gray-2020-07-02/contents/images/nix-wallpaper-nineish-dark-gray.png";
 in
 {
 
@@ -26,7 +27,7 @@ in
       };
 
       "org/gnome/desktop/background" = {
-        "picture-uri" = "${pkgs.nixos-artwork.wallpapers.nineish-dark-gray}/share/wallpapers/nineish-dark-gray-2020-07-02/contents/images/nix-wallpaper-nineish-dark-gray.png";
+        "picture-uri" = wallpaper;
       };
 
       "org/gnome/nautilus/list-view" = {
@@ -229,6 +230,104 @@ in
       extraConfig = builtins.readFile ../config/nvim/config.vim;
     };
   };
+
+  xsession.windowManager.i3 = {
+    enable = true;
+    config = {
+      modifier = "Mod4";
+      bars = [];
+
+      startup = [
+        {
+          command = "${pkgs.feh}/bin/feh --bg-scale '${wallpaper}'";
+        }
+      ];
+
+      keybindings = pkgs.lib.mkOptionDefault {
+        "XF86AudioLowerVolume" = "exec amixer set Master 5%-";
+        "XF86AudioRaiseVolume" = "exec amixer set Master 5%+";
+        "XF86AudioMute" = "exec amixer set Master toggle";
+      };
+    };
+  };
+
+  services.polybar = {
+    enable = true;
+    package = pkgs.polybarFull;
+    script = ''
+      polybar bottom &
+    '';
+
+    settings = {
+      "bar/bottom" = {
+        bottom = true;
+        width = "100%";
+        height = "3%";
+        radius = 0;
+        modules-center = "date";
+        modules-left = "i3";
+        tray-position = "right";
+        wm-restack = "i3";
+      };
+
+      "module/date" = {
+        type = "internal/date";
+        internal = 5;
+        date = "%d.%m.%y";
+        time = "%H:%M";
+        label = "%time%  %date%";
+      };
+
+      "module/i3" = {
+        type = "internal/i3";
+
+        pin-workspaces = true;
+        strip-wsnumbers = true;
+        index-sort = true;
+
+        fuzzy-match = true;
+
+        ws-icon-0 = "1;♚";
+        ws-icon-1 = "2;♛";
+        ws-icon-2 = "3;♜";
+        ws-icon-3 = "4;♝";
+        ws-icon-4 = "5;♞";
+        ws-icon-default = "♟";
+
+        # label-dimmed-underline = ${root.background}
+
+        format = "<label-state> <label-mode>";
+
+        label-mode = "%mode%";
+        label-mode-padding = 0;
+        label-mode-background = "#e60053";
+
+        label-focused = "%index%";
+        label-focused-foreground = "#ffffff";
+        label-focused-background = "#3f3f3f";
+        label-focused-underline = "#fba922";
+        label-focused-padding = 1;
+
+        label-unfocused = "%index%";
+        label-unfocused-padding = 1;
+
+        label-visible = "%index%";
+        label-visible-underline = "#555555";
+        label-visible-padding = 1;
+
+        label-urgent = "%index%";
+        label-urgent-foreground = "#000000";
+        label-urgent-background = "#bd2c40";
+        label-urgent-padding = 1;
+
+        label-separator = "|";
+        label-separator-padding = 0;
+        label-separator-foreground = "#ffb52a";
+      };
+    };
+  };
+
+  services.network-manager-applet.enable = true;
 
   # firefox
   programs = {
