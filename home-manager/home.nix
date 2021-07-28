@@ -11,7 +11,6 @@ let
   wallpaper = "${pkgs.nixos-artwork.wallpapers.nineish-dark-gray}/share/wallpapers/nineish-dark-gray-2020-07-02/contents/images/nix-wallpaper-nineish-dark-gray.png";
 in
 {
-
   programs.home-manager.enable = true;
   fonts.fontconfig.enable = true;
 
@@ -383,7 +382,6 @@ in
     # cli
     agenix
     aria2
-    bitwarden-cli
     fd
     gnumake
     lazygit
