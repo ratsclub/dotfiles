@@ -223,10 +223,6 @@ in
       viAlias = true;
       vimAlias = true;
 
-      withNodeJs = true;
-      withPython3 = true;
-      withRuby = true;
-
       extraConfig = builtins.readFile ../config/nvim/config.vim;
     };
   };
@@ -349,6 +345,30 @@ in
         bitwarden
       ];
     };
+  };
+
+  programs.newsboat = {
+    enable = true;
+    urls = [
+      {
+        url = "https://lobste.rs/rss";
+        tags = [ "tech" ];
+      }
+      {
+        url = "https://drewdevault.com/blog/index.xml";
+        tags = [ "tech" ];
+      }
+      {
+        url = "https://www.dellacorte.me/feed/newsletters.xml";
+        tags = [ "personal" ];
+      }
+      {
+        url = "https://100r.co/links/rss.xml";
+        tags = [ "personal" ];
+      }
+    ];
+
+    extraConfig = builtins.readFile ../config/newsboat/config;
   };
 
   home.packages = with pkgs; [
