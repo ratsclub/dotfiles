@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   nix = {
@@ -6,6 +6,11 @@
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+
+    nixPath = [
+      "nixpkgs=/etc/nix/channels/nixpkgs"
+      "home-manager=/etc/nix/channels/home-manager"
+    ];
 
     gc = {
       automatic = true;

@@ -236,6 +236,9 @@ in
         {
           command = "${pkgs.feh}/bin/feh --bg-scale '${wallpaper}'";
         }
+        {
+          command = "systemctl --user restart polybar.service";
+        }
       ];
 
       keybindings = pkgs.lib.mkOptionDefault {
@@ -259,8 +262,9 @@ in
         width = "100%";
         height = "3%";
         radius = 0;
-        modules-center = "date";
         modules-left = "i3";
+        modules-center = "date";
+        modules-right = "battery";
         tray-position = "right";
         wm-restack = "i3";
       };
@@ -273,6 +277,15 @@ in
         label = "%time%  %date%";
       };
 
+      "module/battery" = {
+        type = "internal/battery";
+
+        battery = "BAT0";
+        adapter = "AC";
+
+        poll-interval = 5;
+      };
+
       "module/i3" = {
         type = "internal/i3";
 
@@ -283,6 +296,7 @@ in
         fuzzy-match = true;
 
         ws-icon-0 = "1;♚";
+        poll-interval = 5;
         ws-icon-1 = "2;♛";
         ws-icon-2 = "3;♜";
         ws-icon-3 = "4;♝";
@@ -350,18 +364,22 @@ in
     enable = true;
     urls = [
       {
+        title = "Lobsters";
         url = "https://lobste.rs/rss";
         tags = [ "tech" ];
       }
       {
+        title = "Drew DeVault's blog";
         url = "https://drewdevault.com/blog/index.xml";
         tags = [ "tech" ];
       }
       {
+        title = "Andrea Della Corte";
         url = "https://www.dellacorte.me/feed/newsletters.xml";
         tags = [ "personal" ];
       }
       {
+        title = "Hundred Rabbits";
         url = "https://100r.co/links/rss.xml";
         tags = [ "personal" ];
       }

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports =
@@ -50,6 +50,13 @@
         i3lock #default i3 screen locker
         i3blocks #if you are planning on using i3blocks over i3status
       ];
+    };
+  };
+
+  environment = {
+    etc = {
+      "nix/channels/nixpkgs".source = inputs.nixpkgs;
+      "nix/channels/home-manager".source = inputs.home-manager;
     };
   };
 
