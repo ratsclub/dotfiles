@@ -193,7 +193,7 @@ in
         jnoortheen.nix-ide
 
         # Go
-        golang.Go
+        golang.go
 
         # Python
         ms-python.python
