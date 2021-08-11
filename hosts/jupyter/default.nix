@@ -8,6 +8,7 @@ in
   imports = [
     "${modulesPath}/profiles/minimal.nix"
     ../../nixos/user.nix
+    ../../nixos/nix.nix
   ];
 
   # WSL is closer to a container than anything else
@@ -23,6 +24,9 @@ in
     # Otherwise WSL fails to login as root with "initgroups failed 5"
     extraGroups = [ "root" ];
   };
+
+  networking.hostName = "jupyter";
+  time.timeZone = "America/Sao_Paulo";
 
   security.sudo.wheelNeedsPassword = false;
 

@@ -1,12 +1,15 @@
 { config, lib, pkgs, ... }:
 
+let
+  username = "ratsclub";
+in
 {
   users = {
-    users.ratsclub = {
+    users.${username} = {
       isNormalUser = true;
       uid = 1000;
       extraGroups = [ "wheel" "docker" "networkmanager" ];
-      home = "/home/ratsclub";
+      home = "/home/${username}";
       password = "changeme";
     };
   };
