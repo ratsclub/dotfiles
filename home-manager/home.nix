@@ -177,7 +177,7 @@ in
           "editor.defaultFormatter" = "esbenp.prettier-vscode";
         };
         "nix.enableLanguageServer" = true;
-        "editor.fontFamily" = "IBM Plex Mono";
+        "editor.fontFamily" = "Jetbrains Mono";
       };
       extensions = with unstable.vscode-extensions; [
         # Theme
@@ -193,7 +193,7 @@ in
         jnoortheen.nix-ide
 
         # Go
-        golang.Go
+        golang.go
 
         # Python
         ms-python.python
@@ -409,6 +409,7 @@ in
 
     # fonts
     ibm-plex
+    jetbrains-mono
 
     # gui
     bitwarden
