@@ -34,23 +34,23 @@ in
     let
       wallpaper = "${pkgs.nixos-artwork.wallpapers.nineish-dark-gray}/share/wallpapers/nineish-dark-gray-2020-07-02/contents/images/nix-wallpaper-nineish-dark-gray.png";
     in
-      {
-        enable = true;
-        settings = {
-          "org/gnome/desktop/peripherals/mouse" = {
-            "left-handed" = true;
-          };
+    {
+      enable = true;
+      settings = {
+        "org/gnome/desktop/peripherals/mouse" = {
+          "left-handed" = true;
+        };
 
-          "org/gnome/desktop/background" = {
-            "picture-uri" = wallpaper;
-          };
+        "org/gnome/desktop/background" = {
+          "picture-uri" = wallpaper;
+        };
 
-          "org/gnome/nautilus/list-view" = {
-            "use-tree-view" = true;
-            "default-zoom-level" = "small";
-          };
+        "org/gnome/nautilus/list-view" = {
+          "use-tree-view" = true;
+          "default-zoom-level" = "small";
         };
       };
+    };
 
   home.packages = with pkgs; [
     discord
