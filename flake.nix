@@ -4,8 +4,9 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-21.05";
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager/release-21.05";
+    home-manager.url = "github:nix-community/home-manager";
     nixos-hardware.url = github:NixOS/nixos-hardware/master;
+    emacs.url = "github:nix-community/emacs-overlay";
     nur.url = github:nix-community/NUR;
   };
 
@@ -67,8 +68,8 @@
       homeConfigurations.mars = home-manager.lib.homeManagerConfiguration rec {
         configuration = ./home-manager/cli.nix;
         system = "x86_64-linux";
-        homeDirectory = "/home/ratsclub";
-        username = "ratsclub";
+        homeDirectory = "/home/victor";
+        username = "victor";
         extraSpecialArgs = {
           inherit inputs system;
         };

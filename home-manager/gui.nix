@@ -17,6 +17,7 @@ in
     ./pkgs/bash
     ./pkgs/cli-tools
     ./pkgs/direnv
+    ./pkgs/emacs
     ./pkgs/firefox
     ./pkgs/git
     ./pkgs/neovim
