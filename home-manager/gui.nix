@@ -14,14 +14,8 @@ let
 in
 {
   imports = [
-    ./pkgs/bash
-    ./pkgs/cli-tools
-    ./pkgs/direnv
-    ./pkgs/emacs
+    ./cli.nix
     ./pkgs/firefox
-    ./pkgs/git
-    ./pkgs/neovim
-    ./pkgs/newsboat
     ./pkgs/vscode
   ];
 

@@ -13,8 +13,8 @@
   programs.home-manager.enable = true;
   fonts.fontconfig.enable = true;
 
-  home.username = "victor";
-  home.homeDirectory = "/home/victor";
+  home.username = "victorfreire";
+  home.homeDirectory = "/home/victorfreire";
 
   home.stateVersion = "20.09";
 }
