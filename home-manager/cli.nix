@@ -4,7 +4,6 @@
     ./pkgs/bash
     ./pkgs/cli-tools
     ./pkgs/direnv
-    ./pkgs/emacs
     ./pkgs/git
     ./pkgs/neovim
     ./pkgs/newsboat
