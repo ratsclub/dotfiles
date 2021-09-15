@@ -67,8 +67,8 @@
       homeConfigurations.mars = home-manager.lib.homeManagerConfiguration rec {
         configuration = ./home-manager/cli.nix;
         system = "x86_64-linux";
-        homeDirectory = "/home/victorfreire";
-        username = "victorfreire";
+        homeDirectory = "/home/victor";
+        username = "victor";
         extraSpecialArgs = {
           inherit inputs system;
         };
