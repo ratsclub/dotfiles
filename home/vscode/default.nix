@@ -1,17 +1,9 @@
-{ pkgs, inputs, system, ... }:
+{ pkgs, ... }:
 
-let
-  unstable = import inputs.unstable {
-    inherit system;
-    config = {
-      allowUnfree = true;
-    };
-  };
-in
 {
   programs.vscode = {
     enable = true;
-    package = unstable.vscodium;
+    package = pkgs.vscodium;
     userSettings = {
       # auto update tags when edited
       "editor.linkedEditing" = true;
@@ -30,7 +22,7 @@ in
       "nix.enableLanguageServer" = true;
       "editor.fontFamily" = "Jetbrains Mono";
     };
-    extensions = with unstable.vscode-extensions; [
+    extensions = with pkgs.vscode-extensions; [
       # Theme
       github.github-vscode-theme
 
@@ -47,8 +39,8 @@ in
       golang.go
 
       # Python
-      ms-python.python
-      ms-toolsai.jupyter
+      #ms-python.python
+      #ms-toolsai.jupyter
 
       # Rust
       matklad.rust-analyzer
@@ -64,7 +56,7 @@ in
     ];
   };
 
-  home.packages = with unstable; [
+  home.packages = with pkgs; [
     jetbrains-mono
   ];
 }
