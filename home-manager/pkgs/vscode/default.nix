@@ -40,6 +40,9 @@ in
       # Angular
       angular.ng-template
 
+      # Deno
+      # denoland.vscode-deno
+
       # Nix
       jnoortheen.nix-ide
 
@@ -54,8 +57,6 @@ in
       matklad.rust-analyzer
 
       # Markdown
-      foam.foam-vscode
-      svsool.markdown-memo
       yzhang.markdown-all-in-one
 
       # Misc
