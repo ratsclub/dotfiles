@@ -33,7 +33,7 @@
       angular.ng-template
 
       # Deno
-      # denoland.vscode-deno
+      denoland.vscode-deno
 
       # Nix
       jnoortheen.nix-ide

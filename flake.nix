@@ -2,7 +2,7 @@
   description = "My personal dotfiles";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/331dfc770cef774d07542c284b9a65cd6b0bd98b";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     utils.url = "github:numtide/flake-utils";
