@@ -14,6 +14,7 @@
     # package = pkgs.neovim;
     plugins = with pkgs.vimPlugins; [
       telescope-nvim
+      vim-polyglot
     ];
 
     extraConfig = builtins.readFile ./config.vim;
