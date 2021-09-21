@@ -11,12 +11,10 @@ Home to my personal configuration files.
 - [VSCodium](https://vscodium.com/) and [Neovim](https://neovim.io/) as code editors.
 
 
-<center>
-    <figure>
+<p align="center">
         <img src="assets/nixos.gif" width=40 alt="i use nixos btw">
-        <figcaption>i use nixos btw</figcaption>
-    </figure>
-</center>
+</p>
+<p align="center">i use nixos btw</p>
 
 [NixOS]: https://nixos.org
 [Nix]: https://nixos.org
