@@ -1,46 +1,57 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports =
     [
-      # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.hostName = "t495"; # Define your hostname.
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    kernelPackages = pkgs.linuxPackages_latest;
+    kernelParams = [
+      "quiet"
+      "splash"
+      "udev.log_priority=3"
+    ];
+    supportedFilesystems = [ "ntfs" ];
+    plymouth.enable = true;
+  };
 
   # Set your time zone.
   time.timeZone = "America/Sao_Paulo";
 
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = false;
-  networking.interfaces.enp3s0f0.useDHCP = true;
-  networking.interfaces.enp4s0.useDHCP = true;
-  networking.interfaces.wlp1s0.useDHCP = true;
+  networking = {
+    hostName = "t495";
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+    useDHCP = false;
+    interfaces.enp3s0f0.useDHCP = true;
+    interfaces.enp4s0.useDHCP = true;
+    interfaces.wlp1s0.useDHCP = true;
+  };
 
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
+  services.xserver = {
+    enable = true;
+    videoDrivers = [ "amdgpu" ];
+    libinput.enable = true;
+
+    desktopManager = {
+      gnome.enable = true;
+      xterm.enable = false;
+    };
+
+    displayManager.gdm = {
+      enable = true;
+      wayland = true;
+    };
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.victor = {
@@ -49,14 +60,34 @@
     password = "changeme";
   };
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  virtualisation.docker.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  environment = {
+    etc = {
+      "nix/channels/nixpkgs".source = inputs.nixpkgs;
+      "nix/channels/home-manager".source = inputs.home-manager;
+    };
+  };
+
+
+  nix = {
+    package = pkgs.nixUnstable;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+
+    nixPath = [
+      "nixpkgs=/etc/nix/channels/nixpkgs"
+      "home-manager=/etc/nix/channels/home-manager"
+    ];
+
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 2d";
+    };
+
+    autoOptimiseStore = true;
+  };
 
   system.stateVersion = "21.05";
 }

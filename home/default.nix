@@ -4,7 +4,8 @@
   imports = [
     ./cli
     ./gui
-    ./vscode
+    ./vscodium
+    ./neovim
   ];
 
   programs.home-manager.enable = true;

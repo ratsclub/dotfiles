@@ -54,6 +54,7 @@
       # Misc
       eamodio.gitlens
       esbenp.prettier-vscode
+      usernamehw.errorlens
     ];
   };
 
