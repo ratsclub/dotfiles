@@ -17,6 +17,11 @@
       };
     in
     {
+      nixosConfigurations.t495 = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [ ./hosts/t495 ];
+        specialArgs = { inherit inputs system; };
+      };
       homeConfigurations.victor = home-manager.lib.homeManagerConfiguration rec {
         inherit system username homeDirectory pkgs;
         configuration = ./home;
