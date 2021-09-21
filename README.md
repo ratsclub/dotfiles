@@ -10,6 +10,7 @@ Home to my personal configuration files.
 - [Home Manager][] to take care of my home directory on [NixOS][] and non-NixOS.
 - [VSCodium](https://vscodium.com/) and [Neovim](https://neovim.io/) as code editors.
 
+
 <center>
     <figure>
         <img src="assets/nixos.gif" width=40 alt="i use nixos btw">
