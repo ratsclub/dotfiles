@@ -2,7 +2,7 @@
 
 ![OS NixOS](https://img.shields.io/badge/os-nixos%20|%20ubuntu-%235277c3?style=flat-square&logoColor=7eb5e0)
 ![Shell Bash](https://img.shields.io/badge/shell-bash-%234caa20?style=flat-square)
-![Shell Bash](https://img.shields.io/badge/editor-neovim%20|%20vscode-%23464748?style=flat-square)
+![Shell Bash](https://img.shields.io/badge/editor-neovim%20|%20vscodium-%23464748?style=flat-square)
 
 Home to my personal configuration files.
 
