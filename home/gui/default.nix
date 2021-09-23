@@ -2,9 +2,10 @@
 
 {
   home.packages = with pkgs; [
-    discord
-    tdesktop
     bitwarden
+    discord
+    firefox
     obsidian
+    tdesktop
   ];
 }
