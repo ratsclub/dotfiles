@@ -50,6 +50,13 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
+  programs = {
+    kdeconnect = {
+      enable = true;
+      package = pkgs.gnomeExtensions.gsconnect;
+    };
+  };
+
   services.xserver = {
     enable = true;
     videoDrivers = [ "amdgpu" ];
