@@ -3,18 +3,18 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     utils.url = "github:numtide/flake-utils";
+    
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
   };
 
   outputs =
-    { self
-    , nixpkgs
-    , home-manager
-    , nixos-hardware
-    , utils
-    }@inputs:
+    { self, ... }@inputs: with inputs;
     let
       system = "x86_64-linux";
       username = "victor";
@@ -67,7 +67,7 @@
                 useUserPackages = true;
                 users."${username}" = import ./home;
                 extraSpecialArgs = {
-                  inherit inputs system username homeDirectory pkgs;
+                  inherit inputs nixpkgs system username homeDirectory pkgs;
                 };
               };
             }

@@ -31,20 +31,7 @@
     interfaces.enp3s0f0.useDHCP = true;
     interfaces.enp4s0.useDHCP = true;
     interfaces.wlp1s0.useDHCP = true;
-
-    firewall = {
-      allowedTCPPortRanges = [
-        # KDE Connect/GSConnect
-        { from = 1714; to = 1764; }
-      ];
-      allowedUDPPortRanges = [
-        # KDE Connect/GSConnect
-        { from = 1714; to = 1764; }
-      ];
-    };
   };
-
-  environment.systemPackages = with pkgs; [ gnomeExtensions.gsconnect ];
 
   # Enable sound.
   sound.enable = true;
@@ -105,6 +92,8 @@
       automatic = true;
       options = "--delete-older-than 2d";
     };
+
+    registry.nixpkgs.flake = inputs.nixpkgs;
 
     autoOptimiseStore = true;
   };
