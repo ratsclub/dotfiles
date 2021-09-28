@@ -77,19 +77,16 @@
       };
     };
 
+    aria2.enable = true;
     bat.enable = true;
     exa.enable = true;
+    fzf.enable = true;
     jq.enable = true;
-
-    fzf = {
-      enable = true;
-      enableBashIntegration = true;
-    };
+    lazygit.enable = true;
   };
 
   home.packages = with pkgs; [
     fd
     ripgrep
-    aria2
   ];
 }
