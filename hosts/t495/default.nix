@@ -19,6 +19,8 @@
     ];
     supportedFilesystems = [ "ntfs" ];
     plymouth.enable = true;
+
+    cleanTmpDir = true;
   };
 
   # Set your time zone.
