@@ -1,12 +1,13 @@
 { config, pkgs, inputs, ... }:
 
-{
+{  
   imports =
     [
       ./hardware-configuration.nix
     ];
 
   boot = {
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
@@ -37,7 +38,10 @@
 
   # Enable sound.
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  hardware = {
+    pulseaudio.enable = true;
+    ledger.enable = true;
+  };
 
   programs = {
     kdeconnect = {
