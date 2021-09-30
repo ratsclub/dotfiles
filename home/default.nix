@@ -1,4 +1,4 @@
-{ username, homeDirectory, ... }:
+{ username, ... }:
 
 {
   imports = [
@@ -12,7 +12,8 @@
   fonts.fontconfig.enable = true;
 
   home = {
-    inherit username homeDirectory;
+    inherit username;
+    homeDirectory = "/home/${username}";
     stateVersion = "20.09";
   };
 }

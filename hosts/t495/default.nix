@@ -1,10 +1,12 @@
-{ config, pkgs, inputs, ... }:
+{ config, hardware, home-manager, inputs, nixpkgs, pkgs, ... }:
 
 {
   imports =
     [
       ./hardware-configuration.nix
       ../../modules/device.nix
+
+      hardware.lenovo-thinkpad-t495
     ];
 
   device.type = "graphical";
@@ -79,8 +81,8 @@
 
   environment = {
     etc = {
-      "nix/channels/nixpkgs".source = inputs.nixpkgs;
-      "nix/channels/home-manager".source = inputs.home-manager;
+      "nix/channels/nixpkgs".source = nixpkgs;
+      "nix/channels/home-manager".source = home-manager;
     };
   };
 
@@ -101,7 +103,7 @@
       options = "--delete-older-than 2d";
     };
 
-    registry.nixpkgs.flake = inputs.nixpkgs;
+    registry.nixpkgs.flake = nixpkgs;
 
     autoOptimiseStore = true;
   };
