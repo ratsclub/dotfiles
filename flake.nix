@@ -67,6 +67,7 @@
                 users."${username}" = import ./home;
                 extraSpecialArgs = {
                   inherit inputs nixpkgs system username homeDirectory pkgs;
+                  super.device.type = "graphical";
                 };
               };
             }
@@ -80,6 +81,7 @@
         configuration = ./home;
         extraSpecialArgs = {
           inherit inputs system username homeDirectory pkgs;
+          super.device.type = "textual";
         };
       };
     } // utils.lib.eachDefaultSystem (system:

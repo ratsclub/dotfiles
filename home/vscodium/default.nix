@@ -1,8 +1,11 @@
-{ pkgs, ... }:
+{ super, lib, pkgs, ... }:
 
+let
+  isGraphical = super.device.type == "graphical";
+in
 {
   programs.vscode = {
-    enable = true;
+    enable = isGraphical;
     package = pkgs.vscodium;
     userSettings = {
       # auto update tags when edited

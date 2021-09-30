@@ -1,21 +1,24 @@
-{ pkgs, ... }:
+{ super, pkgs, ... }:
 
 {
-  home.packages = with pkgs; [
-    # chat
-    discord
-    tdesktop
+  home.packages =
+    if super.device.type == "graphical"
+    then with pkgs; [
+      # chat
+      discord
+      tdesktop
 
-    # editors
-    jetbrains.idea-community
-    jetbrains.pycharm-community
+      # editors
+      jetbrains.idea-community
+      jetbrains.pycharm-community
 
-    # ebooks
-    foliate
+      # ebooks
+      foliate
 
-    # misc
-    bitwarden
-    firefox
-    obsidian
-  ];
+      # misc
+      bitwarden
+      firefox
+      obsidian
+    ]
+    else [ ];
 }

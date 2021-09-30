@@ -1,10 +1,13 @@
 { config, pkgs, inputs, ... }:
 
-{  
+{
   imports =
     [
       ./hardware-configuration.nix
+      ../../modules/device.nix
     ];
+
+  device.type = "graphical";
 
   boot = {
     binfmt.emulatedSystems = [ "aarch64-linux" ];
