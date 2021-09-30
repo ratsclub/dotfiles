@@ -2,10 +2,14 @@
 
 {
   home.packages = with pkgs; [
-    bitwarden
     discord
+    tdesktop
+    
+    bitwarden
     firefox
     obsidian
-    tdesktop
+
+    jetbrains.idea-community
+    jetbrains.pycharm-community
   ];
 }
