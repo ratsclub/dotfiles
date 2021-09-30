@@ -17,7 +17,6 @@
 
       # misc
       bitwarden
-      firefox
       obsidian
     ]
     else [ ];

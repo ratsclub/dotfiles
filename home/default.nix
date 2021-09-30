@@ -5,6 +5,7 @@
     ./cli
     ./gui
     ./vscodium
+    ./firefox
     ./neovim
   ];
 

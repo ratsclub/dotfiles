@@ -5,7 +5,7 @@ rec {
     import inputs.nixpkgs {
       inherit system;
       config.allowUnfree = true;
-      overlays = (import ../overlays).nixpkgs.overlays;
+      overlays = (import ../overlays).nixpkgs.overlays ++ [ inputs.nur.overlay ];
     };
 
   mkHost = { host, deviceType, system ? "x86_64-linux", username }:
@@ -16,10 +16,8 @@ rec {
 
       specialArgs = {
         inherit pkgs;
+        inherit (inputs) nixpkgs home-manager nur;
         hardware = inputs.hardware.nixosModules;
-        nixpkgs = inputs.nixpkgs;
-        home-manager = inputs.home-manager;
-        nur = inputs.nur;
       };
 
       modules = [
