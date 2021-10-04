@@ -28,9 +28,10 @@
         let
           system = "x86_64-linux";
           username = "victor";
+          homeDirectory = "/home/${username}";
         in
         inputs.home-manager.lib.homeManagerConfiguration {
-          inherit system username;
+          inherit system username homeDirectory;
           pkgs = lib.mkNixpkgs { inherit system; };
           configuration = ./home;
           extraSpecialArgs = {
