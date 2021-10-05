@@ -57,6 +57,7 @@ in
       # Misc
       eamodio.gitlens
       esbenp.prettier-vscode
+      ms-vsliveshare.vsliveshare
       usernamehw.errorlens
     ];
   };

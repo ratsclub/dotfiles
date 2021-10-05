@@ -3,10 +3,11 @@
 {
   imports = [
     ./cli
-    ./gui
-    ./vscodium
+    ./chromium
     ./firefox
+    ./gui
     ./neovim
+    ./vscodium
   ];
 
   programs.home-manager.enable = true;
