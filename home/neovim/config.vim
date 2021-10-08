@@ -1,3 +1,9 @@
+" show numbers
+set nu
+
+" show relative numbers
+set rnu
+
 nnoremap <space> <nop>
 let mapleader=" "
 
