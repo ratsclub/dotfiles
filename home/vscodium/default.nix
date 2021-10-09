@@ -22,6 +22,10 @@ in
       "[html]" = {
         "editor.defaultFormatter" = "esbenp.prettier-vscode";
       };
+      "[nix]" = {
+        "editor.tabSize" = 2;
+        "editor.insertSpaces" = true;
+      };
       "nix.enableLanguageServer" = true;
       "editor.fontFamily" = "Jetbrains Mono";
     };
