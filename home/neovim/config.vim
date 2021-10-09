@@ -4,6 +4,9 @@ set nu
 " show relative numbers
 set rnu
 
+" color scheme
+colorscheme noctu
+
 nnoremap <space> <nop>
 let mapleader=" "
 

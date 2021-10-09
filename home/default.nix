@@ -1,14 +1,19 @@
-{ username, ... }:
+{ username, inputs, ... }:
 
 {
   imports = [
-    ./cli
     ./chromium
+    ./cli
     ./firefox
     ./gui
     ./neovim
+    ./sway
     ./vscodium
+    ./kitty
+    inputs.nix-colors.homeManagerModule
   ];
+
+  colorscheme = inputs.nix-colors.colorSchemes.pinky;
 
   programs.home-manager.enable = true;
   fonts.fontconfig.enable = true;
