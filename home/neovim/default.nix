@@ -12,19 +12,14 @@
     withRuby = true;
 
     plugins = with pkgs.vimPlugins; [
-      {
-        plugin = telescope-nvim;
-      }
-      {
-        plugin = vim-noctu;
-      }
-      {
-        plugin = ale;
-      }
-      
+      ale
+      telescope-nvim
+      vim-airline
+      vim-noctu
       vim-polyglot
     ];
 
+    # https://github.com/nix-community/home-manager/pull/2391
     extraConfig = builtins.readFile ./config.vim;
   };
 }

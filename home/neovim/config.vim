@@ -4,6 +4,9 @@ set number
 " show relative numbers
 set relativenumber 
 
+" color scheme
+colorscheme noctu
+
 " space as leader key
 nnoremap <space> <nop>
 let mapleader=' ' 
@@ -16,8 +19,6 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-" color scheme
-colorscheme noctu
 let g:ale_completion_enabled = 1
 let g:ale_linters = {'c': ['clang'], 'rust': ['analyzer', 'cargo']}
 let g:ale_fixers = {'rust': ['rustfmt'], 'sql': ['pgformatter'], 'nix': ['nixpkgs-fmt'], 'json': ['jq']}
