@@ -2,18 +2,18 @@
 
 {
   imports = [
-    ./chromium
+    ./chromium.nix
     ./cli
-    ./firefox
-    ./gui
-    ./neovim
-    ./sway
-    ./vscodium
-    ./kitty
+    ./firefox.nix
+    ./gui.nix
+    ./neovim.nix
+    ./sway.nix
+    ./vscodium.nix
+    ./kitty.nix
     inputs.nix-colors.homeManagerModule
   ];
 
-  colorscheme = inputs.nix-colors.colorSchemes.pinky;
+  colorscheme = inputs.nix-colors.colorSchemes.gruvbox-dark-hard;
 
   programs.home-manager.enable = true;
   fonts.fontconfig.enable = true;
