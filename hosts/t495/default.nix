@@ -79,19 +79,21 @@
 
   };
 
-  services.xserver = {
-    enable = true;
-    videoDrivers = [ "amdgpu" ];
-    libinput.enable = true;
-
-    desktopManager = {
-      gnome.enable = true;
-      xterm.enable = false;
-    };
-
-    displayManager.gdm = {
+  services = {
+    xserver = {
       enable = true;
-      wayland = true;
+      videoDrivers = [ "amdgpu" ];
+      libinput.enable = true;
+
+      desktopManager = {
+        gnome.enable = true;
+        xterm.enable = false;
+      };
+
+      displayManager.gdm = {
+        enable = true;
+        wayland = true;
+      };
     };
   };
 
