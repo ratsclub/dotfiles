@@ -1,4 +1,3 @@
-
 { pkgs, ... }:
 
 {
@@ -16,24 +15,23 @@
       ale
       telescope-nvim
       vim-airline
-      vim-noctu
       vim-polyglot
     ];
 
     # https://github.com/nix-community/home-manager/pull/2391
     extraConfig = ''
       " show numbers
-      set number 
+      set number
 
       " show relative numbers
-      set relativenumber 
+      set relativenumber
 
       " color scheme
-      colorscheme pablo 
+      colorscheme pablo
 
       " space as leader key
       nnoremap <space> <nop>
-      let mapleader=' ' 
+      let mapleader=' '
 
       " escape key
       inoremap jk <Esc>
@@ -45,7 +43,7 @@
 
       let g:ale_completion_enabled = 1
       let g:ale_linters = {'c': ['clang'], 'rust': ['analyzer', 'cargo']}
-      let g:ale_fixers = {'rust': ['rustfmt'], 'sql': ['pgformatter'], 'nix': ['nixpkgs-fmt'], 'json': ['jq']}
+      let g:ale_fixers = {'rust': ['rustfmt'], 'nix': ['nixpkgs-fmt'], 'json': ['jq']}
       let g:ale_rust_analyzer_config = {'checkOnSave': {'command': 'clippy', 'enable': v:true}}
     '';
   };
