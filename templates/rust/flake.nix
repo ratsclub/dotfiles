@@ -15,6 +15,7 @@
         let
           project-name = "project-name";
           rust-channel = "stable";
+          rust-version = "latest"; # ex. 1.55.0
           rust-overlay = import rust;
 
           pkgs = import nixpkgs {
@@ -22,7 +23,7 @@
             overlays = [ rust-overlay ];
           };
 
-          rust-toolchain = pkgs.rust-bin."${rust-channel}".latest.default.override {
+          rust-toolchain = pkgs.rust-bin."${rust-channel}"."${rust-version}".default.override {
             extensions = [
               "rust-std"
               "rust-src"
