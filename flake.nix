@@ -41,5 +41,15 @@
             super.device.type = "textual";
           };
         };
-    };
+    } // inputs.utils.lib.eachDefaultSystem (system:
+      let pkgs = lib.mkNixpkgs { inherit system; };
+      in
+      {
+        devShell = with pkgs; mkShell {
+          buildInputs = [
+            nixpkgs-fmt
+          ];
+        };
+      }
+    );
 }
