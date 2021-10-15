@@ -41,6 +41,8 @@
             super.device.type = "textual";
           };
         };
+
+      templates = import ./templates;
     } // inputs.utils.lib.eachDefaultSystem (system:
       let pkgs = lib.mkNixpkgs { inherit system; };
       in

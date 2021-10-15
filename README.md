@@ -15,7 +15,7 @@ Home to my personal configuration files.
 
 - [Nix] as package manager.
 - [Home Manager][] to take care of my home directory on [NixOS][] and non-NixOS.
-- [VSCodium](https://vscodium.com/) and [Neovim](https://neovim.io/) as code 
+- [VSCodium](https://vscodium.com/) and [Neovim](https://neovim.io/) as code
   editors.
 
 ## Repository structure
@@ -29,6 +29,9 @@ Home to my personal configuration files.
 - `overlays`: [Nix Overlays][];
 - `templates`: [Nix Flake][] templates that I use to start new projects or package
   existing ones.
+  - Run `nix flake init -t github:ratsclub/dotfiles#templates.<template>` to
+    use the templates. See the [default.nix file](./templates/default.nix) for a
+    complete list of available templates.
 
 [NixOS]: https://nixos.org
 [Nix]: https://nixos.org
