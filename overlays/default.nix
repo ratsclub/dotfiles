@@ -1,5 +1,6 @@
 {
   nixpkgs.overlays = [
+    # GNOME fractional scaling support
     (self: super: {
       gnome = super.gnome.overrideScope' (gself: gsuper: {
         mutter = gsuper.mutter.overrideAttrs (oldAttrs: {
