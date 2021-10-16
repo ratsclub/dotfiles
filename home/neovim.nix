@@ -42,7 +42,7 @@
       nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
       let g:ale_completion_enabled = 1
-      let g:ale_linters = {'c': ['clang'], 'rust': ['analyzer', 'cargo']}
+      let g:ale_linters = {'c': ['clang'], 'rust': ['analyzer', 'cargo'], 'nix': ['nixpkgs-fmt']}
       let g:ale_fixers = {'rust': ['rustfmt'], 'nix': ['nixpkgs-fmt'], 'json': ['jq']}
       let g:ale_rust_analyzer_config = {'checkOnSave': {'command': 'clippy', 'enable': v:true}}
     '';
