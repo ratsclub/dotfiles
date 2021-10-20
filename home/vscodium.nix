@@ -49,8 +49,8 @@ in
       golang.go
 
       # Python
-      #ms-python.python
-      #ms-toolsai.jupyter
+      ms-python.python
+      ms-toolsai.jupyter
 
       # Rust
       matklad.rust-analyzer
