@@ -88,5 +88,6 @@
   home.packages = with pkgs; [
     fd
     ripgrep
+    nixpkgs-fmt
   ];
 }
