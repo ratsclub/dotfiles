@@ -29,7 +29,6 @@ in
       "nix.enableLanguageServer" = true;
       "editor.fontFamily" = "Jetbrains Mono";
       "editor.lineNumbers" = "relative";
-      "vscode-neovim.neovimExecutablePaths.linux" = "${pkgs.neovim}/bin/nvim";
     };
 
     extensions = with pkgs.vscode-extensions; [
@@ -67,7 +66,6 @@ in
       esbenp.prettier-vscode
       ms-vsliveshare.vsliveshare
       usernamehw.errorlens
-      asvetliakov.vscode-neovim
     ];
   };
 
