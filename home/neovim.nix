@@ -12,9 +12,7 @@
     withRuby = true;
 
     plugins = with pkgs.vimPlugins; [
-      ale
       telescope-nvim
-      vim-airline
       vim-polyglot
     ];
 
@@ -40,11 +38,6 @@
       nnoremap <leader>fg <cmd>Telescope live_grep<cr>
       nnoremap <leader>fb <cmd>Telescope buffers<cr>
       nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
-      let g:ale_completion_enabled = 1
-      let g:ale_linters = {'c': ['clang'], 'rust': ['analyzer', 'cargo'], 'nix': ['nixpkgs-fmt']}
-      let g:ale_fixers = {'rust': ['rustfmt'], 'nix': ['nixpkgs-fmt'], 'json': ['jq']}
-      let g:ale_rust_analyzer_config = {'checkOnSave': {'command': 'clippy', 'enable': v:true}}
     '';
   };
 }
