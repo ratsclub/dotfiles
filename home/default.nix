@@ -6,9 +6,9 @@
     ./cli
     ./firefox.nix
     ./gui.nix
+    ./kitty.nix
     ./neovim.nix
     ./vscodium.nix
-    ./kitty.nix
     inputs.nix-colors.homeManagerModule
   ];
 
