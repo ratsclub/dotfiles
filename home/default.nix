@@ -7,7 +7,6 @@
     ./firefox.nix
     ./gui.nix
     ./neovim.nix
-    ./sway.nix
     ./vscodium.nix
     ./kitty.nix
     inputs.nix-colors.homeManagerModule
