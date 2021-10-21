@@ -88,6 +88,9 @@
   home.packages = with pkgs; [
     fd
     ripgrep
+
+    # Nix
     nixpkgs-fmt
+    rnix-lsp
   ];
 }
