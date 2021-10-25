@@ -26,19 +26,22 @@
         deviceType = "graphical";
       };
 
-      homeConfigurations.victor =
+      homeConfigurations =
         let
           system = "x86_64-linux";
           username = "victor";
-          homeDirectory = "/home/${username}";
         in
-        inputs.home-manager.lib.homeManagerConfiguration {
-          inherit system username homeDirectory;
-          pkgs = lib.mkNixpkgs { inherit system; };
-          configuration = ./home;
-          extraSpecialArgs = {
-            inherit inputs system username;
-            super.device.type = "textual";
+        {
+          # `home-manager switch --flake ".#graphical"`
+          graphical = lib.mkHome {
+            inherit username system;
+            deviceType = "graphical";
+          };
+
+          # `home-manager switch --flake ".#textual"`
+          textual = lib.mkHome {
+            inherit username system;
+            deviceType = "textual";
           };
         };
 

@@ -38,4 +38,18 @@ rec {
         }
       ];
     };
+
+  mkHome = { username, system, deviceType }:
+    let
+      pkgs = mkNixpkgs { inherit system; };
+      homeDirectory = "/home/${username}";
+    in
+    inputs.home-manager.lib.homeManagerConfiguration {
+      inherit system username homeDirectory pkgs;
+      configuration = ../home;
+      extraSpecialArgs = {
+        inherit inputs system username;
+        super.device.type = deviceType;
+      };
+    };
 }
