@@ -2,15 +2,19 @@
 
 {
   home.packages =
+    let
+      jetbrains-ides = with pkgs.jetbrains; [
+        datagrip
+        goland
+        idea-ultimate
+        pycharm-professional
+      ];
+    in
     if super.device.type == "graphical"
     then with pkgs; [
       # chat
       discord
       tdesktop
-
-      # editors
-      jetbrains.idea-community
-      jetbrains.pycharm-community
 
       # ebooks
       foliate
@@ -18,6 +22,6 @@
       # misc
       bitwarden
       obsidian
-    ]
+    ] ++ jetbrains-ides
     else [ ];
 }
