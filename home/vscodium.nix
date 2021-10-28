@@ -64,7 +64,6 @@ in
       eamodio.gitlens
       editorconfig.editorconfig
       esbenp.prettier-vscode
-      ms-vsliveshare.vsliveshare
       usernamehw.errorlens
     ];
   };
