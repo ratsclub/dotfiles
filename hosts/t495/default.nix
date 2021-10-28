@@ -90,6 +90,9 @@
     };
   };
 
+  environment.systemPackages = with pkgs; [
+    gnome.gnome-boxes
+  ];
 
   nix = {
     package = pkgs.nixUnstable;
