@@ -74,7 +74,13 @@
 
   users.users.victor = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "networkmanager" "libvirtd" ];
+    extraGroups = [ 
+      "docker" 
+      "kvm"
+      "libvirtd" 
+      "networkmanager" 
+      "wheel" 
+    ];
     password = "changeme";
   };
 
