@@ -33,12 +33,14 @@
         in
         {
           # `home-manager switch --flake ".#graphical"`
+          # `nix build ".#homeConfigurations.graphical.activationPackage"`
           graphical = lib.mkHome {
             inherit username system;
             deviceType = "graphical";
           };
 
           # `home-manager switch --flake ".#textual"`
+          # `nix build ".#homeConfigurations.textual.activationPackage"`
           textual = lib.mkHome {
             inherit username system;
             deviceType = "textual";
