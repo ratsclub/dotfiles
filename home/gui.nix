@@ -14,6 +14,7 @@
     then with pkgs; [
       # chat
       discord
+      element-desktop
       tdesktop
 
       # ebooks
