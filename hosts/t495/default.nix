@@ -17,13 +17,8 @@
       efi.canTouchEfiVariables = true;
     };
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelParams = [
-      "quiet"
-      "splash"
-      "udev.log_priority=3"
-    ];
+    consoleLogLevel = 7;
     supportedFilesystems = [ "ntfs" ];
-    plymouth.enable = true;
 
     cleanTmpDir = true;
   };
@@ -74,12 +69,12 @@
 
   users.users.victor = {
     isNormalUser = true;
-    extraGroups = [ 
-      "docker" 
+    extraGroups = [
+      "docker"
       "kvm"
-      "libvirtd" 
-      "networkmanager" 
-      "wheel" 
+      "libvirtd"
+      "networkmanager"
+      "wheel"
     ];
     password = "changeme";
   };
