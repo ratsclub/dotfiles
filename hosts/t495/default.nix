@@ -1,4 +1,4 @@
-{ config, hardware, home-manager, inputs, nixpkgs, pkgs, ... }:
+{ config, hardware, home-manager, nixpkgs, pkgs, ... }:
 
 {
   imports =
