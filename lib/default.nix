@@ -22,7 +22,7 @@ rec {
 
       modules = [
         # host configuration
-        ../hosts/${host}
+        (../hosts + "/${host}")
 
         # home manager
         inputs.home-manager.nixosModules.home-manager
