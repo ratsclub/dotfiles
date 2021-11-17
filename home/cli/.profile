@@ -6,20 +6,21 @@ if [ -n "$BASH_VERSION" ]; then
         fi
 fi
 
-# set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
         PATH="$HOME/bin:$PATH"
 fi
 
-# set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ] ; then
         PATH="$HOME/.local/bin:$PATH"
 fi
 
-# set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.cargo/bin" ] ; then
         PATH="$HOME/.cargo/bin:$PATH"
 fi
 
-if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi
+if [ -d "$HOME/go/bin" ] ; then
+        PATH="$HOME/go/bin:$PATH"
+fi
+
+if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then . "$HOME/.nix-profile/etc/profile.d/nix.sh"; fi
 export XDG_DATA_DIRS=$HOME/.nix-profile/share:$XDG_DATA_DIRS 
