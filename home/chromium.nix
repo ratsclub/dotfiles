@@ -9,6 +9,9 @@
 
       # bitwarden
       "nngceckbapebfimnlniiiahkandclblb"
+
+      # privacy badger
+      "pkehgijcmpdhfbdbbnkijodmdjhbjlgp"
     ];
   };
 }
