@@ -12,6 +12,7 @@ in
       "editor.linkedEditing" = true;
       "editor.rulers" = [ 80 120 ];
       "editor.formatOnSave" = true;
+      "editor.fontFamily" = "Jetbrains Mono";
 
       "workbench.colorTheme" = "GitHub Dark";
       "workbench.iconTheme" = "material-icon-theme";
@@ -22,20 +23,21 @@ in
       "[html]" = {
         "editor.defaultFormatter" = "esbenp.prettier-vscode";
       };
+
+      # Nix
+      "nix.enableLanguageServer" = true;
       "[nix]" = {
         "editor.tabSize" = 2;
         "editor.insertSpaces" = true;
       };
-      "nix.enableLanguageServer" = true;
-      "editor.fontFamily" = "Jetbrains Mono";
-      "editor.lineNumbers" = "relative";
+
+      # center the editor on screen
+      "zenMode.centerLayout" = true;
     };
 
     extensions = with pkgs.vscode-extensions; [
-      # Theme
+      # themes
       github.github-vscode-theme
-
-      # Icons
       pkief.material-icon-theme
 
       # Angular
