@@ -3,6 +3,11 @@
 {
   home.packages =
     let
+      fonts = with pkgs; [
+        jetbrains-mono
+        overpass
+      ];
+
       jetbrains-ides = with pkgs.jetbrains; [
         datagrip
         goland
@@ -23,6 +28,8 @@
       # misc
       bitwarden
       obsidian
-    ] ++ jetbrains-ides
+    ]
+    ++ jetbrains-ides
+    ++ fonts
     else [ ];
 }

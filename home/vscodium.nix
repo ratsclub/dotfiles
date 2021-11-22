@@ -69,8 +69,4 @@ in
       usernamehw.errorlens
     ];
   };
-
-  home.packages = with pkgs; [
-    jetbrains-mono
-  ];
 }
