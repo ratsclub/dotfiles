@@ -15,7 +15,7 @@ rec {
       inherit system;
 
       specialArgs = {
-        inherit pkgs;
+        inherit pkgs inputs;
         inherit (inputs) nixpkgs home-manager nur;
         hardware = inputs.hardware.nixosModules;
       };

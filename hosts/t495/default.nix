@@ -6,6 +6,8 @@
       ./hardware-configuration.nix
       ../../modules/device.nix
 
+      ../../lib/user.nix
+
       hardware.lenovo-thinkpad-t495
     ];
 
@@ -76,18 +78,6 @@
     };
   };
 
-  users.users.victor = {
-    isNormalUser = true;
-    extraGroups = [
-      "docker"
-      "kvm"
-      "libvirtd"
-      "networkmanager"
-      "wheel"
-    ];
-    password = "changeme";
-  };
-
   virtualisation = {
     docker.enable = true;
     libvirtd.enable = true;
@@ -124,6 +114,6 @@
     autoOptimiseStore = true;
   };
 
-  system.stateVersion = "21.05";
+  system.stateVersion = "21.11";
 }
 
