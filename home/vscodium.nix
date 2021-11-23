@@ -30,9 +30,6 @@ in
         "editor.tabSize" = 2;
         "editor.insertSpaces" = true;
       };
-
-      # center the editor on screen
-      "zenMode.centerLayout" = true;
     };
 
     extensions = with pkgs.vscode-extensions; [
