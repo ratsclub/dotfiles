@@ -49,6 +49,7 @@
       enable = true;
       package = pkgs.gnomeExtensions.gsconnect;
     };
+    steam.enable = true;
   };
 
   services = {

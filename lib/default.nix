@@ -5,7 +5,11 @@ rec {
     import inputs.nixpkgs {
       inherit system;
       config.allowUnfree = true;
-      overlays = (import ../overlays).nixpkgs.overlays ++ [ inputs.nur.overlay ];
+      overlays =
+        (import ../overlays).nixpkgs.overlays
+        ++ [
+          inputs.nur.overlay
+        ];
     };
 
   mkHost = { host, deviceType, system ? "x86_64-linux", username }:
