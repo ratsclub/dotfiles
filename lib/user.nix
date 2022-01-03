@@ -1,6 +1,9 @@
 {
+  users.mutableUsers = false;
+
   users.users.victor = {
     isNormalUser = true;
+    createHome = true;
     extraGroups = [
       "docker"
       "kvm"
@@ -9,5 +12,6 @@
       "wheel"
     ];
     password = "changeme";
+    home = "/home";
   };
 }

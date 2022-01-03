@@ -1,4 +1,4 @@
-{ config, hardware, home-manager, nixpkgs, pkgs, ... }:
+{ config, lib, hardware, home-manager, nixpkgs, pkgs, ... }:
 
 {
   imports =
@@ -18,23 +18,34 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_latest;
+
+    # source: https://grahamc.com/blog/erase-your-darlings
+    initrd.postDeviceCommands = lib.mkAfter ''
+      zfs rollback -r rpool/local/root@blank
+    '';
+
+    cleanTmpDir = true;
     consoleLogLevel = 7;
     supportedFilesystems = [ "ntfs" ];
 
-    cleanTmpDir = true;
+    # source: https://grahamc.com/blog/nixos-on-zfs
+    kernelParams = [ "elevator=none" ];
   };
 
   # Set your time zone.
   time.timeZone = "America/Sao_Paulo";
 
   networking = {
+    hostId = "76cb839b";
     hostName = "t495";
+    networkmanager.enable = true;
+  };
 
-    useDHCP = false;
-    interfaces.enp3s0f0.useDHCP = true;
-    interfaces.enp4s0.useDHCP = true;
-    interfaces.wlp1s0.useDHCP = true;
+  programs.noisetorch.enable = true;
+
+  services.zfs = {
+    autoScrub.enable = true;
+    autoSnapshot.enable = true;
   };
 
   # Enable sound.
@@ -42,14 +53,6 @@
   hardware = {
     pulseaudio.enable = false;
     ledger.enable = true;
-  };
-
-  programs = {
-    kdeconnect = {
-      enable = true;
-      package = pkgs.gnomeExtensions.gsconnect;
-    };
-    steam.enable = true;
   };
 
   services = {
@@ -88,12 +91,16 @@
     etc = {
       "nix/channels/nixpkgs".source = nixpkgs;
       "nix/channels/home-manager".source = home-manager;
-    };
-  };
+      "NetworkManager/system-connections" = {
+        source = "/persist/etc/NetworkManager/system-connections/";
+      };
 
-  environment.systemPackages = with pkgs; [
-    gnome.gnome-boxes
-  ];
+    };
+
+    systemPackages = with pkgs; [
+      gnome.gnome-boxes
+    ];
+  };
 
   nix = {
     package = pkgs.nixUnstable;
@@ -114,6 +121,10 @@
     registry.nixpkgs.flake = nixpkgs;
     autoOptimiseStore = true;
   };
+
+  systemd.tmpfiles.rules = [
+    "L /var/lib/bluetooth - - - - /persist/var/lib/bluetooth"
+  ];
 
   system.stateVersion = "21.11";
 }
