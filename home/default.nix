@@ -9,6 +9,8 @@
     ./kitty.nix
     ./neovim.nix
     ./vscodium.nix
+    ./newsboat.nix
+
     inputs.nix-colors.homeManagerModule
   ];
 
@@ -19,7 +21,7 @@
 
   home = {
     inherit username;
-    homeDirectory = "/home";
+    homeDirectory = "/home/victor";
     stateVersion = "20.09";
   };
 }
