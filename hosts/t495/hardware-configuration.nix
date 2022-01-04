@@ -5,46 +5,27 @@
 
 {
   imports =
-    [
-      (modulesPath + "/installer/scan/not-detected.nix")
+    [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "ehci_pci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
+  boot.initrd.availableKernelModules = [ "nvme" "ehci_pci" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    {
-      device = "rpool/local/root";
-      fsType = "zfs";
+    { device = "/dev/disk/by-uuid/8601af92-da00-4e54-aea0-3c34581e1a11";
+      fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-uuid/9100-F956";
+    { device = "/dev/disk/by-uuid/4FD1-6DC9";
       fsType = "vfat";
     };
 
-  fileSystems."/nix" =
-    {
-      device = "rpool/local/nix";
-      fsType = "zfs";
-    };
-
-  fileSystems."/home" =
-    {
-      device = "rpool/safe/home";
-      fsType = "zfs";
-    };
-
-  fileSystems."/persist" =
-    {
-      device = "rpool/safe/persist";
-      fsType = "zfs";
-    };
-
-  swapDevices = [ ];
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/22c27b8f-f58f-4880-beaa-4ad0a37c399d"; }
+    ];
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
