@@ -104,7 +104,7 @@ in
   };
 
   services.swayidle = {
-    enable = true;
+    enable = super.device.type == "graphical";
     events = [
       { event = "before-sleep"; command = "swaylock"; }
       { event = "lock"; command = "lock"; }
@@ -112,7 +112,7 @@ in
   };
 
   programs.waybar = {
-    enable = true; # super.device.type == "graphical";
+    enable = super.device.type == "graphical";
     settings = [
       {
         layer = "bottom";
