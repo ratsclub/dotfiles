@@ -19,40 +19,31 @@
       efi.canTouchEfiVariables = true;
     };
 
-    # source: https://grahamc.com/blog/erase-your-darlings
-    initrd.postDeviceCommands = lib.mkAfter ''
-      zfs rollback -r rpool/local/root@blank
-    '';
-
     cleanTmpDir = true;
     consoleLogLevel = 7;
     supportedFilesystems = [ "ntfs" ];
-
-    # source: https://grahamc.com/blog/nixos-on-zfs
-    kernelParams = [ "elevator=none" ];
   };
 
   # Set your time zone.
   time.timeZone = "America/Sao_Paulo";
 
   networking = {
-    hostId = "76cb839b";
     hostName = "t495";
     networkmanager.enable = true;
   };
 
   programs.noisetorch.enable = true;
 
-  services.zfs = {
-    autoScrub.enable = true;
-    autoSnapshot.enable = true;
-  };
-
   # Enable sound.
   sound.enable = true;
   hardware = {
     pulseaudio.enable = false;
     ledger.enable = true;
+  };
+
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
   };
 
   services = {
@@ -62,14 +53,10 @@
       libinput.enable = true;
 
       desktopManager = {
-        gnome.enable = true;
         xterm.enable = false;
       };
 
-      displayManager.gdm = {
-        enable = true;
-        wayland = true;
-      };
+      displayManager.gdm.enable = true;
     };
 
     pipewire = {
@@ -91,10 +78,6 @@
     etc = {
       "nix/channels/nixpkgs".source = nixpkgs;
       "nix/channels/home-manager".source = home-manager;
-      "NetworkManager/system-connections" = {
-        source = "/persist/etc/NetworkManager/system-connections/";
-      };
-
     };
 
     systemPackages = with pkgs; [
@@ -122,10 +105,5 @@
     autoOptimiseStore = true;
   };
 
-  systemd.tmpfiles.rules = [
-    "L /var/lib/bluetooth - - - - /persist/var/lib/bluetooth"
-  ];
-
   system.stateVersion = "21.11";
 }
-

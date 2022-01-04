@@ -12,6 +12,5 @@
       "wheel"
     ];
     password = "changeme";
-    home = "/home";
   };
 }

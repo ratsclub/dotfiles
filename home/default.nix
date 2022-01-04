@@ -7,14 +7,16 @@
     ./firefox.nix
     ./gui.nix
     ./kitty.nix
+    ./mako.nix
     ./neovim.nix
-    ./vscodium.nix
     ./newsboat.nix
+    ./sway.nix
+    ./vscodium.nix
 
     inputs.nix-colors.homeManagerModule
   ];
 
-  colorscheme = inputs.nix-colors.colorSchemes.gruvbox-dark-hard;
+  colorscheme = inputs.nix-colors.colorSchemes.ayu-dark;
 
   programs.home-manager.enable = true;
   fonts.fontconfig.enable = true;
