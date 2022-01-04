@@ -12,9 +12,9 @@ in
     width = 400;
     height = 150;
     borderSize = 2;
-    defaultTimeout = 12000;
+    defaultTimeout = 10000;
     backgroundColor = "#${colors.base00}dd";
-    borderColor = "#${colors.base03}dd";
+    borderColor = "#${colors.base0C}dd";
     textColor = "#${colors.base05}dd";
   };
 }
