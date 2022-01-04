@@ -6,6 +6,7 @@ let
   kitty = "${pkgs.kitty}/bin/kitty";
 
   grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
+  mako = "${pkgs.mako}/bin/mako";
   pactl = "${pkgs.pulseaudio}/bin/pactl";
   pavucontrol = "${pkgs.pavucontrol}/bin/pavucontrol";
 
@@ -66,11 +67,13 @@ in
         { command = "${swayidle} -w"; }
         # Start waybar
         { command = "${waybar}"; }
+        # Start mako
+        { command = "${mako}"; }
       ];
       keybindings = lib.mkOptionDefault {
         # Screenshot
         "Print" = "exec ${grimshot} --notify copy screen";
-        "${modifier}+Control+Print" = "exec ${grimshot} --notify copy output";
+        "Control+Print" = "exec ${grimshot} --notify copy output";
 
         "Control+Shift+Print" = "exec ${grimshot} --notify copy area";
         "${modifier}+Print" = "exec ${grimshot} --notify copy active";
@@ -205,6 +208,48 @@ in
     inside-caps-lock-color=#${colorscheme.base09}
     ring-caps-lock-color=#${colorscheme.base02}
     separator-color=#${colorscheme.base02}
+  '';
+
+  xdg.configFile."wofi/style.css".text = ''
+    window {
+      margin: 0px;
+      border: 1px solid #${colorscheme.base0C};
+      background-color: #${colorscheme.base00};
+    }
+
+    #input {
+      margin: 5px;
+      border: none;
+      color: #${colorscheme.base05};
+      background-color: #${colorscheme.base02};
+    }
+
+    #inner-box {
+      margin: 5px;
+      border: none;
+      background-color: #${colorscheme.base00};
+    }
+
+    #outer-box {
+      margin: 5px;
+      border: none;
+      background-color: #${colorscheme.base00};
+    }
+
+    #scroll {
+      margin: 0px;
+      border: none;
+    }
+
+    #text {
+      margin: 5px;
+      border: none;
+      color: #${colorscheme.base05};
+    }
+
+    #entry:selected {
+      background-color: #${colorscheme.base02};
+    }
   '';
 
   home.packages = with pkgs; [
