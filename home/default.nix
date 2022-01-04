@@ -16,7 +16,7 @@
     inputs.nix-colors.homeManagerModule
   ];
 
-  colorscheme = inputs.nix-colors.colorSchemes.ayu-dark;
+  colorscheme = inputs.nix-colors.colorSchemes.catppuccin;
 
   programs.home-manager.enable = true;
   fonts.fontconfig.enable = true;
