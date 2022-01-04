@@ -37,6 +37,7 @@
   # Enable sound.
   sound.enable = true;
   hardware = {
+    bluetooth.enable = true;
     pulseaudio.enable = false;
     ledger.enable = true;
   };
