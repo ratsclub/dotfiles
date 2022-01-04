@@ -25,8 +25,11 @@ in
     systemdIntegration = true;
     wrapperFeatures.gtk = true;
     config = rec {
-      modifier = "Mod4";
+      bars = [ ];
       terminal = "${kitty}";
+      workspaceAutoBackAndForth = true;
+
+      modifier = "Mod4";
       menu =
         "${wofi} -D run-always_parse_args=true -k /dev/null -i -e -S run -t ${terminal}";
       colors = {
@@ -59,7 +62,6 @@ in
           childBorder = "${colorscheme.base09}";
         };
       };
-      bars = [ ];
       output = {
         "HDMI-A-1" = {
           scale = "1.50";
@@ -99,6 +101,14 @@ in
           "exec ${pactl} set-source-mute @DEFAULT_SOURCE@ toggle";
       };
     };
+  };
+
+  services.swayidle = {
+    enable = true;
+    events = [
+      { event = "before-sleep"; command = "swaylock"; }
+      { event = "lock"; command = "lock"; }
+    ];
   };
 
   programs.waybar = {
