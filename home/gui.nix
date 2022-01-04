@@ -6,6 +6,11 @@
       fonts = with pkgs; [
         jetbrains-mono
         overpass
+
+        noto-fonts
+        noto-fonts-extra
+        noto-fonts-emoji
+        noto-fonts-cjk
       ];
 
       jetbrains-ides = with pkgs.jetbrains; [
@@ -28,6 +33,9 @@
       # misc
       bitwarden
       obsidian
+
+      # bluetooth
+      blueberry
     ]
     ++ jetbrains-ides
     ++ fonts
