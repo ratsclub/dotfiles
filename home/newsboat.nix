@@ -16,9 +16,9 @@
       }
     ];
     extraConfig = ''
-      html-renderer       "${pkgs.w3m}/bin/w3m -dump -T text/html"
-      refresh-on-startup  yes
-      text-width          72
+      html-renderer      "${pkgs.w3m}/bin/w3m -dump -T text/html"
+      refresh-on-startup yes
+      text-width         72
     '';
   };
 }
