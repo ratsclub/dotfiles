@@ -30,7 +30,7 @@ in
       color1 = "#${colors.base08}";
       color2 = "#${colors.base0B}";
       color3 = "#${colors.base0A}";
-      color4 = "#${colors.base0D}";
+      color4 = "#${colors.base03}";
       color5 = "#${colors.base0E}";
       color6 = "#${colors.base0C}";
       color7 = "#${colors.base05}";
@@ -38,7 +38,7 @@ in
       color9 = "#${colors.base08}";
       color10 = "#${colors.base0B}";
       color11 = "#${colors.base0A}";
-      color12 = "#${colors.base0D}";
+      color12 = "#${colors.base03}";
       color13 = "#${colors.base0E}";
       color14 = "#${colors.base0C}";
       color15 = "#${colors.base07}";
