@@ -11,6 +11,6 @@
       "networkmanager"
       "wheel"
     ];
-    password = "changeme";
+    initialPassword = "changeme";
   };
 }
