@@ -1,5 +1,5 @@
 {
-  users.mutableUsers = false;
+  users.mutableUsers = true;
 
   users.users.victor = {
     isNormalUser = true;
