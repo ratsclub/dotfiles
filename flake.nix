@@ -6,6 +6,7 @@
     hardware.url = "github:NixOS/nixos-hardware/master";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
+    nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
 
     nix-colors.url = "github:misterio77/nix-colors";
 

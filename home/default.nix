@@ -1,9 +1,13 @@
 { username, inputs, ... }:
 
+let
+  inherit (inputs) nix-colors nix-doom-emacs;
+in
 {
   imports = [
     ./chromium.nix
     ./cli
+    ./doom
     ./firefox.nix
     ./gui.nix
     ./kitty.nix
@@ -13,10 +17,11 @@
     ./sway.nix
     ./vscodium.nix
 
-    inputs.nix-colors.homeManagerModule
+    nix-colors.homeManagerModule
+    nix-doom-emacs.hmModule
   ];
 
-  colorscheme = inputs.nix-colors.colorSchemes.catppuccin;
+  colorscheme = nix-colors.colorSchemes.catppuccin;
 
   programs.home-manager.enable = true;
   fonts.fontconfig.enable = true;
