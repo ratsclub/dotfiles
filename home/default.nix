@@ -7,7 +7,6 @@ in
   imports = [
     ./chromium.nix
     ./cli
-    ./doom
     ./firefox.nix
     ./gui.nix
     ./kitty.nix
@@ -18,7 +17,6 @@ in
     ./vscodium.nix
 
     nix-colors.homeManagerModule
-    nix-doom-emacs.hmModule
   ];
 
   colorscheme = nix-colors.colorSchemes.catppuccin;
