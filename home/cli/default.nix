@@ -53,6 +53,14 @@
       userName = "Victor Freire";
       userEmail = "victor@freire.dev.br";
 
+      aliases = {
+        st = "status";
+        co = "checkout";
+        ca = "commit --amend";
+        cm = "commit -m";
+        df = "diff";
+      };
+
       delta = {
         enable = true;
         options = {
