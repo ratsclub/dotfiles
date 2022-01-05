@@ -125,13 +125,21 @@ in
         modules-center = [ "sway/window" ];
         modules-right = [
           "battery"
+          "custom/separator"
           "pulseaudio"
+          "custom/separator"
           "cpu"
+          "custom/separator"
           "memory"
           "clock"
           "tray"
         ];
         modules = {
+          "custom/separator" = {
+            format = "|";
+            interval = "once";
+            tooltip = false;
+          };
           battery = {
             bat = "BAT0";
             interval = 40;
@@ -146,10 +154,15 @@ in
             '';
           };
           cpu = {
-            format = "CPU {usage}%";
+            format = "CPU {usage}% - {avg_frequency}Ghz";
+            interval = 1;
             tooltip = false;
           };
-          memory = { format = "RAM {}%"; };
+          disk = {
+            format = "DISK {used}/{total}";
+            tooltip = false;
+          };
+          memory = { format = "RAM {used:0.1f}G/{total:0.1f}G "; };
           pulseaudio = {
             format = "VOL {volume}%";
             format-muted = "MUTE";
@@ -196,7 +209,6 @@ in
     '';
   };
 
-  # swaylock
   xdg.configFile."swaylock/config".text = ''
     effect-blur=20x3
     fade-in=0.1
