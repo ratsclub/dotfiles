@@ -109,6 +109,9 @@ in
       { event = "before-sleep"; command = "swaylock"; }
       { event = "lock"; command = "lock"; }
     ];
+    timeouts = [
+      { timeout = 60; command = "${swaylock} -fF"; }
+    ];
   };
 
   programs.waybar = {
