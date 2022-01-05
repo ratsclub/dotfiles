@@ -54,11 +54,24 @@ in
       }
     ];
     extraConfig = ''
-      # disabled as I can't see some links
-      # html-renderer      "${w3m} -dump -T text/html"
+      # misc
+      refresh-on-startup yes
 
-      refresh-on-startup yes 
+      # display
+      feed-sort-order unreadarticlecount-asc
       text-width         72
+
+      # navigation
+      bind-key j down feedlist
+      bind-key k up feedlist
+      bind-key j next articlelist
+      bind-key k prev articlelist
+      bind-key J next-feed articlelist
+      bind-key K prev-feed articlelist
+      bind-key j down article
+      bind-key k up article
+
+      # macros
       macro v set browser "${mpv} %u" ; open-in-browser ; set browser "${w3m} %u" -- "Open video on mpv"
     '';
   };
