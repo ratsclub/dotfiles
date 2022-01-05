@@ -54,11 +54,12 @@
       userEmail = "victor@freire.dev.br";
 
       aliases = {
-        st = "status";
-        co = "checkout";
         ca = "commit --amend";
         cm = "commit -m";
+        co = "checkout";
         df = "diff";
+        ri = "rebase --interactive --autosquash";
+        st = "status --short --branch";
       };
 
       delta = {
