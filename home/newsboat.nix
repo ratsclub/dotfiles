@@ -54,12 +54,12 @@ in
       }
     ];
     extraConfig = ''
-      html-renderer      "${w3m} -dump -T text/html"
-      refresh-on-startup yes
-      text-width         72
+      # disabled as I can't see some links
+      # html-renderer      "${w3m} -dump -T text/html"
 
-      # open video on mpv
-      macro v set browser "${mpv} %u" ; open-in-browser ; set browser "${w3m} %u"
+      refresh-on-startup yes 
+      text-width         72
+      macro v set browser "${mpv} %u" ; open-in-browser ; set browser "${w3m} %u" -- "Open video on mpv"
     '';
   };
 }
