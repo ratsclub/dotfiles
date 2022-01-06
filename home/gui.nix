@@ -26,6 +26,7 @@
       discord
       element-desktop
       tdesktop
+      slack
 
       # ebooks
       foliate
