@@ -32,19 +32,22 @@
     networkmanager.enable = true;
   };
 
-  programs.noisetorch.enable = true;
-
   # Enable sound.
   sound.enable = true;
   hardware = {
     bluetooth.enable = true;
-    pulseaudio.enable = false;
     ledger.enable = true;
+    pulseaudio.enable = false;
   };
 
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
+  programs = {
+    dconf.enable = true;
+    noisetorch.enable = true;
+
+    sway = {
+      enable = true;
+      wrapperFeatures.gtk = true;
+    };
   };
 
   services = {
@@ -54,10 +57,14 @@
       libinput.enable = true;
 
       desktopManager = {
+        gnome.enable = true; 
         xterm.enable = false;
       };
 
-      displayManager.gdm.enable = true;
+      displayManager.gdm = { 
+        enable = true; 
+        wayland = true; 
+      };
     };
 
     pipewire = {
