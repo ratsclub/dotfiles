@@ -31,7 +31,7 @@ in
 
       modifier = "Mod4";
       menu =
-        "${wofi} -D run-always_parse_args=true -k /dev/null -i -e -S run -t ${terminal}";
+        "${wofi} -D run-always_parse_args=true -i -M fuzzy -S run -t ${terminal}";
       colors = {
         focused = {
           border = "${colorscheme.base0C}";
@@ -64,7 +64,7 @@ in
       };
       output = {
         "HDMI-A-1" = {
-          scale = "1.50";
+          scale = "1";
         };
       };
       startup = [
