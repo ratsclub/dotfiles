@@ -1,6 +1,9 @@
-{ pkgs, config, super, lib, ... }:
+{ pkgs, config, super, inputs, lib, ... }:
 
 let
+  inherit (inputs) nix-colors;
+  inherit (nix-colors.lib { inherit pkgs; }) nixWallpaperFromScheme;
+
   colorscheme = config.colorscheme.colors;
 
   kitty = "${pkgs.kitty}/bin/kitty";
@@ -17,7 +20,12 @@ let
   waybar = "${pkgs.waybar}/bin/waybar";
   wofi = "${pkgs.wofi}/bin/wofi";
 
-  wallpaper = "${pkgs.nixos-artwork.wallpapers.nineish-dark-gray.gnomeFilePath}";
+  wallpaper = nixWallpaperFromScheme {
+    scheme = config.colorscheme;
+    width = 3840;
+    height = 2160;
+    logoScale = 5.0;
+  };
 in
 {
   wayland.windowManager.sway = {
@@ -25,13 +33,15 @@ in
     systemdIntegration = true;
     wrapperFeatures.gtk = true;
     config = rec {
+      # only use waybar
       bars = [ ];
+
+      modifier = "Mod4";
       terminal = "${kitty}";
       workspaceAutoBackAndForth = true;
 
-      modifier = "Mod4";
       menu =
-        "${wofi} -D run-always_parse_args=true -i -M fuzzy -S run -t ${terminal}";
+        "${wofi} -D run-always_parse_args=true -i -S run -t ${terminal}";
       colors = {
         focused = {
           border = "${colorscheme.base0C}";
