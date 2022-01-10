@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  w3m = "${pkgs.w3m}/bin/w3m";
+  firefox = "${pkgs.firefox}/bin/firefox";
   mpv = "${pkgs.mpv}/bin/mpv";
 in
 {
@@ -17,6 +17,16 @@ in
         title = "The Go Programming Language Blog";
         url = "https://go.dev/blog/feed.atom?format=xml";
         tags = [ "tech" "go" ];
+      }
+      {
+        title = "uses this";
+        url = "https://usesthis.com/feed.atom";
+        tags = [ "tech" "entertainment" ];
+      }
+      {
+        title = "Capivara da Faria Lima";
+        url = "https://capivaradafarialima.com/feed/";
+        tags = [ "finance" ];
       }
 
       # Aggregators
@@ -72,7 +82,7 @@ in
       bind-key k up article
 
       # macros
-      macro v set browser "${mpv} %u" ; open-in-browser ; set browser "${w3m} %u" -- "Open video on mpv"
+      macro v set browser "${mpv} %u" ; open-in-browser ; set browser "${firefox} %u" -- "Open video on mpv"
     '';
   };
 }

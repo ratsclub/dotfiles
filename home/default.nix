@@ -19,7 +19,7 @@ in
     nix-colors.homeManagerModule
   ];
 
-  colorscheme = nix-colors.colorSchemes.catppuccin;
+  colorscheme = nix-colors.colorSchemes.dracula;
 
   programs.home-manager.enable = true;
   fonts.fontconfig.enable = true;
