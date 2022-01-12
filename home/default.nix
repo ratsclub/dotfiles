@@ -1,7 +1,7 @@
 { username, inputs, ... }:
 
 let
-  inherit (inputs) nix-colors nix-doom-emacs;
+  inherit (inputs) nix-colors;
 in
 {
   imports = [
