@@ -21,6 +21,7 @@
           golangci-lint
           gomodifytags
           gopls
+          gopkgs
           gotests
           impl
         ];
