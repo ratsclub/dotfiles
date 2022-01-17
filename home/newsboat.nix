@@ -8,6 +8,7 @@ in
   programs.newsboat = {
     enable = true;
     urls = [
+      # blogs
       {
         title = "Drew DeVault's";
         url = "https://drewdevault.com/blog/index.xml";
@@ -27,6 +28,11 @@ in
         title = "Capivara da Faria Lima";
         url = "https://capivaradafarialima.com/feed/";
         tags = [ "finance" ];
+      }
+      {
+        title = "myme.no";
+        url = "https://myme.no/feed.xml";
+        tags = [ "tech" ];
       }
 
       # Aggregators
