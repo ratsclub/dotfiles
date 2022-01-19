@@ -14,10 +14,9 @@
       ];
 
       jetbrains-ides = with pkgs.jetbrains; [
-        datagrip
         goland
-        idea-ultimate
         pycharm-professional
+        rider
       ];
     in
     if super.device.type == "graphical"
@@ -25,8 +24,8 @@
       # chat
       discord
       element-desktop
+      signal-desktop
       tdesktop
-      slack
 
       # ebooks
       foliate
