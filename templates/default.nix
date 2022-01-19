@@ -5,9 +5,15 @@
     path = ./rust;
   };
 
-  # nix flake init -t github:ratsclub/dotfiles#templates.rust
+  # nix flake init -t github:ratsclub/dotfiles#templates.go
   go = {
     description = "Go Project Template";
     path = ./go;
+  };
+
+  # nix flake init -t github:ratsclub/dotfiles#templates.go
+  basic = {
+    description = "A very basic flake";
+    path = ./basic;
   };
 }
