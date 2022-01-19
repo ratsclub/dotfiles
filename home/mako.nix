@@ -5,7 +5,7 @@ let
 in
 {
   programs.mako = {
-    enable = super.device.type == "graphical";
+    enable = false;
     font = "Jetbrains Mono";
     padding = "10,20";
     anchor = "top-center";

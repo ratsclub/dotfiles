@@ -29,7 +29,7 @@ let
 in
 {
   wayland.windowManager.sway = {
-    enable = super.device.type == "graphical";
+    enable = false;
     systemdIntegration = true;
     wrapperFeatures.gtk = true;
     config = rec {
@@ -114,7 +114,7 @@ in
   };
 
   services.swayidle = {
-    enable = super.device.type == "graphical";
+    enable = false;
     events = [
       { event = "before-sleep"; command = "swaylock"; }
       { event = "lock"; command = "lock"; }
@@ -125,7 +125,7 @@ in
   };
 
   programs.waybar = {
-    enable = super.device.type == "graphical";
+    enable = false;
     settings = [
       {
         layer = "bottom";
