@@ -11,7 +11,7 @@
     path = ./go;
   };
 
-  # nix flake init -t github:ratsclub/dotfiles#templates.go
+  # nix flake init -t github:ratsclub/dotfiles#templates.basic
   basic = {
     description = "A very basic flake";
     path = ./basic;
