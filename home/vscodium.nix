@@ -13,6 +13,7 @@ in
       "editor.rulers" = [ 80 120 ];
       "editor.formatOnSave" = true;
       "editor.fontFamily" = "Jetbrains Mono";
+      "workbench.tree.indent" = 15;
 
       "workbench.colorTheme" = "GitHub Dark";
       "workbench.iconTheme" = "material-icon-theme";
@@ -39,6 +40,10 @@ in
 
       # Angular
       angular.ng-template
+
+      # .NET
+      ionide.ionide-fsharp
+      ms-dotnettools.csharp
 
       # Deno
       denoland.vscode-deno
