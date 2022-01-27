@@ -13,7 +13,6 @@ in
     ./mako.nix
     ./neovim.nix
     ./newsboat.nix
-    ./sway.nix
     ./vscodium.nix
 
     nix-colors.homeManagerModule

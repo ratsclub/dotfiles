@@ -43,11 +43,6 @@
   programs = {
     dconf.enable = true;
     noisetorch.enable = true;
-
-    sway = {
-      enable = true;
-      wrapperFeatures.gtk = true;
-    };
   };
 
   services = {
@@ -57,13 +52,13 @@
       libinput.enable = true;
 
       desktopManager = {
-        gnome.enable = true; 
+        gnome.enable = true;
         xterm.enable = false;
       };
 
-      displayManager.gdm = { 
-        enable = true; 
-        wayland = true; 
+      displayManager.gdm = {
+        enable = true;
+        wayland = true;
       };
     };
 
