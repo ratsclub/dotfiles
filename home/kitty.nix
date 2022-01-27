@@ -12,6 +12,7 @@ in
     };
 
     settings = {
+      disable_ligatures = "always";
       window_padding_width = 2;
       foreground = "#${colors.base05}";
       background = "#${colors.base00}";
