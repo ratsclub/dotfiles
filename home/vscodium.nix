@@ -1,6 +1,7 @@
 { super, lib, pkgs, ... }:
 
 let
+  inherit (pkgs) rust-analyzer;
   isGraphical = super.device.type == "graphical";
 in
 {
@@ -31,6 +32,9 @@ in
         "editor.tabSize" = 2;
         "editor.insertSpaces" = true;
       };
+
+      # Rust
+      "rust-analyzer.server.path" = "${rust-analyzer}/bin/rust-analyzer";
     };
 
     extensions = with pkgs.vscode-extensions; [
