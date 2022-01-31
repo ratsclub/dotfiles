@@ -2,7 +2,7 @@
 
 {
   programs.chromium = {
-    enable = super.device.type == "graphical";
+    enable = true;
     extensions = [
       # ublock origin
       "cjpalhdlnbpafiamejdnhcphjbkeiagm"

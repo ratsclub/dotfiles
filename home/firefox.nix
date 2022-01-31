@@ -1,9 +1,12 @@
-{ super, pkgs, username, ... }:
+{ config, pkgs, username, ... }:
 
+let
+  inherit (config.meta) username;
+in
 {
   programs.firefox = {
-    enable = super.device.type == "graphical";
-    profiles."${username}" = {
+    enable = true;
+    profiles."${config.meta.username}" = {
       settings = {
         # https://wiki.archlinux.org/title/Firefox#Hardware_video_acceleration
         "gfx.webrender.all" = true;

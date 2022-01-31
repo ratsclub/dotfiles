@@ -2,11 +2,10 @@
 
 let
   inherit (pkgs) rust-analyzer;
-  isGraphical = super.device.type == "graphical";
 in
 {
   programs.vscode = {
-    enable = isGraphical;
+    enable = true;
     package = pkgs.vscodium;
     userSettings = {
       # auto update tags when edited

@@ -1,10 +1,10 @@
-{ pkgs, super, inputs, config, ... }:
+{ pkgs, inputs, config, ... }:
 
 let colors = config.colorscheme.colors;
 in
 {
   programs.kitty = {
-    enable = super.device.type == "graphical";
+    enable = true;
     font = {
       package = pkgs.jetbrains-mono;
       name = "JetBrains Mono";

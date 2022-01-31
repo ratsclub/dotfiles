@@ -1,23 +1,17 @@
 { config, lib, hardware, home-manager, nixpkgs, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../../modules/device.nix
-
-      ../../lib/user.nix
-
-      hardware.lenovo-thinkpad-t495
-    ];
-
-  device.type = "graphical";
+  imports = [
+    ./hardware-configuration.nix
+  ];
 
   boot = {
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
+
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
 
     cleanTmpDir = true;
     consoleLogLevel = 7;
@@ -86,26 +80,6 @@
     systemPackages = with pkgs; [
       gnome.gnome-boxes
     ];
-  };
-
-  nix = {
-    package = pkgs.nixUnstable;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-
-    nixPath = [
-      "nixpkgs=/etc/nix/channels/nixpkgs"
-      "home-manager=/etc/nix/channels/home-manager"
-    ];
-
-    gc = {
-      automatic = true;
-      options = "--delete-older-than 2d";
-    };
-
-    registry.nixpkgs.flake = nixpkgs;
-    autoOptimiseStore = true;
   };
 
   system.stateVersion = "21.11";
