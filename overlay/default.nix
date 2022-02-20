@@ -29,20 +29,6 @@ final: prev: rec {
     };
   };
 
-  python3 =
-    let packageOverrides = pfinal: pprev: {
-      # FIXME https://nixpk.gs/pr-tracker.html?pr=159074
-      remarshal = pprev.remarshal.overridePythonAttrs (old: {
-        postPatch = ''
-          substituteInPlace pyproject.toml \
-          --replace "poetry.masonry.api" "poetry.core.masonry.api" \
-          --replace 'PyYAML = "^5.3"' 'PyYAML = "*"' \
-          --replace 'tomlkit = "^0.7"' 'tomlkit = "*"'
-        '';
-      });
-    };
-    in prev.python3.override { inherit packageOverrides; };
-
   hut = prev.buildGoModule rec {
     pname = "hut";
     version = "ca4420d992f2e7653277d466dfcd1341f4c1f916";
