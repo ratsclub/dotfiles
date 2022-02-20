@@ -42,6 +42,7 @@
             ./home/firefox.nix
             ./home/git.nix
             ./home/gui.nix
+            ./home/email.nix
             ./home/home.nix
             ./home/kitty.nix
             ./home/neovim.nix
