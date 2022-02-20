@@ -1,0 +1,65 @@
+final: prev: rec {
+  vscode-extensions = prev.vscode-extensions // {
+    # FIXME https://nixpk.gs/pr-tracker.html?pr=160535
+    ms-pyright.pyright = prev.vscode-utils.buildVscodeMarketplaceExtension {
+      mktplcRef = {
+        name = "pyright";
+        publisher = "ms-pyright";
+        version = "1.1.222";
+        sha256 = "sha256-QMX/SawDEnG1xVrug8mvN7EvRrRDkJffcXBUFpQi1XE=";
+      };
+      meta = with final.lib; {
+        description = "VS Code static type checking for Python";
+        downloadPage = "https://marketplace.visualstudio.com/items?itemName=ms-pyright.pyright";
+        homepage = "https://github.com/Microsoft/pyright#readme";
+        changelog = "https://marketplace.visualstudio.com/items/ms-pyright.pyright/changelog";
+        license = licenses.mit;
+        maintainers = with maintainers; [ ratsclub ];
+      };
+    };
+
+    # FIXME https://nixpk.gs/pr-tracker.html?pr=159053
+    ms-vscode.theme-tomorrowkit = prev.vscode-utils.buildVscodeMarketplaceExtension {
+      mktplcRef = {
+        name = "Theme-TomorrowKit";
+        publisher = "ms-vscode";
+        version = "0.1.4";
+        sha256 = "sha256-qakwJWak+IrIeeVcMDWV/fLPx5M8LQGCyhVt4TS/Lmc=";
+      };
+    };
+  };
+
+  python3 =
+    let packageOverrides = pfinal: pprev: {
+      # FIXME https://nixpk.gs/pr-tracker.html?pr=159074
+      remarshal = pprev.remarshal.overridePythonAttrs (old: {
+        postPatch = ''
+          substituteInPlace pyproject.toml \
+          --replace "poetry.masonry.api" "poetry.core.masonry.api" \
+          --replace 'PyYAML = "^5.3"' 'PyYAML = "*"' \
+          --replace 'tomlkit = "^0.7"' 'tomlkit = "*"'
+        '';
+      });
+    };
+    in prev.python3.override { inherit packageOverrides; };
+
+  hut = prev.buildGoModule rec {
+    pname = "hut";
+    version = "ca4420d992f2e7653277d466dfcd1341f4c1f916";
+
+    src = builtins.fetchGit {
+      url = "https://git.sr.ht/~emersion/hut";
+      ref = "master";
+      rev = version;
+    };
+
+    nativeBuildInputs = with prev; [ installShellFiles scdoc ];
+
+    vendorSha256 = "sha256-zdQvk0M1a+Y90pnhqIpKxLJnlVJqMoSycewTep2Oux4=";
+
+    postBuild = ''
+      scdoc < doc/hut.1.scd > hut.1
+      installManPage hut.1
+    '';
+  };
+}
