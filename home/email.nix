@@ -33,8 +33,6 @@ in
       signature = {
         text = ''
           ${name}
-          ---
-          https://freire.dev.br
         '';
         showSignature = "append";
       };

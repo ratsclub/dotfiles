@@ -43,4 +43,7 @@
 ;;; :app erc
 (setq erc-nick "bookdoorstop")
 
+;;; :email notmuch
+(setq mail-signature "Victor Freire")
+
 ;;; config.el ends here
