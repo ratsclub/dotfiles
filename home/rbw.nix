@@ -1,8 +1,13 @@
+{config, ...}:
+
+let
+  inherit (config.meta) email;
+  in
 {
   programs.rbw = {
     enable = true;
     settings = {
-      email = "victor@freire.dev.br";
+      inherit email;
       pinentry = "gnome3";
     };
   };

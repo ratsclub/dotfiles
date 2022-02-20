@@ -1,12 +1,15 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
+let
+  inherit (config.meta) email name;
+in
 {
   programs.git = {
     enable = true;
     package = pkgs.gitFull;
 
-    userName = "Victor Freire";
-    userEmail = "victor@freire.dev.br";
+    userName = name;
+    userEmail = email;
 
     aliases = {
       ca = "commit --amend";

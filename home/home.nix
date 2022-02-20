@@ -10,6 +10,11 @@ in
 
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
 
+  meta = {
+    username = "victor";
+    email = "victor@freire.dev.br";
+  };
+
   home = {
     inherit username;
     homeDirectory = "/home/${username}";
