@@ -46,6 +46,7 @@
             ./home/kitty.nix
             ./home/neovim.nix
             ./home/newsboat.nix
+            ./home/rbw.nix
             ./home/vscodium.nix
 
             ./modules/meta.nix
