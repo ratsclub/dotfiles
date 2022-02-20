@@ -17,16 +17,6 @@ final: prev: rec {
         maintainers = with maintainers; [ ratsclub ];
       };
     };
-
-    # FIXME https://nixpk.gs/pr-tracker.html?pr=159053
-    ms-vscode.theme-tomorrowkit = prev.vscode-utils.buildVscodeMarketplaceExtension {
-      mktplcRef = {
-        name = "Theme-TomorrowKit";
-        publisher = "ms-vscode";
-        version = "0.1.4";
-        sha256 = "sha256-qakwJWak+IrIeeVcMDWV/fLPx5M8LQGCyhVt4TS/Lmc=";
-      };
-    };
   };
 
   hut = prev.buildGoModule rec {
