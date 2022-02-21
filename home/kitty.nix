@@ -4,8 +4,7 @@ let colors = config.colorscheme.colors;
 in
 {
   programs.kitty = {
-    # FIXME wait https://nixpk.gs/pr-tracker.html?pr=159255
-    enable = false;
+    enable = true;
     font = {
       package = pkgs.jetbrains-mono;
       name = "JetBrains Mono";
