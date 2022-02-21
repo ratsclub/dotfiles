@@ -44,6 +44,7 @@
 (setq erc-nick "bookdoorstop")
 
 ;;; :email notmuch
-(setq mail-signature "Victor Freire")
+(setq mail-signature "Victor Freire"
+      +notmuch-home-function (lambda () (notmuch-search "tag:inbox")))
 
 ;;; config.el ends here
