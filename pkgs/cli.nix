@@ -2,6 +2,7 @@
 
 with pkgs; [
   aria2
+  convco
   bat
   exa
   fd
