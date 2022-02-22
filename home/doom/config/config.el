@@ -41,6 +41,8 @@
                             (concat org-directory "/private/feeds.org")))
 
 ;;; :app irc
+(setq +notmuch-sync-backend 'mbsync)
+
 (after! circe
   (defun my/rbw-get-secret (secret)
     (process-lines "rbw" "get" secret "--full"))
