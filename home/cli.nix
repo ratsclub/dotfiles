@@ -10,7 +10,7 @@ in
     jq.enable = true;
   };
 
-  home.packages = (import ../pkgs/cli.nix { inherit pkgs; });
+  home.packages = pkgs.cli-tools;
 
   programs.fzf.enable = true;
   home.sessionVariables = {

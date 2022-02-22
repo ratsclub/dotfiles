@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  environment.systemPackages = (import ../pkgs/cli.nix { inherit pkgs; });
+  environment.systemPackages = pkgs.cli-tools;
   programs.git = {
     enable = true;
     package = pkgs.gitFull;
