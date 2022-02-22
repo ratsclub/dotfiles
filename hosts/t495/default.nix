@@ -78,8 +78,7 @@
     };
 
     systemPackages = with pkgs; [
-      # FIXME https://nixpk.gs/pr-tracker.html?pr=159340
-      # gnome.gnome-boxes
+      gnome.gnome-boxes
     ];
   };
 
