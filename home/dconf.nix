@@ -1,6 +1,8 @@
 { config, pkgs, inputs, ... }:
 
 let
+  inherit (homeManager.lib.hm.gvariant) mkTuple;
+  inherit (inputs) homeManager;
   inherit (pkgs) nixos-artwork;
   wallpaper = nixos-artwork.wallpapers.nineish-dark-gray.gnomeFilePath;
 in
@@ -21,6 +23,12 @@ in
     };
     "org/gnome/mutter" = {
       "edge-tiling" = true;
+    };
+    "org/gnome/desktop/input-sources" = {
+      "sources" = [
+        (mkTuple ["xkb" "us"])
+        (mkTuple ["xkb" "br"])
+      ];
     };
   };
 }
