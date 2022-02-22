@@ -40,8 +40,22 @@
       rmh-elfeed-org-files (list
                             (concat org-directory "/private/feeds.org")))
 
-;;; :app erc
-(setq erc-nick "bookdoorstop")
+;;; :app irc
+(after! circe
+  (defun my/rbw-get-secret (secret)
+    (process-lines "rbw" "get" secret "--full"))
+
+  (defun my/rbw-splitted-secret (secret position)
+    (-second-item (split-string (nth position (my/rbw-get-secret secret)))))
+
+  (set-irc-server! "chat.sr.ht"
+    `(:tls t
+      :port 6697
+      :nick ,(my/rbw-splitted-secret "sourcehut" 1)
+      :sasl-password ,(my/rbw-splitted-secret "sourcehut" 3)
+      :sasl-username ,(format "%s/irc.libera.chat"
+                              (my/rbw-splitted-secret "libera.chat" 1))
+      :channels ("#norzilian" "#nixos"))))
 
 ;;; :email notmuch
 (setq mail-signature "Victor Freire"
