@@ -10,7 +10,7 @@
     homeManager.inputs.nixpkgs.follows = "nixpkgs";
     homeManager.url = "github:nix-community/home-manager";
     nixColors.url = "github:misterio77/nix-colors";
-    nixDoomEmacs.inputs.doom-emacs.url = "github:hlissner/doom-emacs/master";
+    nixDoomEmacs.inputs.doom-emacs.url = "github:hlissner/doom-emacs/849672691dd5d1214d6c72167ae84c03e8d9c8e3";
     nixDoomEmacs.url = "github:nix-community/nix-doom-emacs";
     nur.url = "github:nix-community/nur";
   };
