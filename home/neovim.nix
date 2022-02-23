@@ -39,10 +39,10 @@ in
       inoremap jk <Esc>
 
       " Find files using Telescope command-line sugar.
-      nnoremap <leader>ff <cmd>Telescope find_files<cr>
-      nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-      nnoremap <leader>fb <cmd>Telescope buffers<cr>
-      nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+      nnoremap <leader>pf <cmd>Telescope find_files<cr>
+      nnoremap <leader>ps <cmd>Telescope live_grep<cr>
+      nnoremap <leader>ss <cmd>Telescope buffers<cr>
+      nnoremap <leader>hs <cmd>Telescope help_tags<cr>
     '';
   };
 }
