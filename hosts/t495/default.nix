@@ -1,10 +1,6 @@
 { config, lib, hardware, homeManager, nixpkgs, pkgs, ... }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
-
   boot = {
     loader = {
       systemd-boot.enable = true;

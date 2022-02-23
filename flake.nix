@@ -30,6 +30,8 @@
             ./nixos/nix.nix
             ./nixos/user.nix
 
+            ./hosts/t495/hardware-configuration.nix
+
             inputs.hardware.nixosModules.lenovo-thinkpad-t495
           ];
 
