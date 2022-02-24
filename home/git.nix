@@ -18,6 +18,7 @@ in
       df = "diff";
       ri = "rebase --interactive --autosquash";
       st = "status --short --branch";
+      hist = "log --graph --pretty=format:'%Cred%h%Creset %s%C(yellow)%d%Creset %Cgreen(%cr)%Creset [%an]' --abbrev-commit --date=relative";
     };
 
     delta = {
