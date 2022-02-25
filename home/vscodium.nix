@@ -34,6 +34,9 @@ in
 
       # Rust
       "rust-analyzer.server.path" = "${rust-analyzer}/bin/rust-analyzer";
+
+      # Svelt
+      "svelte.enable-ts-plugin" = true;
     };
 
     extensions = with pkgs.vscode-extensions; [
