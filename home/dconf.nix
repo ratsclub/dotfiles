@@ -26,8 +26,8 @@ in
     };
     "org/gnome/desktop/input-sources" = {
       "sources" = [
-        (mkTuple ["xkb" "us"])
-        (mkTuple ["xkb" "br"])
+        (mkTuple [ "xkb" "us" ])
+        (mkTuple [ "xkb" "br" ])
       ];
     };
   };
