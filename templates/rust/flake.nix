@@ -10,7 +10,9 @@
   outputs = { self, nixpkgs, utils, rustOverlay }:
     utils.lib.eachDefaultSystem (system:
       let
-        projectName = "project";
+        pname = "project";
+        version = (builtins.fromTOML
+          (builtins.readFile ./Cargo.toml)).package.version;
 
         rustChannel = "stable";
         rustVersion = "latest"; # ex. 1.58.0
@@ -35,24 +37,24 @@
         };
 
         projectPkg = rustPlatform.buildRustPackage {
-          name = projectName;
+          inherit pname version;
           src = lib.cleanSource ./.;
 
-          rustc = "${rustToolchain}/bin/rustc";
+          nativeBuildInputs = [ rustToolchain ];
 
           cargoSha256 = lib.fakeSha256;
         };
       in
       rec {
         # `nix build`
-        packages."${projectName}" = projectPkg;
-        defaultPackage = packages."${projectName}";
+        packages."${pname}" = projectPkg;
+        defaultPackage = packages."${pname}";
 
         # `nix run`
-        apps."${projectName}" = utils.lib.mkApp {
-          drv = packages."${projectName}";
+        apps."${pname}" = utils.lib.mkApp {
+          drv = packages."${pname}";
         };
-        defaultApp = apps."${projectName}";
+        defaultApp = apps."${pname}";
 
         # `nix develop`
         devShell = mkShell {
