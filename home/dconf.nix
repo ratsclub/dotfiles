@@ -11,6 +11,10 @@ in
     "org/gnome/desktop/wm/keybindings" = {
       "switch-windows" = [ "<Alt>Tab" ];
     };
+    "org/gnome/desktop/peripherals/trackball" = {
+      "middle-click-emulation" = true;
+      "scroll-wheel-emulation-button" = 8;
+    };
     "org/gnome/desktop/wm/preferences" = {
       "resize-with-right-button" = true;
     };
