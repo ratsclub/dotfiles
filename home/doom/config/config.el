@@ -4,6 +4,9 @@
 (setq user-full-name "Victor Freire"
       user-mail-address "victor@freire.dev.br")
 
+;;; :misc
+(setq initial-major-mode 'org-mode)
+
 ;;; :ui doom
 (setq doom-font (font-spec :family "JetBrainsMono" :size 15)
       ivy-posframe-font (font-spec :family "JetBrainsMono" :size 15)
