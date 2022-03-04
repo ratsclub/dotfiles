@@ -59,6 +59,8 @@
     profileExtra = ''
       # useful for showing icons on non-NixOS systems
       export XDG_DATA_DIRS=$HOME/.nix-profile/share:$XDG_DATA_DIRS
+
+      [ -d "$HOME/.local/bin" ] && export PATH=$PATH:$HOME/.local/bin
     '';
   };
 }
