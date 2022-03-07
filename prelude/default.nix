@@ -62,6 +62,7 @@ rec {
     { username
     , system
     , homeModules ? [ ]
+    , nixpkgs ? inputs.unstable
     }:
     let
       pkgs = mkNixpkgs { inherit system; };
@@ -74,7 +75,7 @@ rec {
       };
 
       extraSpecialArgs = {
-        inherit inputs system username;
+        inherit inputs nixpkgs system username;
       };
     };
 }

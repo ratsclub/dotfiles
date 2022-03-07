@@ -1,4 +1,4 @@
-{ config, inputs, username, ... }:
+{ config, inputs, username, nixpkgs, ... }:
 
 let
   inherit (inputs) nixColors;
@@ -8,7 +8,7 @@ in
   colorscheme = nixColors.colorSchemes.tomorrow-night;
   fonts.fontconfig.enable = true;
 
-  nix.registry.nixpkgs.flake = inputs.nixpkgs;
+  nix.registry.nixpkgs.flake = nixpkgs;
 
   meta = {
     username = "victor";
