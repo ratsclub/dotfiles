@@ -1,7 +1,7 @@
 final: prev: {
   hut = prev.buildGoModule rec {
     pname = "hut";
-    version = "b12d9554fbd9371fc59d00075b1f7159ebb9237f";
+    version = "70566f28388534da2231b82b9b8b7aa8e2054eb3";
 
     src = builtins.fetchGit {
       url = "https://git.sr.ht/~emersion/hut";
