@@ -2,12 +2,14 @@
   description = "My personal dotfiles";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    stable.url = "github:nixos/nixpkgs/nixos-21.11";
+
     utils.url = "github:numtide/flake-utils";
 
     emacsOverlay.url = "github:nix-community/emacs-overlay";
     hardware.url = "github:NixOS/nixos-hardware";
-    homeManager.inputs.nixpkgs.follows = "nixpkgs";
+    homeManager.inputs.nixpkgs.follows = "unstable";
     homeManager.url = "github:nix-community/home-manager";
     nixColors.url = "github:misterio77/nix-colors";
     nixDoomEmacs.inputs.doom-emacs.url = "github:hlissner/doom-emacs/849672691dd5d1214d6c72167ae84c03e8d9c8e3";
@@ -57,6 +59,22 @@
             ./home/doom
             inputs.nixDoomEmacs.hmModule
             inputs.nixColors.homeManagerModule
+          ];
+        };
+
+        rpi3 = prelude.mkHost {
+          host = "rpi3";
+          system = "aarch64-linux";
+          username = "victor";
+          nixosModules = [
+            ./modules/meta.nix
+            ./nixos/cli.nix
+            ./nixos/nix.nix
+            ./nixos/user.nix
+
+            ./hosts/rpi3
+
+            "${inputs.unstable}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
           ];
         };
       };

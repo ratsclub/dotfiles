@@ -4,8 +4,11 @@ let
   lib = inputs.nixpkgs.lib;
 in
 rec {
-  mkNixpkgs = { system }:
-    import inputs.nixpkgs {
+  mkNixpkgs =
+    { nixpkgs ? inputs.unstable
+    , system
+    }:
+    import nixpkgs {
       inherit system;
       config.allowUnfree = true;
       overlays = [
@@ -21,15 +24,16 @@ rec {
     , system ? "x86_64-linux"
     , nixosModules ? [ ]
     , homeModules ? [ ]
+    , nixpkgs ? inputs.unstable
     }:
-    let pkgs = mkNixpkgs { inherit system; };
+    let pkgs = mkNixpkgs { inherit nixpkgs system; };
     in
-    inputs.nixpkgs.lib.nixosSystem {
+    nixpkgs.lib.nixosSystem {
       inherit system;
 
       specialArgs = {
-        inherit pkgs inputs system;
-        inherit (inputs) nixpkgs homeManager nur hardware;
+        inherit pkgs inputs system nixpkgs;
+        inherit (inputs) homeManager nur hardware;
       };
 
       modules =

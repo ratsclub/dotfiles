@@ -1,4 +1,9 @@
-{ config, inputs, pkgs, ... }:
+{ config
+, inputs
+, pkgs
+, nixpkgs
+, ...
+}:
 
 {
   nix = {
@@ -14,7 +19,7 @@
       options = "--delete-older-than 2d";
     };
 
-    registry.nixpkgs.flake = inputs.nixpkgs;
+    registry.nixpkgs.flake = nixpkgs;
     settings = {
       experimental-features = "nix-command flakes";
       auto-optimise-store = true;
