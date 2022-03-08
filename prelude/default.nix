@@ -51,7 +51,7 @@ rec {
                 imports = homeModules;
               };
               extraSpecialArgs = {
-                inherit inputs pkgs username;
+                inherit inputs pkgs nixpkgs username;
               };
             };
           }
