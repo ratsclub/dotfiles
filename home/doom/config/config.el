@@ -18,7 +18,7 @@
   (treemacs-follow-mode t))
 
 ;;; :lang org
-(setq org-directory "~/garden.freire.dev.br"
+(setq org-directory "~/org"
 
       ;; org-agenda
       org-log-done 'time
