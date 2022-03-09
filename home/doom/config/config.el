@@ -38,8 +38,10 @@
 (setq nix-nixfmt-bin "nixpkgs-fmt")
 
 ;;; :tools rss
-(setq elfeed-search-filter "@6-month-ago"
-      rmh-elfeed-org-files (list
+(after! elfeed
+  (setq elfeed-search-filter "@6-months-ago"))
+
+(setq rmh-elfeed-org-files (list
                             (concat org-directory "/private/feeds.org")))
 
 ;;; :app irc
