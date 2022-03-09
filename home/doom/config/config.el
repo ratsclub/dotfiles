@@ -23,8 +23,7 @@
       ;; org-agenda
       org-log-done 'time
       org-agenda-start-with-log-mode t
-      org-agenda-files (list
-                        (concat org-directory "/private/tasks.org"))
+      org-agenda-files (directory-files-recursively "~/org/" "\\.org$")
 
       ;; roam
       org-roam-directory org-directory
