@@ -42,7 +42,7 @@
   (setq elfeed-search-filter "@6-months-ago"))
 
 (setq rmh-elfeed-org-files (list
-                            (concat org-directory "/private/feeds.org")))
+                            (concat org-directory "/feeds.org")))
 
 ;;; :app irc
 (setq +notmuch-sync-backend 'mbsync)
