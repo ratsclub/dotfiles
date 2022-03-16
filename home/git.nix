@@ -19,6 +19,7 @@ in
       ri = "rebase --interactive --autosquash";
       st = "status --short --branch";
       hist = "log --graph --pretty=format:'%Cred%h%Creset %s%C(yellow)%d%Creset %Cgreen(%cr)%Creset [%an]' --abbrev-commit --date=relative";
+      squash-all = ''!f(){ git reset $(git commit-tree HEAD^{tree} -m "''${1:-A new start}");};f'';
     };
 
     delta = {
