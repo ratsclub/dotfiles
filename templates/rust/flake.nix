@@ -3,51 +3,46 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    rustOverlay.url = "github:oxalica/rust-overlay";
+    rust.url = "github:oxalica/rust-overlay";
     utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, utils, rustOverlay }:
-    utils.lib.eachDefaultSystem (system:
+  outputs = { self, nixpkgs, utils, rust, ...}:
+    let
+      pname = "project";
+      version = (builtins.fromTOML
+        (builtins.readFile ./Cargo.toml)).package.version;
+    in
+    {
+      overlays.default = nixpkgs.lib.composeManyExtensions [
+        rust.overlay
+        (final: prev: {
+          "${pname}RustToolchain" = final.rust-bin.selectLatestNightlyWith
+            (toolchain:
+              toolchain.default.override {
+                extensions = [ "rust-std" "rust-src" ];
+              });
+
+          "${pname}" = import ./nix/package.nix {
+            inherit pname version;
+            pkgs = final;
+          };
+        })
+      ];
+    } // utils.lib.eachDefaultSystem (system:
       let
-        pname = "project";
-        version = (builtins.fromTOML
-          (builtins.readFile ./Cargo.toml)).package.version;
-
-        rustChannel = "stable";
-        rustVersion = "latest"; # ex. 1.58.0
-
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ (import rustOverlay) ];
-        };
-
-        inherit (pkgs)
-          lib
-          mkShell
-          rust-analyzer
-          rust-bin
-          rustPlatform;
-
-        rustToolchain = rust-bin."${rustChannel}"."${rustVersion}".default.override {
-          extensions = [
-            "rust-std"
-            "rust-src"
+          overlays = [
+            self.overlays.default
           ];
-        };
-
-        projectPkg = rustPlatform.buildRustPackage {
-          inherit pname version;
-          src = lib.cleanSource ./.;
-
-          nativeBuildInputs = [ rustToolchain ];
-
-          cargoSha256 = lib.fakeSha256;
         };
       in
       rec {
         # `nix build`
-        packages."${pname}" = projectPkg;
+        packages."${pname}" = pkgs.callPackage ./.nix/package.nix {
+          inherit pkgs pname version;
+        };
         defaultPackage = packages."${pname}";
 
         # `nix run`
@@ -57,11 +52,8 @@
         defaultApp = apps."${pname}";
 
         # `nix develop`
-        devShell = mkShell {
-          nativeBuildInputs = [
-            rustToolchain
-            rust-analyzer
-          ];
+        devShells.default = pkgs.callPackage ./.nix/default.shell.nix {
+          inherit pkgs pname;
         };
       });
 }
