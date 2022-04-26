@@ -9,7 +9,8 @@
 
   outputs = { self, nixpkgs, utils, rust, ...}:
     let
-      pname = "project";
+      name = (builtins.fromTOML
+        (builtins.readFile ./Cargo.toml)).package.name;
       version = (builtins.fromTOML
         (builtins.readFile ./Cargo.toml)).package.version;
     in
