@@ -1,35 +1,60 @@
-{ config, pkgs, inputs, ... }:
+{ inputs, ... }:
 
-let
-  inherit (inputs) nixColors nixpkgs;
-  inherit (config.meta) username;
-in
 {
-  imports = [
-    ./bash.nix
-    ./chromium.nix
-    ./cli.nix
-    ./doom
-    ./firefox.nix
-    ./git.nix
-    ./gui.nix
-    ./vscodium.nix
-  ];
+  victor = inputs.homeManager.lib.homeManagerConfiguration {
+    pkgs = import inputs.nixpkgs {
+      system = "x86_64-linux";
+      overlays = [ inputs.nur.overlay ];
+      config = {
+        allowUnfree = true;
+      };
+    };
+    modules = [
+      inputs.nixDoomEmacs.hmModule
+      inputs.nixColors.homeManagerModule
+    ]
+    ++ [
+      ./modules
+      ./modules/bash.nix
+      ./modules/cli.nix
+      ./modules/doom
+      ./modules/git.nix
 
-  colorscheme = nixColors.colorSchemes.monokai;
-  fonts.fontconfig.enable = true;
+      # gui
+      ./modules/chromium.nix
+      ./modules/firefox.nix
+      ./modules/gui.nix
+      ./modules/vscodium.nix
+    ];
 
-  nix = {
-    registry.nixpkgs.flake = nixpkgs;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-    package = pkgs.nixUnstable;
+    extraSpecialArgs = {
+      inherit inputs;
+    };
   };
 
-  home = {
-    username = "victor";
-    homeDirectory = "/home/victor";
-    stateVersion = "22.11";
+  work = inputs.homeManager.lib.homeManagerConfiguration {
+    pkgs = import inputs.nixpkgs {
+      system = "x86_64-linux";
+      overlays = [ inputs.nur.overlay ];
+      config = {
+        allowUnfree = true;
+      };
+    };
+    modules = [
+      inputs.nixDoomEmacs.hmModule
+      inputs.nixColors.homeManagerModule
+    ]
+    ++ [
+      ./modules
+      ./modules/bash.nix
+      ./modules/cli.nix
+      ./modules/doom
+      ./modules/git.nix
+    ];
+
+    extraSpecialArgs = {
+      inherit inputs;
+    };
   };
+
 }

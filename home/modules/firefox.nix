@@ -1,12 +1,9 @@
-{ config, pkgs, username, ... }:
+{ config, pkgs, ... }:
 
-let
-  inherit (config.home) username;
-in
 {
   programs.firefox = {
     enable = true;
-    profiles."${username}" = {
+    profiles."victor" = {
       isDefault = true;
       settings = {
         # https://wiki.archlinux.org/title/Firefox#Hardware_video_acceleration

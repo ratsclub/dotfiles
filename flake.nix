@@ -30,18 +30,6 @@
   };
 
   outputs = { self, ... }@inputs: {
-    homeConfigurations.victor = inputs.homeManager.lib.homeManagerConfiguration {
-      pkgs = import inputs.nixpkgs {
-        system = "x86_64-linux";
-        overlays = [ inputs.nur.overlay ];
-        config = {
-          allowUnfree = true;
-        };
-      };
-      modules = [ inputs.nixDoomEmacs.hmModule inputs.nixColors.homeManagerModule ] ++ [ ./home ];
-      extraSpecialArgs = {
-        inherit inputs;
-      };
-    };
+    homeConfigurations = import ./home { inherit inputs; };
   };
 }

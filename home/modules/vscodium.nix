@@ -1,7 +1,11 @@
-{ super, lib, pkgs, ... }:
+{ config, pkgs, super, ... }:
 
 let
-  inherit (pkgs) nixpkgs-fmt rnix-lsp rust-analyzer;
+  inherit (pkgs)
+    nixpkgs-fmt
+    rnix-lsp
+    rust-analyzer
+    ;
 in
 {
   programs.vscode = {
