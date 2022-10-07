@@ -31,7 +31,7 @@
       +notmuch-sync-backend 'mbsync)
 
 ;; org
-(setq org-directory "~/monorepo/notes"
+(setq org-directory "~/notes"
       org-id-link-to-org-use-id t
       org-roam-directory org-directory)
 
