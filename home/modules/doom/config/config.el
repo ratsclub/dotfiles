@@ -31,9 +31,9 @@
       +notmuch-sync-backend 'mbsync)
 
 ;; org
-(setq org-directory "~/notes"
+(setq org-directory "~/org"
       org-id-link-to-org-use-id t
-      org-roam-directory org-directory)
+      org-roam-directory (f-join org-directory "roam"))
 
 (map! :leader
       (:prefix "n"
