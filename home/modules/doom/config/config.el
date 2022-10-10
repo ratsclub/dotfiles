@@ -10,19 +10,6 @@
 ;; go
 (setq lsp-go-use-gofumpt t)
 
-;; kubernetes
-(use-package kubernetes
-  :defer
-  :commands (kubernetes-overview))
-
-(use-package kubernetes-evil
-  :defer
-  :after kubernetes)
-
-(map! :leader
-      (:prefix "o"
-       :desc "Kubernetes" "K" 'kubernetes-overview))
-
 ;; nix
 (setq nix-nixfmt-bin "nixpkgs-fmt")
 

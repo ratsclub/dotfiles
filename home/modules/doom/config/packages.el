@@ -1,2 +1,2 @@
-(package! kubernetes :pin "83fbac3ba03b62df8d6f2dab56f2b13db3051046")
-(package! kubernetes-evil :pin "83fbac3ba03b62df8d6f2dab56f2b13db3051046")
+(package! org-drill :pin "e55415221eedba2f2bd37a30cb71c842e344b5ee" )
+(package! org-super-agenda :pin "f4f528985397c833c870967884b013cf91a1da4a")
