@@ -4,6 +4,10 @@ let
   inherit (inputs) nixColors nixpkgs;
 in
 {
+  imports = [
+    inputs.nixColors.homeManagerModule
+  ];
+
   colorscheme = nixColors.colorSchemes.monokai;
   fonts.fontconfig.enable = true;
 

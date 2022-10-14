@@ -25,11 +25,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hardware.url = "github:nixos/nixos-hardware";
     nixColors.url = "github:misterio77/nix-colors";
     nur.url = "github:nix-community/nur";
   };
 
   outputs = { self, ... }@inputs: {
     homeConfigurations = import ./home { inherit inputs; };
+    nixosConfigurations = import ./hosts { inherit inputs; };
   };
 }
