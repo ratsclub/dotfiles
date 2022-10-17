@@ -9,16 +9,7 @@
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    doom-emacs = {
-      url = "github:doomemacs/doomemacs";
-      flake = false;
-    };
-    nixDoomEmacs = {
-      url = "github:nix-community/nix-doom-emacs";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.doom-emacs.follows = "doom-emacs";
-      inputs.emacs-overlay.follows = "emacs";
-    };
+    nixDoomEmacs.url = "github:nix-community/nix-doom-emacs/1a556689996701b80ad46bed3ea7075041156f25";
 
     homeManager = {
       url = "github:nix-community/home-manager";
