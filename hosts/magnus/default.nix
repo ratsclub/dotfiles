@@ -8,6 +8,7 @@
 
       inputs.homeManager.nixosModules.home-manager
       inputs.hardware.nixosModules.lenovo-thinkpad-t495
+      inputs.agenix.nixosModules.age
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -62,6 +63,13 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  age = {
+    secrets.mailbox = {
+      file = ../../secrets/mailbox.age;
+      owner = "victor";
+    };
+    identityPaths = [ "/home/victor/.ssh/id_ed25519" ];
+  };
   home-manager = {
     useUserPackages = true;
     users.victor = {
@@ -71,6 +79,7 @@
         ../../home/modules/cli.nix
         ../../home/modules/doom
         ../../home/modules/git.nix
+        ../../home/modules/email.nix
 
         # gui
         ../../home/modules/chromium.nix

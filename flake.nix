@@ -16,6 +16,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     hardware.url = "github:nixos/nixos-hardware";
     nixColors.url = "github:misterio77/nix-colors";
     nur.url = "github:nix-community/nur";
