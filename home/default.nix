@@ -10,8 +10,9 @@
       };
     };
     modules = [
-      inputs.nixDoomEmacs.hmModule
+      inputs.emacs.overlay
       inputs.nixColors.homeManagerModule
+      inputs.nixDoomEmacs.hmModule
     ]
     ++ [
       ./modules
@@ -35,7 +36,10 @@
   work = inputs.homeManager.lib.homeManagerConfiguration {
     pkgs = import inputs.nixpkgs {
       system = "x86_64-linux";
-      overlays = [ inputs.nur.overlay ];
+      overlays = [
+        inputs.emacs.overlay
+        inputs.nur.overlay
+      ];
       config = {
         allowUnfree = true;
       };
