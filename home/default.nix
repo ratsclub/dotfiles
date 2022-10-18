@@ -12,7 +12,6 @@
     modules = [
       inputs.emacs.overlay
       inputs.nixColors.homeManagerModule
-      inputs.nixDoomEmacs.hmModule
     ]
     ++ [
       ./modules

@@ -4,6 +4,9 @@ let
   inherit (pkgs) emacs;
 in
 {
+  imports = [
+    inputs.nixDoomEmacs.hmModule
+  ];
   programs.doom-emacs = {
     enable = true;
     doomPrivateDir = ./config;
