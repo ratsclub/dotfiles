@@ -45,7 +45,6 @@
       };
     };
     modules = [
-      inputs.nixDoomEmacs.hmModule
       inputs.nixColors.homeManagerModule
     ]
     ++ [
