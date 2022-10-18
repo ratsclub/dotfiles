@@ -7,6 +7,8 @@
 (setq user-full-name "Victor Freire"
       user-mail-address "victor@freire.dev.br")
 
+(setq initial-major-mode 'org-mode)
+
 ;; go
 (setq lsp-go-use-gofumpt t)
 
