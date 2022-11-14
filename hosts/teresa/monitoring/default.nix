@@ -19,6 +19,17 @@ in
         server.http_port = 10010;
       };
 
+      provision.dashboards.settings.providers = [
+        {
+          name = "Node Full";
+          options.path = ./dashboards/node-exporter-full.json;
+        }
+        {
+          name = "ZFS Pool metrics";
+          options.path = ./dashboards/zfs-pool-metrics.json;
+        }
+      ];
+
       provision.datasources.settings.datasources =
         [
           {
@@ -34,7 +45,6 @@ in
         ];
     };
 
-
     prometheus = {
       enable = true;
       port = 10020;
@@ -42,7 +52,7 @@ in
       exporters = {
         node = {
           enable = true;
-          enabledCollectors = [ "systemd" ];
+          enabledCollectors = [ "systemd" "processes" ];
           port = 3021;
         };
       };
