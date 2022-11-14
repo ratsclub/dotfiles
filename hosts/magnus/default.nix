@@ -1,15 +1,16 @@
 { config, inputs, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../../modules/common/nix.nix
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/common/nix.nix
+    ../../modules/services/jellyfin.nix
+    ./media.nix
 
-      inputs.homeManager.nixosModules.home-manager
-      inputs.hardware.nixosModules.lenovo-thinkpad-t495
-      inputs.agenix.nixosModules.age
-    ];
+    inputs.homeManager.nixosModules.home-manager
+    inputs.hardware.nixosModules.lenovo-thinkpad-t495
+    inputs.agenix.nixosModules.age
+  ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -63,12 +64,12 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  age.identityPaths = [ "/home/victor/.ssh/id_ed25519" ];
   age = {
     secrets.mailbox = {
       file = ../../secrets/mailbox.age;
       owner = "victor";
     };
-    identityPaths = [ "/home/victor/.ssh/id_ed25519" ];
   };
   home-manager = {
     useUserPackages = true;
