@@ -4,8 +4,6 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/common/nix.nix
-    ../../modules/services/jellyfin.nix
-    ./media.nix
 
     inputs.homeManager.nixosModules.home-manager
     inputs.hardware.nixosModules.lenovo-thinkpad-t495
