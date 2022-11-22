@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, outputs, ... }:
 
 let
   inherit (inputs)
@@ -12,6 +12,7 @@ let
       inherit system;
       overlays = [
         inputs.nur.overlay
+        outputs.overlays.default
       ];
       config.allowUnfree = true;
     };

@@ -12,15 +12,18 @@
 
   systemd.tmpfiles.rules = [
     # directory where the movies/tv shows/books should go to
-    "d /var/lib/media/books 0755 media media"
-    "d /var/lib/media/books/books 0755 media media"
-    "d /var/lib/media/books/audiobooks 0755 media media"
     "d /var/lib/media/movies 0755 media media"
     "d /var/lib/media/shows 0755 media media"
 
     # directory where the torrents should go
     "d /var/lib/torrents/incomplete 0755 media media"
     "d /var/lib/torrents/complete 0755 media media"
+
+    # directory for readarr
+    "d /var/lib/readarr/config 0777 media media"
+    "d /var/lib/media/books 0777 media media"
+    "d /var/lib/media/books/Books 0777 media media"
+    "d /var/lib/media/books/Audiobooks 0777 media media"
   ];
 
   services = {

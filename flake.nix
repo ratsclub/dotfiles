@@ -27,9 +27,25 @@
     nur.url = "github:nix-community/nur";
   };
 
-  outputs = { self, ... }@inputs: {
-    homeConfigurations = import ./home { inherit inputs; };
-    nixosConfigurations = import ./hosts { inherit inputs; };
-    templates = import ./templates;
-  };
+  outputs = { self, ... }@inputs:
+    let
+      inherit (self) outputs;
+      forAllSystems = inputs.nixpkgs.lib.genAttrs [
+        "aarch64-linux"
+        "x86_64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+      ];
+    in
+    {
+      packages = forAllSystems
+        (system:
+          let pkgs = import inputs.nixpkgs { inherit system; };
+          in import ./pkgs { inherit pkgs; });
+
+      overlays = import ./overlays;
+      homeConfigurations = import ./home { inherit inputs; };
+      nixosConfigurations = import ./hosts { inherit inputs outputs; };
+      templates = import ./templates;
+    };
 }

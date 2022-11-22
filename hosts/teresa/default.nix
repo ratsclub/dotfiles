@@ -6,6 +6,7 @@
       ./hardware-configuration.nix
       ../../modules/common/nix.nix
       ../../modules/common/user.nix
+      ../../modules/services/readarr.nix
       ./media.nix
       ./monitoring
 
@@ -27,6 +28,13 @@
   };
 
   time.timeZone = "America/Sao_Paulo";
+
+  virtualisation = {
+    podman = {
+      enable = true;
+      defaultNetwork.dnsname.enable = true;
+    };
+  };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
