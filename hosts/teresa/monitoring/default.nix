@@ -19,30 +19,30 @@ in
         server.http_port = 10010;
       };
 
-      provision.dashboards.settings.providers = [
-        {
-          name = "Node Full";
-          options.path = ./dashboards/node-exporter-full.json;
-        }
-        {
-          name = "ZFS Pool metrics";
-          options.path = ./dashboards/zfs-pool-metrics.json;
-        }
-      ];
-
-      provision.datasources.settings.datasources =
-        [
+      provision = {
+        dashboards.settings.providers = [
           {
-            name = "Prometheus";
-            type = "prometheus";
-            url = "http://localhost:${toString config.services.prometheus.port}";
-          }
-          {
-            name = "Loki";
-            type = "loki";
-            url = "http://localhost:${toString config.services.loki.configuration.server.http_listen_port}";
+            name = "Node";
+            options.path = ./dashboards/node-exporter-full.json;
           }
         ];
+
+        datasources.settings = {
+          datasources =
+            [
+              {
+                name = "Prometheus";
+                type = "prometheus";
+                url = "http://localhost:${toString config.services.prometheus.port}";
+              }
+              {
+                name = "Loki";
+                type = "loki";
+                url = "http://localhost:${toString config.services.loki.configuration.server.http_listen_port}";
+              }
+            ];
+        };
+      };
     };
 
     prometheus = {
@@ -55,13 +55,34 @@ in
           enabledCollectors = [ "systemd" "processes" ];
           port = 3021;
         };
+        zfs = {
+          enable = true;
+          pools = [
+            "zroot"
+          ];
+        };
+        smartctl = {
+          enable = true;
+        };
       };
 
       scrapeConfigs = [
         {
-          job_name = "teresa";
+          job_name = "${config.networking.hostName} - node";
           static_configs = [{
             targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ];
+          }];
+        }
+        {
+          job_name = "${config.networking.hostName} - zfs";
+          static_configs = [{
+            targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.zfs.port}" ];
+          }];
+        }
+        {
+          job_name = "${config.networking.hostName} - smartctl";
+          static_configs = [{
+            targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.smartctl.port}" ];
           }];
         }
       ];
@@ -141,33 +162,33 @@ in
         };
       };
     };
-  };
 
-  services.promtail = {
-    enable = true;
-    configuration = {
-      server = {
-        http_listen_port = 10040;
-        grpc_listen_port = 0;
-      };
-      positions.filename = "/tmp/positions.yaml";
-      clients = [{
-        url = "http://127.0.0.1:${toString config.services.loki.configuration.server.http_listen_port}/loki/api/v1/push";
-      }];
-      scrape_configs = [{
-        job_name = "journal";
-        journal = {
-          max_age = "12h";
-          labels = {
-            job = "systemd-journal";
-            host = "teresa";
-          };
+    promtail = {
+      enable = true;
+      configuration = {
+        server = {
+          http_listen_port = 10040;
+          grpc_listen_port = 0;
         };
-        relabel_configs = [{
-          source_labels = [ "__journal__systemd_unit" ];
-          target_label = "unit";
+        positions.filename = "/tmp/positions.yaml";
+        clients = [{
+          url = "http://127.0.0.1:${toString config.services.loki.configuration.server.http_listen_port}/loki/api/v1/push";
         }];
-      }];
+        scrape_configs = [{
+          job_name = "journal";
+          journal = {
+            max_age = "12h";
+            labels = {
+              job = "systemd-journal";
+              host = config.networking.hostName;
+            };
+          };
+          relabel_configs = [{
+            source_labels = [ "__journal__systemd_unit" ];
+            target_label = "unit";
+          }];
+        }];
+      };
     };
   };
 }
