@@ -29,14 +29,7 @@
 
   time.timeZone = "America/Sao_Paulo";
 
-  virtualisation = {
-    podman = {
-      enable = true;
-      defaultNetwork.dnsname.enable = true;
-    };
-  };
-
-  # Enable the OpenSSH daemon.
+  programs.htop.enable = true;
   services.openssh.enable = true;
 
   system.stateVersion = "22.05";
