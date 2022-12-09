@@ -12,6 +12,7 @@ in
   fonts.fontconfig.enable = true;
 
   nix = {
+    package = pkgs.nixUnstable;
     registry.nixpkgs.flake = nixpkgs;
     extraOptions = ''
       experimental-features = nix-command flakes

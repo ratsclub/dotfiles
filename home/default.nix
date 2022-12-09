@@ -50,7 +50,7 @@
       ./modules
       ./modules/bash.nix
       ./modules/cli.nix
-      ./modules/doom
+      ./modules/emacs
       ./modules/git.nix
     ];
 
