@@ -10,11 +10,17 @@
 
 (use-package emacs
   :init
+  ;; xdg directories
+  (setq user-emacs-config-directory (concat (getenv "HOME") "/.config/emacs")
+	user-emacs-data-directory (concat (getenv "HOME") "/.local/share/emacs")
+	user-emacs-cache-directory (concat (getenv "HOME") "/.cache/emacs"))
+
   ;; remove useless welcome screen
   (setq inhibit-startup-screen t)
 
-  ;; remove bell ring
-  (setq ring-bell-function 'ignore)
+  ;; remove ring bell sound and activate visual bell
+  (setq ring-bell-function 'ignore
+	visible-bell t)
 
   ;; Use utf-8 by default
   (setq coding-system-for-read 'utf-8)
@@ -28,11 +34,21 @@
   (defalias 'yes-or-no-p 'y-or-n-p)
   (setq initial-scratch-message nil)
 
-  ;; backup files
-  (setq make-backup-files nil
-	auto-save-default nil)
+  ;; backup and lock files
+  (let ((backup-dir (concat user-emacs-data-directory "/backup")))
+    (unless (file-directory-p backup-dir)
+      (mkdir backup-dir t))
+
+    (setq backup-directory-alist (cons (cons "." backup-dir) nil)
+	  create-lockfiles nil))
 
   :config
+  ;; ui
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (display-time)
+
   ;; theme
   (load-theme 'modus-vivendi t)
   (setq modus-themes-region '(accented)
