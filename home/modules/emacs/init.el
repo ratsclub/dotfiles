@@ -40,13 +40,27 @@
       (mkdir backup-dir t))
 
     (setq backup-directory-alist (cons (cons "." backup-dir) nil)
-	  create-lockfiles nil))
+	  create-lockfiles nil
+	  backup-by-copying t))
+
+  ;; show stray whitespace
+  (setq show-trailing-whitespace t
+	indicate-empty-lines t)
+
+  ;; add newline automatically at the end of the file while saving
+  (setq require-final-newline t)
+
+  ;; Consider a period followed by a single space to be end of sentence.
+  (setq sentence-end-double-space nil)
 
   :config
   ;; ui
-  (scroll-bar-mode -1)
-  (tool-bar-mode -1)
-  (menu-bar-mode -1)
+  (menu-bar-mode 0)
+  (when (display-graphic-p)
+    (tool-bar-mode 0)
+    (scroll-bar-mode 0))
+
+  (column-number-mode)
   (display-time)
 
   ;; theme
