@@ -1,11 +1,14 @@
 { inputs, pkgs, ... }:
 
 let
-  configFile = ./init.el;
+  emacsConfig = pkgs.writeTextDir "config/init.el" ''
+    (load "${./init.el}")
+  '';
+
   customEmacs = pkgs.emacsWithPackagesFromUsePackage {
-    config = configFile;
-    package = pkgs.emacsGit;
+    config = ./init.el;
     alwaysEnsure = true;
+    package = pkgs.emacsGit;
   };
 in
 {
@@ -14,5 +17,5 @@ in
     package = customEmacs;
   };
 
-  home.file.".emacs.d/init.el".source = configFile;
+  home.file.".emacs.d/init.el".source = ./init.el;
 }

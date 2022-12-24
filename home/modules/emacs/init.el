@@ -8,6 +8,9 @@
 (eval-when-compile
   (require 'use-package))
 
+;; always ensure that use-package will download the needed packages
+(setq use-package-always-ensure t)
+
 (use-package emacs
   :init
   ;; xdg directories
@@ -22,19 +25,41 @@
   (setq ring-bell-function 'ignore
 	visible-bell t)
 
-  ;; Use utf-8 by default
-  (setq coding-system-for-read 'utf-8)
-  (setq coding-system-for-write 'utf-8)
+  ;; Use 80 columns to keep things readable with split windows.
+  (setq whitespace-style '(trailing lines space-before-tab)
+        whitespace-line-column 80
+        default-fill-column 80)
 
-  ;; Sentence SHOULD end with only a point.
+  ;; Use utf-8 by default
+  (prefer-coding-system 'utf-8)
+  (set-default-coding-systems 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  (set-keyboard-coding-system 'utf-8)
+  ;;  (setq coding-system-for-read 'utf-8)
+  ;;  (setq coding-system-for-write 'utf-8)
+
+  ;; Consider a period followed by a single space to be end of
+  ;; sentence.
   (setq sentence-end-double-space nil)
 
-  ;; Toggle wrapping text at the 80th character
-  (setq default-fill-column 80)
+
+  ;; Show stray whitespaces.
+  (setq show-trailing-whitespace t
+        indicate-empty-lines t)
+
+  ;; Automatically add a new whiteline at the end of the file while saving
+  (setq require-final-newline t)
+
+
+  ;; Use ~y~ and ~n~ instead of long ~yes~ and ~no~
   (defalias 'yes-or-no-p 'y-or-n-p)
+
+  ;; remove scratch initial message
   (setq initial-scratch-message nil)
 
   ;; backup and lock files
+  ;; Instead of littering the current project's directory, we can use
+  ;; the xdg variables we defined to improve things up.
   (let ((backup-dir (concat user-emacs-data-directory "/backup")))
     (unless (file-directory-p backup-dir)
       (mkdir backup-dir t))
@@ -42,16 +67,6 @@
     (setq backup-directory-alist (cons (cons "." backup-dir) nil)
 	  create-lockfiles nil
 	  backup-by-copying t))
-
-  ;; show stray whitespace
-  (setq show-trailing-whitespace t
-	indicate-empty-lines t)
-
-  ;; add newline automatically at the end of the file while saving
-  (setq require-final-newline t)
-
-  ;; Consider a period followed by a single space to be end of sentence.
-  (setq sentence-end-double-space nil)
 
   :config
   ;; ui
@@ -80,9 +95,8 @@
                                       (t . (monochrome)))))
   
   ;; smoother scrolling
-  (pixel-scroll-precision-mode))
+  (pixel-scroll-precision-mode)
 
-(use-package diplay-line-numbers
   :hook
   ((prog-mode . display-line-numbers-mode)))
 
@@ -188,3 +202,7 @@
   :config
   (setq org-element-use-cache nil
 	org-startup-indented t))
+
+(use-package nix-mode :defer t :mode "\\.nix\\'")
+(use-package fsharp-mode :defer t)
+(use-package treesit :defer t)
