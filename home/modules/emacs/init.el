@@ -197,12 +197,15 @@
               ("C-c F" . eglot-format-buffer)))
 
 (use-package org
-  :ensure t
+  :ensure org-contrib
   :defines org-element-use-cache
   :config
   (setq org-element-use-cache nil
-	org-startup-indented t))
+	org-startup-indented t
+	org-directory "~/Documents/Projects/org"))
+
+(use-package org-drill
+  :defer t)
 
 (use-package nix-mode :defer t :mode "\\.nix\\'")
 (use-package fsharp-mode :defer t)
-(use-package treesit :defer t)
