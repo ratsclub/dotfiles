@@ -52,6 +52,7 @@
       ./modules/cli.nix
       ./modules/emacs
       ./modules/git.nix
+      ./modules/vscodium.nix
     ];
 
     extraSpecialArgs = {
