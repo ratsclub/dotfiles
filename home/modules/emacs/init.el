@@ -200,6 +200,7 @@
   :ensure org-contrib
   :defines org-element-use-cache
   :config
+  (use-package ox-hugo :defer t)
   (setq org-element-use-cache nil
 	org-startup-indented t
 	org-directory "~/Documents/Projects/org"))
