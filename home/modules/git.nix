@@ -40,6 +40,9 @@
       merge = {
         conflictstyle = "diff3";
       };
+      github = {
+        user = "ratsclub";
+      };
     };
   };
 }
