@@ -207,8 +207,12 @@
 	org-startup-indented t
 	org-directory "~/Documents/Projects/org"))
 
-(use-package org-drill
-  :defer t)
+(use-package org-drill :defer t)
 
-(use-package nix-mode :defer t :mode "\\.nix\\'")
+(use-package nix-mode
+  :defer t
+  :mode "\\.nix\\'"
+  :config
+  (setq nix-nixfmt-bin "nixpkgs-fmt"))
+
 (use-package fsharp-mode :defer t)
