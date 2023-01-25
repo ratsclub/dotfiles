@@ -179,7 +179,9 @@
 
 (use-package magit
   :ensure t
-  :defer t)
+  :defer t
+  :config
+  (use-package forge :defer t))
 
 (use-package orderless
   :ensure t
