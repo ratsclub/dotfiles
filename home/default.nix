@@ -17,6 +17,7 @@
       ./modules
       ./modules/bash.nix
       ./modules/cli.nix
+      ./modules/direnv.nix
       ./modules/doom
       ./modules/git.nix
 
@@ -50,6 +51,7 @@
       ./modules
       ./modules/bash.nix
       ./modules/cli.nix
+      ./modules/direnv.nix
       ./modules/emacs
       ./modules/git.nix
       ./modules/vscodium.nix

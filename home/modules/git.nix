@@ -8,7 +8,14 @@
     userName = "Victor Freire";
     userEmail = "victor@freire.dev.br";
 
-    ignores = [ "result" ];
+    ignores = [
+      # nix
+      "result"
+
+      # direnv
+      ".envrc"
+      ".direnv"
+    ];
 
     aliases = {
       ca = "commit --amend";
