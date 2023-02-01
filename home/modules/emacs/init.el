@@ -206,11 +206,10 @@
   :defines org-element-use-cache
   :config
   (use-package ox-hugo :defer t)
+  (use-package org-drill :defer t)
   (setq org-element-use-cache nil
 	org-startup-indented t
 	org-directory "~/Documents/Projects/org"))
-
-(use-package org-drill :defer t)
 
 (use-package nix-mode
   :defer t
