@@ -132,6 +132,9 @@
     (eshell-mode . corfu-mode))
 
   :config
+  (use-package corfu-terminal :defer t)
+  (unless (display-graphic-p)
+    (corfu-terminal-mode +1))
   (global-corfu-mode)
   (corfu-popupinfo-mode))
 
