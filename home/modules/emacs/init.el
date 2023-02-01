@@ -218,4 +218,8 @@
   :config
   (setq nix-nixfmt-bin "nixpkgs-fmt"))
 
-(use-package fsharp-mode :defer t)
+(use-package fsharp-mode
+  :defer t
+  :config
+  (use-package eglot-fsharp :defer t))
+
