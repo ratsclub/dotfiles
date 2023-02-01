@@ -199,7 +199,8 @@
               ("C-c r" . eglot-rename)
               ("C-c h" . eldoc)
               ("C-c f" . eglot-format)
-              ("C-c F" . eglot-format-buffer)))
+              ("C-c F" . eglot-format-buffer)
+              ("C-c d" . xref-find-definitions-at-mouse)))
 
 (use-package org
   :ensure org-contrib
