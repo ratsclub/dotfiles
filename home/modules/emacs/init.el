@@ -223,3 +223,7 @@
   :config
   (use-package eglot-fsharp :defer t))
 
+(use-package treemacs
+  :defer t
+  :config
+  (use-package treemacs-projectile :defer t))
