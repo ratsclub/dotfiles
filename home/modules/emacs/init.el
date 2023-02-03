@@ -35,13 +35,10 @@
   (set-default-coding-systems 'utf-8)
   (set-terminal-coding-system 'utf-8)
   (set-keyboard-coding-system 'utf-8)
-  ;;  (setq coding-system-for-read 'utf-8)
-  ;;  (setq coding-system-for-write 'utf-8)
 
   ;; Consider a period followed by a single space to be end of
   ;; sentence.
   (setq sentence-end-double-space nil)
-
 
   ;; Show stray whitespaces.
   (setq show-trailing-whitespace t
@@ -49,7 +46,6 @@
 
   ;; Automatically add a new whiteline at the end of the file while saving
   (setq require-final-newline t)
-
 
   ;; Use ~y~ and ~n~ instead of long ~yes~ and ~no~
   (defalias 'yes-or-no-p 'y-or-n-p)
