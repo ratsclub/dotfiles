@@ -233,4 +233,5 @@
 (use-package treemacs
   :defer t
   :config
-  (use-package treemacs-projectile :defer t))
+  (use-package treemacs-projectile :defer t)
+  (treemacs-hide-gitignored-files-mode t))
