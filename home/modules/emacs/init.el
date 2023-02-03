@@ -191,13 +191,19 @@
 
 (use-package eglot
   :ensure t
-  :hook ((go-mode . eglot-ensure))
+  :hook ((go-mode . eglot-ensure)
+	 (fsharp-mode . eglot-ensure)
+	 (rust-mode . eglot-ensure))
   :bind (:map eglot-mode-map
               ("C-c r" . eglot-rename)
               ("C-c h" . eldoc)
               ("C-c f" . eglot-format)
               ("C-c F" . eglot-format-buffer)
-              ("C-c d" . xref-find-definitions-at-mouse)))
+              ("C-c d" . xref-find-definitions-at-mouse))
+  :config
+  (use-package rust-mode :defer t)
+  (use-package eglot-fsharp :defer t)
+  (require 'eglot-fsharp))
 
 (use-package org
   :ensure org-contrib
@@ -205,10 +211,15 @@
   :config
   (use-package ox-hugo :defer t)
   (use-package org-drill :defer t)
+  (use-package org-anki :defer t)
   (setq org-element-use-cache nil
 	org-startup-indented t
-	org-directory "~/Documents/Projects/org"))
+	org-directory "~/Documents/Projects/org"
 
+	;; org-drill
+	org-drill-spaced-repetition-algorithm 'sm2))
+
+(use-package fsharp-mode :defer t)
 (use-package nix-mode
   :defer t
   :mode "\\.nix\\'"
