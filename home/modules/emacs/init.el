@@ -94,7 +94,8 @@
   (pixel-scroll-precision-mode)
 
   :hook
-  ((prog-mode . display-line-numbers-mode)))
+  ((prog-mode . display-line-numbers-mode)
+   (org-mode . display-line-numbers-mode)))
 
 (use-package windmove
   :bind
