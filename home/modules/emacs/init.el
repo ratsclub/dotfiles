@@ -193,7 +193,8 @@
   :ensure t
   :hook ((go-mode . eglot-ensure)
 	 (fsharp-mode . eglot-ensure)
-	 (rust-mode . eglot-ensure))
+	 (rust-mode . eglot-ensure)
+	 (typescript-mode . eglot-ensure))
   :bind (:map eglot-mode-map
               ("C-c r" . eglot-rename)
               ("C-c h" . eldoc)
@@ -203,6 +204,7 @@
   :config
   (use-package rust-mode :defer t)
   (use-package eglot-fsharp :defer t)
+  (use-package typescript-mode :defer t)
   (require 'eglot-fsharp))
 
 (use-package org
