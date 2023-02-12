@@ -6,21 +6,13 @@
       ./hardware-configuration.nix
       ../../modules/common/nix.nix
       ../../modules/common/user.nix
-      ../../modules/services/readarr.nix
-      ./media.nix
-      ./monitoring
-
       inputs.agenix.nixosModules.age
     ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.supportedFilesystems = [ "zfs" ];
+  boot.loader.grub.device = "/dev/sda";
 
   networking = {
     hostName = "teresa";
-    hostId = "649e39eb";
     networkmanager.enable = true;
 
     # caddy ports
@@ -28,6 +20,32 @@
   };
 
   time.timeZone = "America/Sao_Paulo";
+
+  # nfs
+  environment.systemPackages = with pkgs; [ nfs-utils ];
+  boot.initrd = {
+    supportedFilesystems = [ "nfs" ];
+    kernelModules = [ "nfs" ];
+  };
+  fileSystems."/mnt/backup" = {
+    device = "10.0.0.2:/volume1/backup";
+    fsType = "nfs";
+  };
+
+  # postgres
+  services = {
+    postgresql = {
+      enable = true;
+      package = pkgs.postgresql_15;
+    };
+    postgresqlBackup = {
+      enable = true;
+      backupAll = true;
+      compression = "zstd";
+      location = "/mnt/backup/postgresql";
+      startAt = "daily";
+    };
+  };
 
   programs.htop.enable = true;
   services.openssh.enable = true;
