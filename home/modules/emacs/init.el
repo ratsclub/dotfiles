@@ -104,6 +104,11 @@
    ("C-c <up>" .    'windmove-up)
    ("C-c <down>" .  'windmove-down)))
 
+(use-package which-key
+  :config
+  (setq which-key-idle-delay 0.5)
+  (which-key-mode))
+
 (use-package corfu
   :ensure t
   :init
