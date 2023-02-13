@@ -95,7 +95,10 @@
 
   :hook
   ((prog-mode . display-line-numbers-mode)
-   (org-mode . display-line-numbers-mode)))
+   (org-mode . display-line-numbers-mode)
+
+   ;; colors in compilation-mode
+   (compilation-filter . ansi-color-compilation-filter)))
 
 (use-package windmove
   :bind
