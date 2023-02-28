@@ -222,10 +222,53 @@
   :config
   (use-package ox-hugo :defer t)
   (use-package org-drill :defer t)
-  (use-package org-anki :defer t)
+  (use-package org-roam
+    :defer t
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n i" . org-roam-node-insert)
+	   :map org-roam-dailies-map
+           ("Y" . org-roam-dailies-capture-yesterday)
+           ("T" . org-roam-dailies-capture-tomorrow))
+    :bind-keymap
+    ("C-c n d" . org-roam-dailies-map)
+    :config
+    (require 'org-roam-dailies)
+    (org-roam-db-autosync-mode)
+
+    (setq org-roam-capture-templates
+	  '(("d" "default" plain "%?" :target
+	     (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+			;; using `LASTMOD` just so this gets exported with ox-hugo
+			"#+TITLE: ${title}\n#+DATE: %U\n#+LASTMOD: %U\n\n")
+	     :unnarrowed t)))
+    :hook
+    ((org-mode . (lambda ()
+                        (setq-local time-stamp-active t
+				    time-stamp-start "#\\+LASTMOD:[ \t]*"
+				    time-stamp-end "$"
+				    time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
+                             (add-hook 'before-save-hook 'time-stamp nil 'local)))))
+
+  ;; here to remove `unsafe local variables` warning on org-roam's
+  ;; `org-roam-directory`, this should probably go away... someday
+  (setq-default enable-local-variables :all)
+
+  ;; create org directory if not exists
+  (setq org-directory "~/org"
+	org-roam-directory "~/org/notes")
+  (unless (file-directory-p org-directory)
+    (mkdir org-directory t)
+    (mkdir org-roam-directory t))
+
   (setq org-element-use-cache nil
 	org-startup-indented t
-	org-directory "~/Documents/Projects/org"
+
+	;; use the language's major mode indentation
+	org-src-tab-acts-natively t
+
+	;; set source block indentation to 0
+	org-edit-src-content-indentation 0
 
 	;; org-drill
 	org-drill-spaced-repetition-algorithm 'sm2))
