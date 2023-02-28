@@ -15,6 +15,9 @@
       # direnv
       ".envrc"
       ".direnv"
+
+      # vscode
+      ".vscode"
     ];
 
     aliases = {
