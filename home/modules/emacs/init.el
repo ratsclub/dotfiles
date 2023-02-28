@@ -289,3 +289,17 @@
   :config
   (use-package treemacs-projectile :defer t)
   (treemacs-hide-gitignored-files-mode t))
+
+(use-package treesit
+  :preface
+  (dolist (mapping '((python-mode . python-ts-mode)
+                     (css-mode . css-ts-mode)
+                     (typescript-mode . tsx-ts-mode)
+		     (rust-mode . rust-ts-mode)
+		     (go-mode . go-ts-mode)
+                     (js-mode . js-ts-mode)
+		     (json-mode . json-ts-mode)
+		     (toml-mode . toml-ts-mode)
+                     (css-mode . css-ts-mode)
+                     (yaml-mode . yaml-ts-mode)))
+    (add-to-list 'major-mode-remap-alist mapping)))
