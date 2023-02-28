@@ -151,6 +151,7 @@
         register-preview-function #'consult-register-format)
   
   (advice-add #'register-preview :override #'consult-register-window)
+  (advice-add #'project-find-regexp :override #'consult-ripgrep)
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
 
