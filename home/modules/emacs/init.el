@@ -211,10 +211,12 @@
               ("C-c F" . eglot-format-buffer)
               ("C-c d" . xref-find-definitions-at-mouse))
   :config
-  (use-package rust-mode :defer t)
   (use-package eglot-fsharp :defer t)
   (use-package typescript-mode :defer t)
-  (require 'eglot-fsharp))
+  (require 'eglot-fsharp)
+  (add-to-list 'eglot-server-programs '((rust-ts-mode) "rust-analyzer"))
+  (add-to-list 'eglot-server-programs
+	       '((javascript-mode typescript-ts-mode) "typescript-language-server" "--stdio")))
 
 (use-package org
   :ensure org-contrib
