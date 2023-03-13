@@ -1,5 +1,1 @@
-{ pkgs, ... }:
-
-{
-  readarr = pkgs.callPackage ./readarr.nix { };
-}
+{ pkgs, ... }: {}

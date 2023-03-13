@@ -44,7 +44,7 @@
           in import ./pkgs { inherit pkgs; });
 
       overlays = import ./overlays;
-      homeConfigurations = import ./home { inherit inputs; };
+      homeConfigurations = import ./home { inherit inputs self; };
       nixosConfigurations = import ./hosts { inherit inputs outputs; };
       templates = import ./templates;
     };

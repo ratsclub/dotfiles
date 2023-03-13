@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, self, ... }:
 
 {
   victor = inputs.homeManager.lib.homeManagerConfiguration {
@@ -37,6 +37,7 @@
     pkgs = import inputs.nixpkgs {
       system = "x86_64-linux";
       overlays = [
+        self.overlays.modifications
         inputs.emacs.overlay
         inputs.nur.overlay
       ];
