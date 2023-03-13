@@ -79,6 +79,7 @@ in
       editorconfig.editorconfig
       esbenp.prettier-vscode
       gruntfuggly.todo-tree
+      mkhl.direnv
     ];
   };
 
