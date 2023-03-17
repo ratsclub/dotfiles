@@ -41,8 +41,8 @@
   (setq sentence-end-double-space nil)
 
   ;; Show stray whitespaces.
-  (setq show-trailing-whitespace t
-        indicate-empty-lines t)
+  (setq-default show-trailing-whitespace t
+		indicate-empty-lines t)
 
   ;; Automatically add a new whiteline at the end of the file while saving
   (setq require-final-newline t)
@@ -89,7 +89,7 @@
                                       (2 . (overline variable-pitch 1.25))
                                       (3 . (overline 1.1))
                                       (t . (monochrome)))))
-  
+
   ;; smoother scrolling
   (pixel-scroll-precision-mode)
 
@@ -149,7 +149,7 @@
   :init
   (setq register-preview-delay 0.5
         register-preview-function #'consult-register-format)
-  
+
   (advice-add #'register-preview :override #'consult-register-window)
   (advice-add #'project-find-regexp :override #'consult-ripgrep)
   (setq xref-show-xrefs-function #'consult-xref
@@ -157,7 +157,7 @@
 
   :bind
   (("C-s" . consult-line))
-  
+
   :config
   (consult-customize
    consult-theme :preview-key '(:debounce 0.2 any)
@@ -182,7 +182,7 @@
   (("M-A" . marginalia-cycle)
    :map minibuffer-local-map
    ("M-A" . marginalia-cycle))
-  
+
   :init
   (marginalia-mode))
 
@@ -224,6 +224,7 @@
   :config
   (use-package ox-hugo :defer t)
   (use-package org-drill :defer t)
+
   (use-package org-roam
     :defer t
     :bind (("C-c n l" . org-roam-buffer-toggle)
@@ -244,6 +245,8 @@
 			;; using `LASTMOD` just so this gets exported with ox-hugo
 			"#+TITLE: ${title}\n#+DATE: %U\n#+LASTMOD: %U\n\n")
 	     :unnarrowed t)))
+
+
     :hook
     ((org-mode . (lambda ()
                         (setq-local time-stamp-active t
@@ -252,18 +255,18 @@
 				    time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
                              (add-hook 'before-save-hook 'time-stamp nil 'local)))))
 
+  (use-package org-super-agenda
+    :after org-agenda
+    :config (org-super-agenda-mode))
+
   ;; here to remove `unsafe local variables` warning on org-roam's
   ;; `org-roam-directory`, this should probably go away... someday
   (setq-default enable-local-variables :all)
 
-  ;; create org directory if not exists
   (setq org-directory "~/org"
-	org-roam-directory "~/org/notes")
-  (unless (file-directory-p org-directory)
-    (mkdir org-directory t)
-    (mkdir org-roam-directory t))
+	org-log-done 'time
 
-  (setq org-element-use-cache nil
+	org-element-use-cache nil
 	org-startup-indented t
 
 	;; use the language's major mode indentation
@@ -272,8 +275,66 @@
 	;; set source block indentation to 0
 	org-edit-src-content-indentation 0
 
+	;; todo file used on org-capture for org-agenda
+	+org-capture-todo-file (concat org-directory "/todo.org")
+	org-capture-templates
+        '(("t" "Personal")
+          ("tt" "Personal todo" entry
+           (file+headline +org-capture-todo-file "Personal")
+           "* TODO %?  :personal:\n" :prepend t)
+          ("tn" "Personal note" entry
+           (file+headline +org-capture-todo-file "Personal")
+           "* TODO %?  :personal:\n%i\n%a" :prepend t)
+          ("w" "Work")
+          ("wt" "Work todo" entry
+           (file+headline +org-capture-todo-file "Work")
+           "* TODO %?  :work:\n%i\n" :prepend t)
+          ("wn" "Work note" entry
+           (file+headline +org-capture-todo-file "Work")
+           "* TODO %?  :work:\n%i\n%a" :prepend t)
+          ("p" "Templates for projects")
+          ("pt" "Project-local todo" entry
+           (file+headline +org-capture-todo-file "Project")
+           "* TODO %?\n%i\n%a" :prepend t))
+
 	;; org-drill
-	org-drill-spaced-repetition-algorithm 'sm2))
+	org-drill-spaced-repetition-algorithm 'sm2
+
+	;; org-agenda
+	org-agenda-files (list org-directory)
+	org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-deadline-if-done t
+        org-agenda-include-deadlines t
+        org-agenda-block-separator nil
+        org-agenda-tags-column 100 ;; from testing this seems to be a good value
+        org-agenda-compact-blocks t
+        org-agenda-custom-commands
+        '(("o" "Overview"
+           ((agenda "" ((org-agenda-span 'day)
+                        (org-super-agenda-groups
+                         '((:name "Today"
+				  :time-grid t
+				  :date today
+				  :todo "TODAY"
+				  :scheduled today
+				  :order 1)))))
+            (alltodo "" ((org-agenda-overriding-header "")
+                         (org-super-agenda-groups
+                          '((:name "Important"    :tag "Important" :priority "A" :order 6)
+                            (:name "Due Today"    :deadline today  :order 2)
+                            (:name "Due Soon"     :deadline future :order 8)
+                            (:name "Overdue"      :deadline past   :face error :order 7)
+                            (:name "Future Ideas" :todo "IDEA"     :order 14)
+                            (:name "To read"      :tag "read"      :order 30)
+                            (:name "Waiting"      :todo "WAIT"     :order 20)
+                            (:name "Work"         :tag "work"      :order 32)
+                            (:name "Personal"     :tag "personal"  :order 32)))))))))
+  :hook
+  ((org-capture-mode . org-align-all-tags))
+
+  :bind
+  (("C-c c" .  'org-capture)
+   ("C-c a" . 'org-agenda)))
 
 (use-package fsharp-mode :defer t)
 (use-package nix-mode
