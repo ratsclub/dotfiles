@@ -51,6 +51,7 @@
     ++ [
       ./modules
       ./modules/bash.nix
+      ./modules/chromium.nix
       ./modules/cli.nix
       ./modules/direnv.nix
       ./modules/emacs
