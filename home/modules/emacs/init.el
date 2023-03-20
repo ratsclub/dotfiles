@@ -278,26 +278,20 @@
 
 	;; todo file used on org-capture for org-agenda
 	+org-capture-todo-file (concat org-directory "/todo.org")
-	org-capture-templates
-        '(("t" "Personal")
-          ("tt" "Personal todo" entry
-           (file+headline +org-capture-todo-file "Personal")
-           "* TODO %?  :personal:\n" :prepend t)
-          ("tn" "Personal note" entry
-           (file+headline +org-capture-todo-file "Personal")
-           "* TODO %?  :personal:\n%i\n%a" :prepend t)
-          ("w" "Work")
-          ("wt" "Work todo" entry
-           (file+headline +org-capture-todo-file "Work")
-           "* TODO %?  :work:\n%i\n" :prepend t)
-          ("wn" "Work note" entry
-           (file+headline +org-capture-todo-file "Work")
-           "* TODO %?  :work:\n%i\n%a" :prepend t)
-          ("p" "Templates for projects")
-          ("pt" "Project-local todo" entry
-           (file+headline +org-capture-todo-file "Project")
-           "* TODO %?\n%i\n%a" :prepend t))
-
+	org-capture-templates '(("p" "Personal")
+				("pt" "Personal todo" entry
+				 (file+headline +org-capture-todo-file "Personal")
+				 "* TODO %?  :personal:\n" :prepend t)
+				("pn" "Personal note" entry
+				 (file+headline +org-capture-todo-file "Personal")
+				 "* TODO %?  :personal:\n%i\n%a" :prepend t)
+				("w" "Work")
+				("wt" "Work todo" entry
+				 (file+headline +org-capture-todo-file "Work")
+				 "* TODO %?  :work:\n%i\n" :prepend t)
+				("wn" "Work note" entry
+				 (file+headline +org-capture-todo-file "Work")
+				 "* TODO %?  :work:\n%i\n%a" :prepend t))
 	;; org-drill
 	org-drill-spaced-repetition-algorithm 'sm2
 
