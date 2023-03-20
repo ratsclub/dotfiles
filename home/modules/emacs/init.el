@@ -101,6 +101,7 @@
    (compilation-filter . ansi-color-compilation-filter)))
 
 (use-package windmove
+  :ensure nil
   :bind
   (("C-c <left>" .  'windmove-left)
    ("C-c <right>" . 'windmove-right)
@@ -354,6 +355,7 @@
   (treemacs-hide-gitignored-files-mode t))
 
 (use-package treesit
+  :ensure nil
   :preface
   (dolist (mapping '((python-mode . python-ts-mode)
                      (css-mode . css-ts-mode)
