@@ -276,6 +276,9 @@
 	;; set source block indentation to 0
 	org-edit-src-content-indentation 0
 
+	;; todo keywords to cycle through
+	org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAIT(w)" "IDEA(i)" "|" "DONE(d)"))
+
 	;; todo file used on org-capture for org-agenda
 	+org-capture-todo-file (concat org-directory "/todo.org")
 	org-capture-templates '(("p" "Personal")
