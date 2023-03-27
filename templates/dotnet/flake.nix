@@ -1,46 +1,40 @@
 {
-  description = ".NET project template";
-
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
+    devenv.url = "github:cachix/devenv";
   };
 
-  outputs = inputs@{ nixpkgs, ... }:
-    inputs.utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-      in
-      rec {
-        # `nix build`
-        packages.default = with pkgs; buildDotnetModule {
-          name = "Project";
-          src = ./.;
-          projectFile = "Project.sln";
-
-          # to generate a new dependency file run:
-          # `nix build .#default.passthru.fetch-deps && sh ./result`
-          # and then copy the printed path to this directory with the name deps.nix
-          nugetDeps = ./deps.nix;
-
-          dotnet-sdk = dotnetCorePackages.sdk_6_0;
-          dotnet-runtime = dotnet-aspnetcore;
-        };
-
-        # `nix run`
-        apps.default = inputs.utils.lib.mkApp { drv = packages.default; };
-
-        # `nix develop`
-        devShells.default = with pkgs; mkShell {
-          buildInputs = [
-            dotnet-sdk
-            icu
-          ];
-
-          shellHook = ''
-            export DOTNET_ROOT=${dotnet-sdk}
-            export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${lib.makeLibraryPath [ icu  ]}
-          '';
-        };
-      });
+  outputs = { self, nixpkgs, devenv, ... } @ inputs:
+    let
+      systems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
+      forAllSystems = f: builtins.listToAttrs (map (name: { inherit name; value = f name; }) systems);
+    in
+    {
+      devShells = forAllSystems (system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = devenv.lib.mkShell {
+            inherit inputs pkgs;
+            modules = [
+              ({ pkgs, ... }:
+                let
+                  inherit (pkgs) dotnetCorePackages;
+                  dotnet = (with dotnetCorePackages; combinePackages [
+                    sdk_6_0
+                    sdk_7_0
+                  ]);
+                in
+                {
+                  languages.dotnet = {
+                    enable = true;
+                    package = dotnet;
+                  };
+                })
+            ];
+          };
+        });
+    };
 }
+
