@@ -281,7 +281,10 @@
 
 	;; todo file used on org-capture for org-agenda
 	+org-capture-todo-file (concat org-directory "/todo.org")
-	org-capture-templates '(("p" "Personal")
+
+	;; org-drill file used for SRS
+	+org-capture-drill-file (concat org-directory "/drill.org")
+	org-capture-templates `(("p" "Personal")
 				("pt" "Personal todo" entry
 				 (file+headline +org-capture-todo-file "Personal")
 				 "* TODO %?  :personal:\n" :prepend t)
@@ -294,7 +297,18 @@
 				 "* TODO %?  :work:\n%i\n" :prepend t)
 				("wn" "Work note" entry
 				 (file+headline +org-capture-todo-file "Work")
-				 "* TODO %?  :work:\n%i\n%a" :prepend t))
+				 "* TODO %?  :work:\n%i\n%a" :prepend t)
+				("d" "Drill")
+				("dd" "Drill simple" entry
+				 (file +org-capture-drill-file)
+				 "* Item :drill:\n%?\n")
+				("dc" "Drill cloze 2" entry
+				 (file +org-capture-drill-file)
+				 ,(concat "* Item           :drill:\n"
+					  ":PROPERTIES:\n"
+					  ":drill_card_type: hide2cloze\n\n"
+					  ":END:\n"
+					  "%?\n")))
 	;; org-drill
 	org-drill-spaced-repetition-algorithm 'sm2
 
