@@ -31,7 +31,7 @@ in
 
       imap.host = "imap.mailbox.org";
       smtp.host = "smtp.mailbox.org";
-      passwordCommand = "cat ${osConfig.age.secrets.mailbox.path}";
+      passwordCommand = "";
 
       notmuch.enable = true;
       msmtp.enable = true;

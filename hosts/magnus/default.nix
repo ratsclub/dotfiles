@@ -62,13 +62,6 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  age.identityPaths = [ "/home/victor/.ssh/id_ed25519" ];
-  age = {
-    secrets.mailbox = {
-      file = ../../secrets/mailbox.age;
-      owner = "victor";
-    };
-  };
   home-manager = {
     useUserPackages = true;
     users.victor = {
