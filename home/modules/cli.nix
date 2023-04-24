@@ -28,7 +28,7 @@ in
 
   programs.fzf.enable = true;
   home.sessionVariables = {
-    EDITOR = "vi";
+    EDITOR = "emacs -nw";
     FZF_DEFAULT_OPTS = ''--prompt \" λ \"'';
   };
 }
