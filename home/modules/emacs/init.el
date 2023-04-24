@@ -53,6 +53,12 @@
   ;; remove scratch initial message
   (setq initial-scratch-message nil)
 
+  ;; case-insensitive completion and search
+  (setq case-fold-search t
+	completion-ignore-case t
+	read-file-name-completion-ignore-case t
+	read-buffer-completion-ignore-case t)
+
   ;; backup and lock files
   ;; Instead of littering the current project's directory, we can use
   ;; the xdg variables we defined to improve things up.
