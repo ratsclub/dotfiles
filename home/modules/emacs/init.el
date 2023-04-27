@@ -18,6 +18,9 @@
 	user-emacs-data-directory (concat (getenv "HOME") "/.local/share/emacs")
 	user-emacs-cache-directory (concat (getenv "HOME") "/.cache/emacs"))
 
+  ;; set font
+  (set-face-attribute 'default nil :font "JetBrains Mono")
+
   ;; remove useless welcome screen
   (setq inhibit-startup-screen t)
 
