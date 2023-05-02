@@ -7,48 +7,66 @@
       ../../modules/common/nix.nix
       ../../modules/common/user.nix
       inputs.agenix.nixosModules.age
+      inputs.ermo.nixosModules.default
+
+      ./webserver.nix
+      ./synapse.nix
+      ./tailscale.nix
     ];
 
   boot.loader.grub.device = "/dev/sda";
 
   networking = {
     hostName = "teresa";
+    domain = "glorifiedgluer.com";
     networkmanager.enable = true;
-
-    # caddy ports
-    firewall.allowedTCPPorts = [ 80 443 ];
   };
 
   time.timeZone = "America/Sao_Paulo";
 
-  # nfs
-  environment.systemPackages = with pkgs; [ nfs-utils ];
-  boot.initrd = {
-    supportedFilesystems = [ "nfs" ];
-    kernelModules = [ "nfs" ];
-  };
-  fileSystems."/mnt/backup" = {
-    device = "10.0.0.2:/volume1/backup";
-    fsType = "nfs";
-  };
-
-  # postgres
-  services = {
-    postgresql = {
-      enable = true;
-      package = pkgs.postgresql_15;
-    };
-    postgresqlBackup = {
-      enable = true;
-      backupAll = true;
-      compression = "zstd";
-      location = "/mnt/backup/postgresql";
-      startAt = "daily";
-    };
-  };
-
   programs.htop.enable = true;
-  services.openssh.enable = true;
+
+  services = {
+    openssh = {
+      enable = true;
+      settings.PermitRootLogin = "yes";
+    };
+  };
+
+  ermo.meta = {
+    username = config.users.users.victor.name;
+    authorizedKeys = config.users.users.victor.openssh.authorizedKeys.keys;
+    domain = "gluer.org";
+  };
+
+  ermo.services.cgit = {
+    enable = true;
+    repositories = {
+      "personal/nix-config" = { };
+      "public/ermo".extraConfig = ''
+        desc=tailored nixos modules for single-user usages
+      '';
+      "websites/capivaras.dev" = { };
+      "websites/gluer.org" = { };
+    };
+  };
+
+  ermo.services.webserver = {
+    enable = true;
+    webserver = "caddy";
+    websites = [
+      { domain = "gluer.org"; }
+      { domain = "capivaras.dev"; }
+    ];
+  };
+
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  services.caddy.enable = true;
+
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "victor+acme@freire.dev.br";
+  };
 
   system.stateVersion = "22.05";
 }

@@ -2,7 +2,9 @@
 
 let
   keys = [
+    # TODO: redo my ssh keys
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIEpBZXIOn5Eeq2peV4gH3jSf2fqinRnTPHd1NHlscLZ"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8w7K7WeGfbdcTOM2lfXhEWKI+pNgFzNOwM8HkTIABz"
 
     # yubikeys
     "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIDWji4AKnNF0O1Y4BZqP5fbkFwuzSt0CS8qEY+fwsXGOAAAABHNzaDo="

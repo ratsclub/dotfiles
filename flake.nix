@@ -17,6 +17,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    ermo = {
+      url = "github:capivarasdev/ermo";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     agenix = {
       url = "github:ambroisie/agenix/add-home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -46,6 +51,7 @@
       overlays = import ./overlays;
       homeConfigurations = import ./home { inherit inputs self; };
       nixosConfigurations = import ./hosts { inherit inputs outputs; };
+      nixosModules = import ./modules;
       templates = import ./templates;
     };
 }
