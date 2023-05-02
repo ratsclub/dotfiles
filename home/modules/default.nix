@@ -11,6 +11,10 @@ in
   colorscheme = nixColors.colorSchemes.monokai;
   fonts.fontconfig.enable = true;
 
+  age.identityPaths = [
+    "${config.home.homeDirectory}/.ssh/id_ed25519"
+  ];
+
   nix = {
     package = pkgs.nixUnstable;
     registry.nixpkgs.flake = nixpkgs;

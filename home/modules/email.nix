@@ -1,9 +1,13 @@
-{ osConfig, config, pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   notmuch = "${pkgs.notmuch}/bin/notmuch";
 in
 {
+  age.secrets.mailbox.file = ../../secrets/mailbox.age;
+
+  services.mbsync.enable = true;
+
   programs = {
     mbsync.enable = true;
     msmtp.enable = true;
@@ -31,7 +35,7 @@ in
 
       imap.host = "imap.mailbox.org";
       smtp.host = "smtp.mailbox.org";
-      passwordCommand = "";
+      passwordCommand = "cat ${config.age.secrets.mailbox.path}";
 
       notmuch.enable = true;
       msmtp.enable = true;
@@ -42,6 +46,7 @@ in
 
       signature = {
         text = ''
+          --
           ${realName}
         '';
         showSignature = "append";

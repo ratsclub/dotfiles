@@ -18,7 +18,7 @@
     };
 
     agenix = {
-      url = "github:ryantm/agenix";
+      url = "github:ambroisie/agenix/add-home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
