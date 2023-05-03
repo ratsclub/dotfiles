@@ -8,7 +8,8 @@ let
   customEmacs = pkgs.emacsWithPackagesFromUsePackage {
     config = ./init.el;
     alwaysEnsure = true;
-    package = pkgs.emacsGit;
+    package = pkgs.emacsUnstable;
+    extraEmacsPackages = epkgs: [ ];
   };
 in
 {
