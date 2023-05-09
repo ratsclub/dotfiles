@@ -3,7 +3,7 @@
 let
   inherit (pkgs)
     nixpkgs-fmt
-    rnix-lsp
+    nil
     rust-analyzer
     ;
 in
@@ -32,7 +32,7 @@ in
       "nix" = {
         "enableLanguageServer" = true;
         "formatterPath" = "${nixpkgs-fmt}/bin/nixpkgs-fmt";
-        "serverPath" = "${rnix-lsp}/bin/rnix-lsp";
+        "serverPath" = "${nil}/bin/nil";
       };
       "[nix]" = {
         "editor.insertSpaces" = true;

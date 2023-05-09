@@ -226,7 +226,8 @@
   (require 'eglot-fsharp)
   (add-to-list 'eglot-server-programs '((rust-ts-mode) "rust-analyzer"))
   (add-to-list 'eglot-server-programs
-	       '((javascript-mode typescript-ts-mode) "typescript-language-server" "--stdio")))
+	       '((javascript-mode typescript-ts-mode) "typescript-language-server" "--stdio"))
+  (add-to-list 'eglot-server-programs '(nix-mode . ("nil"))))
 
 (use-package org
   :ensure org-contrib
