@@ -1,87 +1,68 @@
-{ config, inputs, pkgs, ... }:
+{ config, lib, inputs, pkgs, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
     ../../modules/common/nix.nix
-
-    inputs.homeManager.nixosModules.home-manager
-    inputs.hardware.nixosModules.lenovo-thinkpad-t495
+    ../../modules/common/user.nix
     inputs.agenix.nixosModules.age
+    inputs.ermo.nixosModules.default
   ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  networking = {
+    domain = "gluer.org";
+    hostName = "magnus";
 
-  networking.hostName = "magnus";
-  networking.networkmanager.enable = true;
+    firewall.allowedTCPPorts = [ 80 443 ];
 
-  time.timeZone = "America/Sao_Paulo";
-
-  i18n.defaultLocale = "en_US.utf8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "pt_BR.utf8";
-    LC_IDENTIFICATION = "pt_BR.utf8";
-    LC_MEASUREMENT = "pt_BR.utf8";
-    LC_MONETARY = "pt_BR.utf8";
-    LC_NAME = "pt_BR.utf8";
-    LC_NUMERIC = "pt_BR.utf8";
-    LC_PAPER = "pt_BR.utf8";
-    LC_TELEPHONE = "pt_BR.utf8";
-    LC_TIME = "pt_BR.utf8";
-  };
-
-  services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  services.xserver = {
-    layout = "br";
-    xkbVariant = "nodeadkeys";
-  };
-
-  console.keyMap = "br-abnt2";
-
-  services.printing.enable = true;
-
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
-  users.users.victor = {
-    isNormalUser = true;
-    description = "victor";
-    extraGroups = [ "networkmanager" "wheel" ];
-  };
-
-  nixpkgs.config.allowUnfree = true;
-
-  home-manager = {
-    useUserPackages = true;
-    users.victor = {
-      imports = [
-        ../../home/modules
-        ../../home/modules/bash.nix
-        ../../home/modules/cli.nix
-        ../../home/modules/doom
-        ../../home/modules/git.nix
-        ../../home/modules/email.nix
-
-        # gui
-        ../../home/modules/chromium.nix
-        ../../home/modules/firefox.nix
-        ../../home/modules/gui.nix
-        ../../home/modules/vscodium.nix
-      ];
+    nameservers = [ "8.8.8.8" ];
+    defaultGateway = "172.31.1.1";
+    defaultGateway6 = {
+      address = "fe80::1";
+      interface = "eth0";
     };
-    extraSpecialArgs = { inherit inputs pkgs; };
+    dhcpcd.enable = false;
+    usePredictableInterfaceNames = lib.mkForce false;
+    interfaces = {
+      eth0 = {
+        ipv4.addresses = [
+          { address = "128.140.88.168"; prefixLength = 32; }
+        ];
+        ipv6.addresses = [
+          { address = "2a01:4f8:c010:819a::1"; prefixLength = 64; }
+          { address = "fe80::9400:2ff:fe2d:de13"; prefixLength = 64; }
+        ];
+        ipv4.routes = [{ address = "172.31.1.1"; prefixLength = 32; }];
+        ipv6.routes = [{ address = "fe80::1"; prefixLength = 128; }];
+      };
+
+    };
+  };
+  services.udev.extraRules = ''
+    ATTR{address}=="96:00:02:2d:de:13", NAME="eth0"
+  '';
+
+  ermo.meta = {
+    username = config.users.users.victor.name;
+    authorizedKeys = config.users.users.victor.openssh.authorizedKeys.keys;
+    domain = config.networking.domain;
   };
 
-  system.stateVersion = "22.05";
+  ermo.services.webserver = {
+    enable = true;
+    webserver = "caddy";
+    user = config.ermo.meta.username;
+    websites = [
+      { domain = "gluer.org"; }
+    ];
+  };
+
+  services.tailscale.enable = true;
+
+  boot.tmp.cleanOnBoot = true;
+  zramSwap.enable = true;
+
+  services.openssh.enable = true;
+
+  system.stateVersion = "23.05";
 }

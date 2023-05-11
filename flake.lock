@@ -179,11 +179,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1683586184,
-        "narHash": "sha256-wJKr4+k4rHflwD6i/absANzeVhpIUeHfj/DbMFDTkK4=",
+        "lastModified": 1683589648,
+        "narHash": "sha256-MwOzoYHbI8c2y5xLNz8NBQPT1r+uhM4+N0jOBda1Xk4=",
         "owner": "capivarasdev",
         "repo": "ermo",
-        "rev": "409463c9812bcba1241b05785cd80957f539051d",
+        "rev": "5e232f91b0b1d1a551de6f1490b3234591e0be6c",
         "type": "github"
       },
       "original": {

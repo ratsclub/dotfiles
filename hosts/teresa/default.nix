@@ -55,7 +55,6 @@
     enable = true;
     webserver = "caddy";
     websites = [
-      { domain = "gluer.org"; }
       { domain = "capivaras.dev"; }
     ];
   };
