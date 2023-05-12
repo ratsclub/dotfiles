@@ -65,7 +65,12 @@
   boot.tmp.cleanOnBoot = true;
   zramSwap.enable = true;
 
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+    };
+  };
 
   system.stateVersion = "23.05";
 }
