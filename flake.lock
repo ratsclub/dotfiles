@@ -9,16 +9,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1683061796,
-        "narHash": "sha256-OY71qT7byuEx1EcH11cOPmQSnfunwsmgf2y3aVUIrQQ=",
-        "owner": "ambroisie",
+        "lastModified": 1683866323,
+        "narHash": "sha256-M2bEuh2jr0Ec13GnP5f8unD8q0AcPt2fHSUynOZJ8No=",
+        "owner": "ryantm",
         "repo": "agenix",
-        "rev": "a26aaf0e0fac2dee451cb2831dbbfd9b3935e298",
+        "rev": "92197270a1eedd142a4aff853e4cc6d1e838c22f",
         "type": "github"
       },
       "original": {
-        "owner": "ambroisie",
-        "ref": "add-home-manager",
+        "owner": "ryantm",
         "repo": "agenix",
         "type": "github"
       }
