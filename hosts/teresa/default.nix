@@ -35,24 +35,6 @@
     };
   };
 
-  ermo.meta = {
-    username = config.users.users.victor.name;
-    authorizedKeys = config.users.users.victor.openssh.authorizedKeys.keys;
-    domain = "gluer.org";
-  };
-
-  ermo.services.cgit = {
-    enable = true;
-    repositories = {
-      "personal/nix-config" = { };
-      "public/ermo".extraConfig = ''
-        desc=tailored nixos modules for single-user usages
-      '';
-      "websites/capivaras.dev" = { };
-      "websites/gluer.org" = { };
-    };
-  };
-
   ermo.services.webserver = {
     enable = true;
     webserver = "caddy";

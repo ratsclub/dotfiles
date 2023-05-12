@@ -8,8 +8,10 @@
     ../../modules/common/nix.nix
     ../../modules/common/user.nix
 
+    ../../modules/services/git.nix
+    ../../modules/services/webserver.nix
+
     inputs.agenix.nixosModules.age
-    inputs.ermo.nixosModules.default
   ];
 
   networking = {
@@ -45,20 +47,23 @@
     ATTR{address}=="96:00:02:2d:de:13", NAME="eth0"
   '';
 
-  ermo.meta = {
-    username = config.users.users.victor.name;
-    authorizedKeys = config.users.users.victor.openssh.authorizedKeys.keys;
-    domain = config.networking.domain;
-  };
-
-  ermo.services.webserver = {
+  gluer.services.webserver = {
     enable = true;
-    webserver = "caddy";
-    user = config.ermo.meta.username;
+    user = config.users.users.victor.name;
     websites = [
       { domain = "gluer.org"; }
     ];
   };
+
+  gluer.services.git = {
+    enable = true;
+    authorizedKeys = config.users.users.victor.openssh.authorizedKeys.keys;
+    repositories = [
+      { name = "website"; description = "my website"; }
+    ];
+  };
+
+  security.acme.defaults.email = "victor@freire.dev.br";
 
   services.tailscale.enable = true;
 
