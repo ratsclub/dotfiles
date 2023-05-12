@@ -3,8 +3,11 @@
 {
   imports = [
     ./hardware-configuration.nix
+
+    ../../modules/common/autoUpgrade.nix
     ../../modules/common/nix.nix
     ../../modules/common/user.nix
+
     inputs.agenix.nixosModules.age
     inputs.ermo.nixosModules.default
   ];

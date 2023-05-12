@@ -4,14 +4,16 @@
   imports =
     [
       ./hardware-configuration.nix
-      ../../modules/common/nix.nix
-      ../../modules/common/user.nix
-      inputs.agenix.nixosModules.age
-      inputs.ermo.nixosModules.default
-
       ./webserver.nix
       ./synapse.nix
       ./tailscale.nix
+
+      ../../modules/common/autoUpgrade.nix
+      ../../modules/common/nix.nix
+      ../../modules/common/user.nix
+
+      inputs.agenix.nixosModules.age
+      inputs.ermo.nixosModules.default
     ];
 
   boot.loader.grub.device = "/dev/sda";
