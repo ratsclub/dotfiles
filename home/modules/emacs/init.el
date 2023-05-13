@@ -210,7 +210,7 @@
 
 (use-package eglot
   :ensure t
-  :hook ((go-mode . eglot-ensure)
+  :hook ((go-ts-mode . eglot-ensure)
 	 (fsharp-mode . eglot-ensure)
 	 (rust-mode . eglot-ensure)
 	 (typescript-mode . eglot-ensure))
@@ -388,4 +388,7 @@
 		     (toml-mode . toml-ts-mode)
                      (css-mode . css-ts-mode)
                      (yaml-mode . yaml-ts-mode)))
-    (add-to-list 'major-mode-remap-alist mapping)))
+    (add-to-list 'major-mode-remap-alist mapping))
+  :init
+  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
+  (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode)))
