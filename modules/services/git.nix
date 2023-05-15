@@ -25,11 +25,14 @@ let
 
   mkRepoScript = repo:
     let
-      path = normalizePath "${cfg.dataDir}/${escapeShellArg repo.name}.git";
+      path = normalizePath "${cfg.dataDir}/${escapeShellArg repo.name}";
     in
     ''
       # safe to run on an existing repo
       git init --quiet --bare ${path}
+
+      # set default branch
+      git --git-dir=${path} symbolic-ref HEAD refs/heads/${repo.defaultBranch}
 
       # add repository description
       echo "${repo.description}" > ${path}/description
@@ -74,12 +77,17 @@ in
           name = mkOption {
             type = types.nullOr types.str;
             default = null;
-            description = "Repository path";
+            description = "Repository's path";
           };
           description = mkOption {
             type = types.str;
             default = "";
-            description = "Repository description";
+            description = "Repository's description";
+          };
+          defaultBranch = mkOption {
+            type = types.str;
+            default = "main";
+            description = "Repository's default branch";
           };
         };
       });

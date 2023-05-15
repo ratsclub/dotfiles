@@ -22,6 +22,22 @@
         "type": "github"
       }
     },
+    "artwork": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1684185167,
+        "narHash": "sha256-Mn8SU6sHsBaU2yTju26QtPDNuF65KdRlMogISjIjeIY=",
+        "ref": "refs/heads/main",
+        "rev": "19e1baed4707d093235d1d11082db039832e11dc",
+        "revCount": 1,
+        "type": "git",
+        "url": "https://git.gluer.org/artwork"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.gluer.org/artwork"
+      }
+    },
     "base16-schemes": {
       "flake": false,
       "locked": {
@@ -598,6 +614,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "artwork": "artwork",
         "emacs": "emacs",
         "hardware": "hardware",
         "homeManager": "homeManager",
