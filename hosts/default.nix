@@ -18,15 +18,6 @@ let
     };
 in
 {
-  teresa = nixpkgs.lib.nixosSystem rec {
-    system = "x86_64-linux";
-    pkgs = mkPkgs {
-      inherit nixpkgs system;
-    };
-    modules = [ ./teresa ];
-    specialArgs = { inherit inputs; };
-  };
-
   magnus = nixpkgs.lib.nixosSystem rec {
     system = "aarch64-linux";
     pkgs = mkPkgs {

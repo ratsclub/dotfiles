@@ -118,13 +118,13 @@
     };
   };
 
-  # gluer.services.git = {
-  #   enable = true;
-  #   authorizedKeys = config.users.users.victor.openssh.authorizedKeys.keys;
-  #   repositories = [
-  #     { name = "website"; description = "my website"; }
-  #   ];
-  # };
+  gluer.services.git = {
+    enable = true;
+    authorizedKeys = config.users.users.victor.openssh.authorizedKeys.keys;
+    repositories = [
+      { name = "website"; description = "my website"; }
+    ];
+  };
 
   security.acme.defaults.email = "victor@freire.dev.br";
 
