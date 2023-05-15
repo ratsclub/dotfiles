@@ -55,13 +55,76 @@
     ];
   };
 
-  gluer.services.git = {
+  services.nginx = {
     enable = true;
-    authorizedKeys = config.users.users.victor.openssh.authorizedKeys.keys;
-    repositories = [
-      { name = "website"; description = "my website"; }
-    ];
+    virtualHosts = {
+      "glorifiedgluer.com" = {
+        enableACME = true;
+        forceSSL = true;
+        globalRedirect = config.networking.domain;
+      };
+      "media.glorifiedgluer.com" = {
+        enableACME = true;
+        forceSSL = true;
+        globalRedirect = "media.${config.networking.domain}";
+      };
+      "media.gluer.org" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/".proxyPass = "http://olga:8096";
+      };
+
+      # matrix synapse
+      "glorifiedgluer.com" = {
+        locations."= /.well-known/matrix/server".extraConfig =
+          let
+            # use 443 instead of the default 8008 port to unite
+            # the client-server and server-server port for simplicity
+            server = {
+              "m.server" = "matrix.glorifiedgluer.com:443";
+            };
+          in
+          ''
+            add_header Content-Type application/json;
+            return 200 '${builtins.toJSON server}';
+          '';
+        locations."= /.well-known/matrix/client".extraConfig =
+          let
+            client = {
+              "m.homeserver" = { "base_url" = "https://matrix.glorifiedgluer.com"; };
+            };
+            # ACAO required to allow element-web on any URL to request this json file
+          in
+          ''
+            access_log /var/log/nginx/matrix.access.log;
+            add_header Content-Type application/json;
+            add_header Access-Control-Allow-Origin *;
+            return 200 '${builtins.toJSON client}';
+          '';
+      };
+
+      "matrix.glorifiedgluer.com" = {
+        enableACME = true;
+        forceSSL = true;
+
+        locations."/_matrix" = {
+          proxyPass = "http://olga:8008"; # without a trailing /
+          extraConfig = ''
+            proxy_send_timeout 100;
+          '';
+        };
+        locations."/_synapse".proxyPass = "http://olga:8008";
+      };
+    };
   };
+
+  # gluer.services.git = {
+  #   enable = true;
+  #   authorizedKeys = config.users.users.victor.openssh.authorizedKeys.keys;
+  #   repositories = [
+  #     { name = "website"; description = "my website"; }
+  #   ];
+  # };
 
   security.acme.defaults.email = "victor@freire.dev.br";
 

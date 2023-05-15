@@ -4,7 +4,6 @@
   imports =
     [
       ./hardware-configuration.nix
-      ./webserver.nix
       ./synapse.nix
       ./tailscale.nix
 
