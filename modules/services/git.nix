@@ -85,12 +85,6 @@ in
       });
     };
 
-    domain = mkOption {
-      type = types.str;
-      default = "${config.networking.domain}";
-      description = lib.mdDoc "Domain to use.";
-    };
-
     authorizedKeys = mkOption {
       type = types.listOf types.str;
       default = [ ];
