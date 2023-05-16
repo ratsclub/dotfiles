@@ -12,9 +12,10 @@
       # nix
       "result"
 
-      # direnv
+      # direnv/devenv
       ".envrc"
       ".direnv"
+      ".devenv"
 
       # vscode
       ".vscode"
