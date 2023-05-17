@@ -16,6 +16,7 @@
       ".envrc"
       ".direnv"
       ".devenv"
+      ".pre-commit-config.yaml"
 
       # vscode
       ".vscode"
