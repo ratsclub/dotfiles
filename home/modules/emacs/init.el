@@ -387,6 +387,7 @@
 		     (json-mode . json-ts-mode)
 		     (toml-mode . toml-ts-mode)
                      (css-mode . css-ts-mode)
+		     (java-mode . java-ts-mode)
                      (yaml-mode . yaml-ts-mode)))
     (add-to-list 'major-mode-remap-alist mapping))
   :init
