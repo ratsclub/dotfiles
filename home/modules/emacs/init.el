@@ -107,7 +107,12 @@
    (org-mode . display-line-numbers-mode)
 
    ;; colors in compilation-mode
-   (compilation-filter . ansi-color-compilation-filter)))
+   (compilation-filter . ansi-color-compilation-filter))
+
+  :mode
+  (("\\.go\\'" . go-ts-mode)
+   ("/go\\.mod\\'" . go-mod-ts-mode)
+   ("\\.ya?ml$" . yaml-ts-mode)))
 
 (use-package windmove
   :ensure nil
@@ -389,7 +394,4 @@
                      (css-mode . css-ts-mode)
 		     (java-mode . java-ts-mode)
                      (yaml-mode . yaml-ts-mode)))
-    (add-to-list 'major-mode-remap-alist mapping))
-  :init
-  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
-  (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode)))
+    (add-to-list 'major-mode-remap-alist mapping)))
