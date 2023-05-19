@@ -27,6 +27,7 @@ in
   };
 
   accounts.email = {
+    maildirBasePath = "${config.xdg.dataHome}/Maildir";
     accounts.personal = rec {
       realName = "Victor Freire";
       address = "victor@freire.dev.br";
