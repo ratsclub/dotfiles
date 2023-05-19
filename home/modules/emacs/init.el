@@ -395,3 +395,15 @@
 		     (java-mode . java-ts-mode)
                      (yaml-mode . yaml-ts-mode)))
     (add-to-list 'major-mode-remap-alist mapping)))
+
+;; my functions
+(defun gluer/slugify ()
+  "copies a slugified string of the active region, mainly used to
+create slugs for my website"
+  (interactive)
+  (when (use-region-p)
+    (let* ((str (buffer-substring (region-beginning) (region-end)))
+	   (slug (org-hugo-slug str)))
+      (kill-new slug)
+      (message "copied '%s' to the clipboard" slug))))
+
