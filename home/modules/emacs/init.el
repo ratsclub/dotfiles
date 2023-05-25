@@ -248,6 +248,8 @@
     :after org-agenda
     :config (org-super-agenda-mode))
 
+  ;; add items to structure template list
+  (add-to-list 'org-structure-template-alist '("d" . "description"))
 
   (setq org-directory "~/org"
 	org-log-done 'time
