@@ -239,45 +239,15 @@
   :defines org-element-use-cache
   :config
   (use-package ox-hugo :defer t)
-  (use-package org-drill :defer t)
-
-  (use-package org-roam
+  (use-package org-drill
     :defer t
-    :bind (("C-c n l" . org-roam-buffer-toggle)
-           ("C-c n f" . org-roam-node-find)
-           ("C-c n i" . org-roam-node-insert)
-	   :map org-roam-dailies-map
-           ("Y" . org-roam-dailies-capture-yesterday)
-           ("T" . org-roam-dailies-capture-tomorrow))
-    :bind-keymap
-    ("C-c n d" . org-roam-dailies-map)
     :config
-    (require 'org-roam-dailies)
-    (org-roam-db-autosync-mode)
-
-    (setq org-roam-capture-templates
-	  '(("d" "default" plain "%?" :target
-	     (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-			;; using `LASTMOD` just so this gets exported with ox-hugo
-			"#+TITLE: ${title}\n#+DATE: %U\n#+LASTMOD: %U\n\n")
-	     :unnarrowed t)))
-
-
-    :hook
-    ((org-mode . (lambda ()
-                        (setq-local time-stamp-active t
-				    time-stamp-start "#\\+LASTMOD:[ \t]*"
-				    time-stamp-end "$"
-				    time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
-                             (add-hook 'before-save-hook 'time-stamp nil 'local)))))
+    (setq org-drill-spaced-repetition-algorithm 'sm2))
 
   (use-package org-super-agenda
     :after org-agenda
     :config (org-super-agenda-mode))
 
-  ;; here to remove `unsafe local variables` warning on org-roam's
-  ;; `org-roam-directory`, this should probably go away... someday
-  (setq-default enable-local-variables :all)
 
   (setq org-directory "~/org"
 	org-log-done 'time
@@ -324,8 +294,6 @@
 					  ":drill_card_type: hide2cloze\n\n"
 					  ":END:\n"
 					  "%?\n")))
-	;; org-drill
-	org-drill-spaced-repetition-algorithm 'sm2
 
 	;; org-agenda
 	org-agenda-files (list org-directory)
