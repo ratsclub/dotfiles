@@ -13,17 +13,19 @@ in
     package = pkgs.vscodium;
     userSettings = {
       "update.mode" = "none";
+
       "editor.formatOnSave" = false;
       "editor.linkedEditing" = true;
       "editor.rulers" = [ 80 120 ];
-      "workbench.tree.indent" = 15;
 
+      "workbench.tree.indent" = 15;
       "workbench.colorTheme" = "Monokai";
-      "workbench.iconTheme" = "material-icon-theme";
 
       "terminal.integrated.tabs.enabled" = true;
+
       "window.titleBarStyle" = "custom";
       "window.zoomLevel" = 0;
+
       "[html]" = {
         "editor.defaultFormatter" = "esbenp.prettier-vscode";
       };
@@ -44,18 +46,12 @@ in
     };
 
     extensions = with pkgs.vscode-extensions; [
-      # themes
-      pkief.material-icon-theme
-
       # Angular
       angular.ng-template
 
       # .NET
       ionide.ionide-fsharp
       ms-dotnettools.csharp
-
-      # Deno
-      denoland.vscode-deno
 
       # Nix
       jnoortheen.nix-ide
