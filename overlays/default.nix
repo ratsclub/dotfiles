@@ -12,8 +12,8 @@
             mktplcRef = {
               name = "Ionide-fsharp";
               publisher = "Ionide";
-              version = "7.5.3";
-              sha256 = "sha256-y3vb5Zte/fyESC63NqHCBeZ4yzE1EmseGGtHWrYGnv4=";
+              version = "7.5.4";
+              sha256 = "sha256-cM3ssUzQnqt5WL8UaLYkrmfHscVa2sGa7/UWLXMIHGg=";
             };
           };
 
