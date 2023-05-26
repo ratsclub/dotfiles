@@ -205,7 +205,10 @@
   :ensure t
   :defer t
   :config
-  (use-package forge :defer t))
+  (use-package forge :defer t)
+  (use-package magit-todos
+    :defer t
+    :hook (magit-mode . magit-todos-mode)))
 
 (use-package orderless
   :ensure t
