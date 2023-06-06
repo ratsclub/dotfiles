@@ -26,6 +26,12 @@ in
       "window.titleBarStyle" = "custom";
       "window.zoomLevel" = 0;
 
+      # F#
+      "FSharp.inlayHints.enabled" = false;
+      "FSharp.inlayHints.typeAnnotations" = false;
+      "FSharp.inlayHints.parameterNames" = false;
+
+      # HTML
       "[html]" = {
         "editor.defaultFormatter" = "esbenp.prettier-vscode";
       };
