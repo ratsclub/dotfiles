@@ -351,7 +351,8 @@
   :defer t
   :config
   (use-package treemacs-projectile :defer t)
-  (treemacs-hide-gitignored-files-mode t))
+  (setq treemacs-no-png-images t)
+  (treemacs-git-mode 'extended))
 
 (use-package treesit
   :ensure nil
