@@ -19,7 +19,7 @@ in
       "editor.rulers" = [ 80 120 ];
 
       "workbench.tree.indent" = 15;
-      "workbench.colorTheme" = "Monokai";
+      "workbench.colorTheme" = "Default Dark Modern";
 
       "terminal.integrated.tabs.enabled" = true;
 
