@@ -8,8 +8,12 @@ let
   customEmacs = pkgs.emacsWithPackagesFromUsePackage {
     config = ./init.el;
     alwaysEnsure = true;
-    package = pkgs.emacs-unstable;
-    extraEmacsPackages = epkgs: [ ];
+    package =
+      pkgs.emacs-unstable.overrideAttrs (old:
+        { withTreeSitter = true; });
+    extraEmacsPackages = epkgs: [
+      epkgs.treesit-grammars.with-all-grammars
+    ];
   };
 in
 {
