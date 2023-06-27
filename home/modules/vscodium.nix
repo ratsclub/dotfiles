@@ -18,6 +18,13 @@ in
       "editor.linkedEditing" = true;
       "editor.rulers" = [ 80 120 ];
 
+      # excluded files
+      "files.exclude" = {
+        # removes these from the search
+        "**/.direnv" = true;
+        "**/.devenv" = true;
+      };
+
       "workbench.tree.indent" = 15;
       "workbench.colorTheme" = "Default Dark Modern";
 
