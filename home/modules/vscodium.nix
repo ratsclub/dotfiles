@@ -80,6 +80,9 @@ in
       # Rust
       matklad.rust-analyzer
 
+      # SML
+      azdavis.millet
+
       # Markdown
       yzhang.markdown-all-in-one
 
