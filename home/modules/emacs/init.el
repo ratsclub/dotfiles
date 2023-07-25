@@ -221,7 +221,8 @@
   :hook ((go-ts-mode . eglot-ensure)
 	 (fsharp-mode . eglot-ensure)
 	 (rust-mode . eglot-ensure)
-	 (typescript-mode . eglot-ensure))
+	 (typescript-mode . eglot-ensure)
+	 (sml-mode . eglot-ensure))
   :bind (:map eglot-mode-map
               ("C-c r" . eglot-rename)
               ("C-c h" . eldoc)
@@ -233,6 +234,7 @@
   (use-package typescript-mode :defer t)
   (require 'eglot-fsharp)
   (add-to-list 'eglot-server-programs '((rust-ts-mode) "rust-analyzer"))
+  (add-to-list 'eglot-server-programs '((sml-mode) "millet-ls"))
   (add-to-list 'eglot-server-programs
 	       '((javascript-mode typescript-ts-mode) "typescript-language-server" "--stdio"))
   (add-to-list 'eglot-server-programs '(nix-mode . ("nil"))))
@@ -337,6 +339,10 @@
    ("C-c a" . 'org-agenda)))
 
 (use-package fsharp-mode :defer t)
+(use-package sml-mode
+  :defer t
+  :mode ("\\.\\(sml\\|sig\\)\\'" . sml-mode))
+
 (use-package nix-mode
   :defer t
   :mode "\\.nix\\'"
@@ -346,6 +352,10 @@
 (use-package direnv
   :config (direnv-mode)
   :custom (direnv-always-show-summary nil))
+
+(use-package editorconfig
+  :config
+  (editorconfig-mode 1))
 
 (use-package treemacs
   :defer t
