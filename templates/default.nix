@@ -8,4 +8,9 @@
     description = "Go project template";
     path = ./go;
   };
+
+  vm = {
+    description = "NixOS Virtual Machine template";
+    path = ./vm;
+  };
 }
