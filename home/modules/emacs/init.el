@@ -380,6 +380,11 @@
                      (yaml-mode . yaml-ts-mode)))
     (add-to-list 'major-mode-remap-alist mapping)))
 
+(use-package switch-window
+  :config
+  (setq switch-window-shortcut-style 'qwerty)
+  :bind (("C-x o" . switch-window)))
+
 ;; my functions
 (defun gluer/slugify ()
   "copies a slugified string of the active region, mainly used to

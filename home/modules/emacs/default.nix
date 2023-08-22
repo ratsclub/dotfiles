@@ -30,6 +30,7 @@ in
       nix-mode
       orderless
       sml-mode
+      switch-window
       treemacs
       treemacs-projectile
       typescript-mode
