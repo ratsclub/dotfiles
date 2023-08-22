@@ -1,9 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <Deterministic>true</Deterministic>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <MSBuildTreatWarningsAsErrors>true</MSBuildTreatWarningsAsErrors>
-
-    <TargetFramework>net6.0</TargetFramework>
-  </PropertyGroup>
-</Project>
