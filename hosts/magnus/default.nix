@@ -1,5 +1,8 @@
 { config, lib, inputs, pkgs, ... }:
 
+let
+  user = "victor";
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -7,12 +10,6 @@
     ../../modules/common/autoUpgrade.nix
     ../../modules/common/nix.nix
     ../../modules/common/user.nix
-
-    ../../modules/services/git.nix
-    ../../modules/services/legit.nix
-    ../../modules/services/webserver.nix
-
-    inputs.agenix.nixosModules.age
   ];
 
   networking = {
@@ -48,86 +45,29 @@
     ATTR{address}=="96:00:02:2d:de:13", NAME="eth0"
   '';
 
-  gluer = {
-    services.webserver = {
-      enable = true;
-      user = config.users.users.victor.name;
-      websites = [
-        { domain = "gluer.org"; }
-      ];
-    };
-
-    services.git = {
-      enable = true;
-      authorizedKeys = config.users.users.victor.openssh.authorizedKeys.keys;
-      repositories = [
-        { name = "website"; description = "my website"; }
-        { name = "artwork"; description = "project-related artwork"; }
-        { name = "legit-theme"; description = "theme for legit"; }
-      ];
-    };
-
-    services.legit = {
-      enable = true;
-      user = config.gluer.services.git.user;
-      group = config.gluer.services.git.group;
-      settings = {
-        meta = {
-          title = "git";
-          description = "personal projects";
-        };
-
-        repo.scanPath = config.gluer.services.git.dataDir;
-        server.name = "git.${config.networking.domain}";
-        dirs =
-          let
-            pkg = config.gluer.services.legit.package;
-            artwork = inputs.artwork.outPath;
-
-            static = pkgs.linkFarm "static" [
-              { name = "legit.png"; path = "${artwork}/gluer.org/shiba-computer-low.jpg"; }
-              { name = "style.css"; path = "${pkg}/lib/static/style.css"; }
-            ];
-          in
-          {
-            inherit static;
-            templates = "${pkg}/lib/templates";
-          };
-      };
-    };
-  };
-
+  systemd.tmpfiles.rules = [
+    # create the websites directories
+    "d /var/lib/www/${config.networking.domain} 770 ${user} nginx - -"
+  ];
   services.nginx = {
     enable = true;
     virtualHosts =
-      let
-        legitServer = config.gluer.services.legit.settings.server;
-      in
       {
-        "${legitServer.name}" = {
+        "${config.networking.domain}" = {
           enableACME = true;
           forceSSL = true;
-          locations."~/".proxyPass = "http://${legitServer.host}:${builtins.toString legitServer.port}";
+          root = "/var/lib/www/${config.networking.domain}";
         };
         "glorifiedgluer.com" = {
           enableACME = true;
           forceSSL = true;
           globalRedirect = config.networking.domain;
         };
-        "media.glorifiedgluer.com" = {
-          enableACME = true;
-          forceSSL = true;
-          globalRedirect = "media.${config.networking.domain}";
-        };
-        "media.gluer.org" = {
-          enableACME = true;
-          forceSSL = true;
-          locations."/".proxyPass = "http://olga:8096";
-        };
       };
   };
 
   security.acme.defaults.email = "victor@freire.dev.br";
+  security.acme.acceptTerms = true;
 
   services.tailscale.enable = true;
 
@@ -141,5 +81,5 @@
     };
   };
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "23.11";
 }
