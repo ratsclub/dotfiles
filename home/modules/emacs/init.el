@@ -9,7 +9,10 @@
   (require 'use-package))
 
 ;; always ensure that use-package will download the needed packages
-(setq use-package-always-ensure t)
+(setq use-package-always-ensure nil)
+
+;; ensure bind-key is available
+(use-package bind-key)
 
 (use-package emacs
   :init
@@ -22,7 +25,9 @@
   (set-face-attribute 'default nil :font "JetBrains Mono")
 
   ;; remove useless welcome screen
-  (setq inhibit-startup-screen t)
+  (setq inhibit-startup-screen t
+	inhibit-splash-screen t
+	inhibit-startup-message t)
 
   ;; remove ring bell sound and activate visual bell
   (setq ring-bell-function 'ignore
@@ -115,7 +120,6 @@
    ("\\.ya?ml$" . yaml-ts-mode)))
 
 (use-package windmove
-  :ensure nil
   :bind
   (("C-c <left>" .  'windmove-left)
    ("C-c <right>" . 'windmove-right)
@@ -128,7 +132,6 @@
   (which-key-mode))
 
 (use-package corfu
-  :ensure t
   :init
   (setq tab-always-indent 'complete
 	completion-cycle-threshold nil)
@@ -159,7 +162,6 @@
   (corfu-popupinfo-mode))
 
 (use-package consult
-  :ensure t
   :hook ((completion-list-mode . consult-preview-at-point-mode))
   :init
   (setq register-preview-delay 0.5
@@ -186,12 +188,10 @@
   (setq consult-narrow-key "<"))
 
 (use-package vertico
-  :ensure t
   :init
   (vertico-mode))
 
 (use-package marginalia
-  :ensure t
   :defer t
   :bind
   (("M-A" . marginalia-cycle)
@@ -202,7 +202,6 @@
   (marginalia-mode))
 
 (use-package magit
-  :ensure t
   :defer t
   :config
   (use-package forge :defer t)
@@ -211,13 +210,11 @@
     :hook (magit-mode . magit-todos-mode)))
 
 (use-package orderless
-  :ensure t
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
 (use-package eglot
-  :ensure t
   :hook ((go-ts-mode . eglot-ensure)
 	 (fsharp-mode . eglot-ensure)
 	 (rust-mode . eglot-ensure)
@@ -280,6 +277,9 @@
 				("pt" "Personal todo" entry
 				 (file+headline +org-capture-todo-file "Personal")
 				 "* TODO %?  :personal:\n" :prepend t)
+				("pi" "Personal idea" entry
+				 (file+headline +org-capture-todo-file "Personal")
+				 "* IDEA %? \n" :prepend t)
 				("pn" "Personal note" entry
 				 (file+headline +org-capture-todo-file "Personal")
 				 "* TODO %?  :personal:\n%i\n%a" :prepend t)
@@ -326,11 +326,12 @@
                             (:name "Due Today"    :deadline today  :order 2)
                             (:name "Due Soon"     :deadline future :order 8)
                             (:name "Overdue"      :deadline past   :face error :order 7)
-                            (:name "Future Ideas" :todo "IDEA"     :order 14)
+
                             (:name "To read"      :tag "read"      :order 30)
                             (:name "Waiting"      :todo "WAIT"     :order 20)
                             (:name "Work"         :tag "work"      :order 32)
-                            (:name "Personal"     :tag "personal"  :order 32)))))))))
+                            (:name "Personal"     :tag "personal"  :order 14)
+			    (:name "Future Ideas" :todo "IDEA"     :order 32)))))))))
   :hook
   ((org-capture-mode . org-align-all-tags))
 
@@ -365,7 +366,6 @@
   (treemacs-git-mode 'extended))
 
 (use-package treesit
-  :ensure nil
   :preface
   (dolist (mapping '((python-mode . python-ts-mode)
                      (css-mode . css-ts-mode)

@@ -7,7 +7,6 @@
       overlays = [
         inputs.nur.overlay
         self.overlays.modifications
-        inputs.emacs.overlay
         inputs.nur.overlay
       ];
       config = {
