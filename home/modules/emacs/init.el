@@ -207,7 +207,11 @@
   (use-package forge :defer t)
   (use-package magit-todos
     :defer t
-    :hook (magit-mode . magit-todos-mode)))
+    :hook (magit-mode . magit-todos-mode))
+
+  ;; makes magit fullscreen and restore the windows when closing
+  (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-topleft-v1
+	magit-bury-buffer-function 'magit-restore-window-configuration))
 
 (use-package orderless
   :custom
