@@ -18,6 +18,7 @@ in
       consult
       corfu
       corfu-terminal
+      citeproc
       direnv
       editorconfig
       eglot
