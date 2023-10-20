@@ -117,7 +117,9 @@
   :mode
   (("\\.go\\'" . go-ts-mode)
    ("/go\\.mod\\'" . go-mod-ts-mode)
-   ("\\.ya?ml$" . yaml-ts-mode)))
+   ("\\.ya?ml$" . yaml-ts-mode)
+   ("\\.rs$" . rust-ts-mode)
+   ("\\.toml$" . toml-ts-mode)))
 
 (use-package windmove
   :bind
@@ -221,7 +223,7 @@
 (use-package eglot
   :hook ((go-ts-mode . eglot-ensure)
 	 (fsharp-mode . eglot-ensure)
-	 (rust-mode . eglot-ensure)
+	 (rust-ts-mode . eglot-ensure)
 	 (typescript-mode . eglot-ensure)
 	 (sml-mode . eglot-ensure))
   :bind (:map eglot-mode-map
