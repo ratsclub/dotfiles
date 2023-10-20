@@ -225,7 +225,14 @@
 	 (fsharp-mode . eglot-ensure)
 	 (rust-ts-mode . eglot-ensure)
 	 (typescript-mode . eglot-ensure)
-	 (sml-mode . eglot-ensure))
+	 (sml-mode . eglot-ensure)
+	 (eglot-managed-mode . (lambda ()
+				 ;; Show flymake diagnostics first.
+				 (setq eldoc-documentation-functions
+				       (cons #'flymake-eldoc-function
+					     (remove #'flymake-eldoc-function eldoc-documentation-functions)))
+				 ;; Show all eldoc feedback.
+				 (setq eldoc-documentation-strategy #'eldoc-documentation-compose))))
   :bind (:map eglot-mode-map
               ("C-c r" . eglot-rename)
               ("C-c h" . eldoc)
