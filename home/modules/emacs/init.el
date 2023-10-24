@@ -70,11 +70,12 @@
   ;; backup and lock files
   ;; Instead of littering the current project's directory, we can use
   ;; the xdg variables we defined to improve things up.
-  (let ((backup-dir (concat user-emacs-cache-directory "/backup")))
+  (let ((backup-dir (concat user-emacs-data-directory "/backup/")))
     (unless (file-directory-p backup-dir)
       (mkdir backup-dir t))
 
-    (setq backup-directory-alist `(("." . ,(concat backup-dir)))
+    (setq auto-save-file-name-transforms `((".*" ,backup-dir t))
+	  backup-directory-alist `(("." . ,backup-dir))
 	  create-lockfiles nil
 	  backup-by-copying t))
 
