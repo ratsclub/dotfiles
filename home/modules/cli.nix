@@ -15,7 +15,6 @@ in
     bat
     convco
     entr
-    exa
     fd
     fzf
     htop
