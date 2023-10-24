@@ -20,11 +20,6 @@
     hardware.url = "github:nixos/nixos-hardware";
     nixColors.url = "github:misterio77/nix-colors";
     nur.url = "github:nix-community/nur";
-
-    artwork = {
-      url = "git+https://git.gluer.org/artwork";
-      flake = false;
-    };
   };
 
   outputs = { self, ... }@inputs:
