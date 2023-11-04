@@ -82,9 +82,8 @@
   :config
   ;; ui
   (menu-bar-mode 0)
-  (when (display-graphic-p)
-    (tool-bar-mode 0)
-    (scroll-bar-mode 0))
+  (tool-bar-mode 0)
+  (scroll-bar-mode 0)
 
   (column-number-mode)
   (display-time)
