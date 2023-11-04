@@ -411,13 +411,14 @@
   :bind (("C-x o" . switch-window)))
 
 ;; my functions
-(defun gluer/slugify ()
-  "copies a slugified string of the active region, mainly used to
-create slugs for my website"
+(defun gluer/slugify-hugo-heading ()
+  "Gets the current heading title, slugifies it and sets the
+`EXPORT_FILE_NAME` and `EXPORT_HUGO_SLUG` properties with its
+value."
   (interactive)
-  (when (use-region-p)
-    (let* ((str (buffer-substring (region-beginning) (region-end)))
-	   (slug (org-hugo-slug str)))
-      (kill-new slug)
-      (message "copied '%s' to the clipboard" slug))))
+  (let* ((title (org-entry-get nil "ITEM"))
+	 (slug (org-hugo-slug title)))
+    (org-entry-put nil "EXPORT_FILE_NAME" slug)
+    (org-entry-put nil "EXPORT_HUGO_SLUG" slug)
+    (message "Successfully added '%s' slug." slug)))
 
