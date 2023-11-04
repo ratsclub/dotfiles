@@ -26,7 +26,7 @@
       ./modules/direnv.nix
       # ./modules/doom
       ./modules/emacs
-      ./modules/email.nix
+      # ./modules/email.nix
       # ./modules/firefox.nix
       ./modules/git.nix
       ./modules/vscodium.nix
