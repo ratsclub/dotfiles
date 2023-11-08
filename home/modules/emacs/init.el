@@ -234,11 +234,14 @@
 				 ;; Show all eldoc feedback.
 				 (setq eldoc-documentation-strategy #'eldoc-documentation-compose))))
   :bind (:map eglot-mode-map
-              ("C-c r" . eglot-rename)
-              ("C-c h" . eldoc)
-              ("C-c f" . eglot-format)
-              ("C-c F" . eglot-format-buffer)
-              ("C-c d" . xref-find-definitions-at-mouse))
+	      ("C-c l a" . eglot-code-actions)
+              ("C-c l r" . eglot-rename)
+              ("C-c l h" . eldoc)
+              ("C-c l f" . eglot-format)
+              ("C-c l F" . eglot-format-buffer)
+              ("C-c l d" . xref-find-definitions-at-mouse)
+	      ;; sometimes ionide acts up
+	      ("C-c l R" . eglot-reconnect))
   :config
   (use-package eglot-fsharp :defer t)
   (use-package typescript-mode :defer t)
