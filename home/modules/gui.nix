@@ -2,6 +2,7 @@
 
 {
   home.packages = with pkgs; [
-    bitwarden
+    jetbrains.rider
+    signal-desktop
   ];
 }

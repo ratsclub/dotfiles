@@ -29,6 +29,7 @@
       # ./modules/email.nix
       # ./modules/firefox.nix
       ./modules/git.nix
+      ./modules/gui.nix
       ./modules/vscodium.nix
     ];
 
