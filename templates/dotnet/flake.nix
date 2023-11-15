@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     devenv.url = "github:cachix/devenv";
   };
 
@@ -24,6 +24,7 @@
                   dotnet = (with dotnetCorePackages; combinePackages [
                     sdk_6_0
                     sdk_7_0
+                    sdk_8_0
                   ]);
                 in
                 {
@@ -37,4 +38,3 @@
         });
     };
 }
-
