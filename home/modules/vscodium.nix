@@ -59,12 +59,15 @@ in
     };
 
     extensions = with pkgs.vscode-extensions; [
-      # Angular
-      angular.ng-template
-
       # .NET
       ionide.ionide-fsharp
       ms-dotnettools.csharp
+
+      # Angular
+      angular.ng-template
+
+      # Deno
+      denoland.vscode-deno
 
       # Nix
       jnoortheen.nix-ide
