@@ -24,7 +24,6 @@
       ./modules/chromium.nix
       ./modules/cli.nix
       ./modules/direnv.nix
-      # ./modules/doom
       ./modules/emacs
       # ./modules/email.nix
       # ./modules/firefox.nix
