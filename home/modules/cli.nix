@@ -13,7 +13,6 @@ in
   home.packages = with pkgs; [
     aria2
     bat
-    convco
     entr
     fd
     fzf
