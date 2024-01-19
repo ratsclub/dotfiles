@@ -22,6 +22,9 @@ in
     nixpkgs-fmt
     ripgrep
     wget
+
+    # lsp
+    nil
   ];
 
   programs.fzf.enable = true;

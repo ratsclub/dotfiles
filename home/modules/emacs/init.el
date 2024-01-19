@@ -225,6 +225,7 @@
 	 (fsharp-mode . eglot-ensure)
 	 (rust-ts-mode . eglot-ensure)
 	 (typescript-mode . eglot-ensure)
+	 (nix-mode . eglot-ensure)
 	 (sml-mode . eglot-ensure)
 	 (eglot-managed-mode . (lambda ()
 				 ;; Show flymake diagnostics first.
