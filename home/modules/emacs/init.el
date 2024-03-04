@@ -494,7 +494,7 @@
   (proced-show-remote-processes t))
 
 ;; my functions
-(defun gluer/slugify-hugo-heading ()
+(defun my/slugify-hugo-heading ()
   "Gets the current heading title, slugifies it and sets the
 `EXPORT_FILE_NAME` and `EXPORT_HUGO_SLUG` properties with its
 value."
