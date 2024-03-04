@@ -486,6 +486,13 @@
 	 (message-mode . flyspell-mode)
 	 (gnus-group-mode . hl-line-mode)))
 
+(use-package proced
+  :custom
+  (proced-auto-update-flag t)
+  (proced-auto-update-interval 3)
+  (proced-enable-color-flag t)
+  (proced-show-remote-processes t))
+
 ;; my functions
 (defun gluer/slugify-hugo-heading ()
   "Gets the current heading title, slugifies it and sets the
