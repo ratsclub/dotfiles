@@ -14,9 +14,7 @@
       };
     };
     modules = [
-      inputs.nixColors.homeManagerModule
       inputs.agenix.homeManagerModules.age
-      inputs.nixColors.homeManagerModule
     ]
     ++ [
       ./modules

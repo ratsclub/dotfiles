@@ -1,14 +1,11 @@
 { config, pkgs, inputs, ... }:
 
 let
-  inherit (inputs) nixColors nixpkgs;
+  inherit (inputs) nixpkgs;
 in
 {
-  imports = [
-    inputs.nixColors.homeManagerModule
-  ];
+  imports = [ ];
 
-  colorscheme = nixColors.colorSchemes.monokai;
   fonts.fontconfig.enable = true;
 
   age.identityPaths = [
