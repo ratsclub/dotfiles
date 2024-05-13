@@ -251,7 +251,8 @@
   (add-to-list 'eglot-server-programs '((sml-mode) "millet-ls"))
   (add-to-list 'eglot-server-programs
 	       '((javascript-mode typescript-ts-mode) "typescript-language-server" "--stdio"))
-  (add-to-list 'eglot-server-programs '(nix-mode . ("nil"))))
+  (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
+  (add-to-list 'eglot-server-programs '((fsharp-mode) "fsautocomplete")))
 
 (use-package org
   :ensure org-contrib
