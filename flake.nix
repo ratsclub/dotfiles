@@ -16,7 +16,6 @@
     };
 
     hardware.url = "github:nixos/nixos-hardware";
-    nixColors.url = "github:misterio77/nix-colors";
     nur.url = "github:nix-community/nur";
   };
 
