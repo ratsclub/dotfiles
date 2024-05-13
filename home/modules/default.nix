@@ -16,7 +16,7 @@ in
   ];
 
   nix = {
-    package = pkgs.nixUnstable;
+    package = pkgs.nixVersions.latest;
     registry.nixpkgs.flake = nixpkgs;
     extraOptions = ''
       experimental-features = nix-command flakes
