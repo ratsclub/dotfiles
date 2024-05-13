@@ -1,4 +1,4 @@
-{ config, pkgs, super, ... }:
+{ pkgs, ... }:
 
 let
   inherit (pkgs)
