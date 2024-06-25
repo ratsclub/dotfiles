@@ -22,6 +22,7 @@ in
     nixpkgs-fmt
     ripgrep
     wget
+    ncdu
 
     # lsp
     nil
