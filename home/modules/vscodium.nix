@@ -81,7 +81,7 @@ in
       ms-pyright.pyright
 
       # Rust
-      matklad.rust-analyzer
+      rust-lang.rust-analyzer
 
       # SML
       azdavis.millet
