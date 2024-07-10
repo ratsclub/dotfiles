@@ -37,6 +37,10 @@ in
       "FSharp.inlayHints.enabled" = false;
       "FSharp.inlayHints.typeAnnotations" = false;
       "FSharp.inlayHints.parameterNames" = false;
+      "FSharp.addFsiWatcher" = true;
+      "FSharp.FSIExtraInteractiveParameters" = [ "--readline" ];
+      "FSharp.FSIExtraSharedParameters" = [ "--readline" ];
+      "FSharp.saveOnSendLastSelection" = false;
 
       # HTML
       "[html]" = {
