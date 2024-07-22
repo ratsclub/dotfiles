@@ -18,6 +18,9 @@
       ".devenv"
       ".pre-commit-config.yaml"
 
+      # jetbrains
+      ".idea"
+
       # vscode
       ".vscode"
     ];
