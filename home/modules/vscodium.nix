@@ -58,6 +58,12 @@ in
         "editor.tabSize" = 2;
       };
 
+      # Python
+      "[python]" = {
+        "editor.formatOnSave" = true;
+        "editor.defaultFormatter" = "charliermarsh.ruff";
+      };
+
       # Rust
       "rust-analyzer.server.path" = "${rust-analyzer}/bin/rust-analyzer";
     };
@@ -83,6 +89,7 @@ in
       ms-python.python
       ms-toolsai.jupyter
       ms-pyright.pyright
+      charliermarsh.ruff
 
       # Rust
       rust-lang.rust-analyzer
