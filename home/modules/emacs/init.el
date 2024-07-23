@@ -383,6 +383,11 @@
   :config (direnv-mode)
   :custom (direnv-always-show-summary nil))
 
+(use-package markdown
+  :defer t
+  :custom
+  (markdown-fontify-code-block-natively t))
+
 (use-package editorconfig
   :config
   (editorconfig-mode 1))
