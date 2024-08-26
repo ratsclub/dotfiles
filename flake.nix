@@ -36,7 +36,7 @@
           let pkgs = import inputs.nixpkgs { inherit system; };
           in import ./pkgs { inherit pkgs; });
 
-      overlays = import ./overlays;
+      overlays = import ./overlays { inherit (inputs) nixpkgs small; };
       homeConfigurations = import ./home { inherit inputs self; };
       nixosConfigurations = import ./hosts { inherit inputs outputs; };
       nixosModules = import ./modules;
