@@ -7,6 +7,7 @@
     jetbrains.goland
     jetbrains.rust-rover
     jetbrains.idea-ultimate
+    jetbrains.webstorm
 
     signal-desktop
   ];
