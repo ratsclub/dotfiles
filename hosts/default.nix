@@ -2,17 +2,16 @@
 
 let
   inherit (inputs)
-    hardware
     nixpkgs
     stable
     ;
 
-  mkPkgs = { nixpkgs, system, ... }:
+  mkPkgs = { nixpkgs, system, overlay, ... }:
     import nixpkgs {
       inherit system;
       overlays = [
-        inputs.nur.overlay
         outputs.overlays.default
+        overlay
       ];
       config.allowUnfree = true;
     };
@@ -24,6 +23,26 @@ in
       inherit nixpkgs system;
     };
     modules = [ ./magnus ];
+    specialArgs = { inherit inputs; };
+  };
+
+  capivarasdev = stable.lib.nixosSystem rec {
+    system = "aarch64-linux";
+    pkgs = mkPkgs {
+      inherit system;
+
+      nixpkgs = stable;
+
+      # TODO: until v8 reaches nixpkgs stable
+      overlay = (final: prev: {
+        forgejo = nixpkgs.legacyPackages.${system}.forgejo;
+        forgejo-runner = nixpkgs.legacyPackages.${system}.forgejo-runner;
+      });
+    };
+    modules = [
+      ./capivarasdev
+      inputs.agenix.nixosModules.default
+    ];
     specialArgs = { inherit inputs; };
   };
 }

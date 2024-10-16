@@ -1,1 +1,3 @@
-{ }
+{
+  apprise = ./apprise.nix;
+}
