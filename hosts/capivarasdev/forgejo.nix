@@ -31,10 +31,14 @@ in
 
     settings = {
       DEFAULT.APP_NAME = "capivaras.dev code forge";
+
+      actions.ENABLED = false;
+
+      service.DISABLE_REGISTRATION = true;
+
       server.HTTP_ADDR = "127.0.0.1";
       server.DOMAIN = "code.${fqdn}";
       server.ROOT_URL = "https://${srv.DOMAIN}";
-      service.DISABLE_REGISTRATION = true;
 
       mailer.ENABLED = true;
       mailer.SMTP_ADDR = "smtp.purelymail.com";
