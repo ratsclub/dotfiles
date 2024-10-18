@@ -6,6 +6,12 @@ let
   srv = cfg.settings.server;
 in
 {
+  age.secrets = {
+    forgejo-mailer.file = ../../secrets/services/forgejo/mailer.age;
+    forgejo-mailer.owner = config.services.forgejo.user;
+    forgejo-mailer.group = config.services.forgejo.group;
+  };
+
   services.caddy = {
     virtualHosts."${srv.DOMAIN}".extraConfig = ''
       reverse_proxy localhost:${builtins.toString srv.HTTP_PORT}
@@ -33,7 +39,8 @@ in
     settings = {
       DEFAULT.APP_NAME = "capivaras.dev code forge";
 
-      actions.ENABLED = false;
+      actions.ENABLED = true;
+      actions.ARTIFACT_RETENTION_DAYS = 30;
 
       service.DISABLE_REGISTRATION = true;
 
@@ -49,6 +56,6 @@ in
       mailer.FROM = "noreply@${fqdn}";
       mailer.USER = "noreply@${fqdn}";
     };
-    mailerPasswordFile = config.age.secrets.forgejomail.path;
+    mailerPasswordFile = config.age.secrets.forgejo-mailer.path;
   };
 }

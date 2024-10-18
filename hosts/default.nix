@@ -46,4 +46,24 @@ in
     ];
     specialArgs = { inherit inputs; };
   };
+
+  davila = stable.lib.nixosSystem rec {
+    system = "x86_64-linux";
+    pkgs = mkPkgs {
+      inherit system;
+
+      nixpkgs = stable;
+
+      # TODO: until v9 reaches nixpkgs stable
+      overlay = (final: prev: {
+        forgejo = small.legacyPackages.${system}.forgejo;
+        forgejo-runner = small.legacyPackages.${system}.forgejo-runner;
+      });
+    };
+    modules = [
+      ./davila
+      inputs.agenix.nixosModules.default
+    ];
+    specialArgs = { inherit inputs; };
+  };
 }
