@@ -40,6 +40,7 @@ in
       server.HTTP_ADDR = "127.0.0.1";
       server.DOMAIN = "code.${fqdn}";
       server.ROOT_URL = "https://${srv.DOMAIN}";
+      server.LANDING_PAGE = "/explore/repos";
 
       mailer.ENABLED = true;
       mailer.SMTP_ADDR = "smtp.purelymail.com";
