@@ -43,6 +43,8 @@ in
       actions.ARTIFACT_RETENTION_DAYS = 30;
 
       service.DISABLE_REGISTRATION = true;
+      service.ENABLE_NOTIFY_MAIL = true;
+      service.DEFAULT_KEEP_EMAIL_PRIVATE = true;
 
       server.HTTP_ADDR = "127.0.0.1";
       server.DOMAIN = "code.${fqdn}";
