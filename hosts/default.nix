@@ -27,7 +27,7 @@ in
     specialArgs = { inherit inputs; };
   };
 
-  capivarasdev = stable.lib.nixosSystem rec {
+  capivaras = stable.lib.nixosSystem rec {
     system = "aarch64-linux";
     pkgs = mkPkgs {
       inherit system;
@@ -41,7 +41,7 @@ in
       });
     };
     modules = [
-      ./capivarasdev
+      ./capivaras
       inputs.agenix.nixosModules.default
     ];
     specialArgs = { inherit inputs; };
