@@ -1,9 +1,7 @@
-{ config, ... }:
-
 {
   system.autoUpgrade = {
     enable = true;
-    flake = "sourcehut:~glorifiedgluer/nix-config";
+    flake = "git+https://code.capivaras.dev/ratsclub/nix-config.git";
     dates = "daily";
   };
 }
