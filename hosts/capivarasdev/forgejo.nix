@@ -53,8 +53,8 @@ in
       mailer.SMTP_ADDR = "smtp.purelymail.com";
       mailer.SMTP_PORT = 587;
       mailer.PROTOCOL = "smtp+starttls";
-      mailer.FROM = "noreply@${fqdn}";
-      mailer.USER = "noreply@${fqdn}";
+      mailer.FROM = "noreply@${srv.DOMAIN}";
+      mailer.USER = "noreply@${srv.DOMAIN}";
     };
     mailerPasswordFile = config.age.secrets.forgejo-mailer.path;
   };
