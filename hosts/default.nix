@@ -4,6 +4,7 @@ let
   inherit (inputs)
     nixpkgs
     stable
+    small
     ;
 
   mkPkgs = { nixpkgs, system, overlay, ... }:
@@ -33,10 +34,10 @@ in
 
       nixpkgs = stable;
 
-      # TODO: until v8 reaches nixpkgs stable
+      # TODO: until v9 reaches nixpkgs stable
       overlay = (final: prev: {
-        forgejo = nixpkgs.legacyPackages.${system}.forgejo;
-        forgejo-runner = nixpkgs.legacyPackages.${system}.forgejo-runner;
+        forgejo = small.legacyPackages.${system}.forgejo;
+        forgejo-runner = small.legacyPackages.${system}.forgejo-runner;
       });
     };
     modules = [

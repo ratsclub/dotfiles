@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 let
   fqdn = config.networking.fqdn;
@@ -24,6 +24,7 @@ in
 
   services.forgejo = {
     enable = true;
+    package = pkgs.forgejo;
     database.type = "postgres";
 
     dump.enable = true;
