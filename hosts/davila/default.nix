@@ -5,7 +5,7 @@
 { config, inputs, pkgs, ... }:
 
 let
-  capivarasdevCfg = inputs.self.nixosConfigurations.capivarasdev.config;
+  capivarasdevCfg = inputs.self.nixosConfigurations.capivaras.config;
 in
 {
   imports =
