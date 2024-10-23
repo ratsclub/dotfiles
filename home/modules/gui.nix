@@ -8,6 +8,7 @@
     jetbrains.rust-rover
     jetbrains.idea-ultimate
     jetbrains.webstorm
+    jetbrains.datagrip
 
     signal-desktop
   ];
