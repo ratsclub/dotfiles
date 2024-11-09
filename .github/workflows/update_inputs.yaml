@@ -10,7 +10,7 @@ on:
 
 jobs:
   update:
-    runs-on: nix
+    runs-on: ubuntu-latest
 
     permissions:
       # Give the default GITHUB_TOKEN write permission to commit and push the
@@ -22,8 +22,10 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
-      - run: nix flake update
-        shell: bash
-      - uses: https://github.com/stefanzweifel/git-auto-commit-action@v5
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - name: Run nix flake update
+        run: nix flake update
+      - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: nix flake update"
