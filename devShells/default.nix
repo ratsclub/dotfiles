@@ -30,7 +30,7 @@ in
       ({ pkgs, lib, ... }: {
         languages = {
           java.enable = true;
-          java.jdk.package = pkgs.jdk20_headless;
+          java.jdk.package = pkgs.jdk17_headless;
           java.maven.enable = true;
         };
       })
