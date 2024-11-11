@@ -6,6 +6,11 @@
     small.url = "github:nixos/nixpkgs/nixos-unstable-small";
     stable.url = "github:nixos/nixpkgs/nixos-24.05";
 
+    devenv = {
+      url = "github:cachix/devenv";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     homeManager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -41,5 +46,6 @@
       nixosConfigurations = import ./hosts { inherit inputs outputs; };
       nixosModules = import ./modules;
       templates = import ./templates;
+      devShells = import ./devShells { inherit inputs; };
     };
 }
