@@ -36,4 +36,17 @@ in
       })
     ];
   };
+
+  web = devenv.lib.mkShell {
+    inherit inputs pkgs;
+    modules = [
+      ({ pkgs, lib, ... }: {
+        languages = {
+          javascript.enable = true;
+          javascript.package = pkgs.nodejs_20;
+          javascript.yarn.enable = true;
+        };
+      })
+    ];
+  };
 })
