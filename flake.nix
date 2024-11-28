@@ -21,6 +21,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixBitcoin.url = "github:fort-nix/nix-bitcoin";
+
     hardware.url = "github:nixos/nixos-hardware";
     nur.url = "github:nix-community/nur";
   };
