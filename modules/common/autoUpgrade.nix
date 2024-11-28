@@ -3,7 +3,7 @@
 
   system.autoUpgrade = {
     enable = true;
-    flake = "git+https://code.capivaras.dev/ratsclub/nix-config.git";
+    flake = "github:ratsclub/dotfiles";
     dates = "daily";
   };
 }
