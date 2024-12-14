@@ -13,4 +13,9 @@
     description = "NixOS Virtual Machine template";
     path = ./vm;
   };
+
+  devenv = {
+    description = "devenv empty template";
+    path = ./devenv;
+  };
 }
