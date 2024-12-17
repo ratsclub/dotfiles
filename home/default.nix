@@ -5,9 +5,8 @@
     pkgs = import inputs.nixpkgs {
       system = "x86_64-linux";
       overlays = [
-        inputs.nur.overlay
+        inputs.nur.overlays.default
         self.overlays.modifications
-        inputs.nur.overlay
       ];
       config = {
         allowUnfree = true;
