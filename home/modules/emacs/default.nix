@@ -5,7 +5,7 @@ let
     (load "${./init.el}")
   '';
 
-  customEmacs = pkgs.emacs29.override {
+  customEmacs = pkgs.emacs.override {
     withGTK3 = true;
     withTreeSitter = true;
   };
