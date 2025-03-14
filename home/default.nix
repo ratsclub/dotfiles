@@ -16,11 +16,14 @@
     modules = [
       ({ pkgs, ... }: {
         home = {
-          packages = [ pkgs.graphite-cli ];
           username = "victor";
           homeDirectory = "/Users/victor";
+
+          packages = [ pkgs.graphite-cli ];
           stateVersion = "24.11";
         };
+
+        programs.direnv.enableZshIntegration = true;
       })
 
       ./modules/vscodium.nix
