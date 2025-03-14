@@ -1,3 +1,5 @@
+{ userName, userEmail }:
+
 { config, pkgs, ... }:
 
 {
@@ -5,8 +7,8 @@
     enable = true;
     package = pkgs.gitFull;
 
-    userName = "Victor Freire";
-    userEmail = "victor@freire.dev.br";
+    userName = userName;
+    userEmail = userEmail;
 
     ignores = [
       # nix

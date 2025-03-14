@@ -16,13 +16,14 @@ in
     entr
     fd
     fzf
+    gcc
     htop
     hut
     jq
+    ncdu
     nixpkgs-fmt
     ripgrep
     wget
-    ncdu
 
     # lsp
     nil
