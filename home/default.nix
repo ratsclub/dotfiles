@@ -14,13 +14,14 @@
     };
 
     modules = [
-      {
+      ({ pkgs, ... }: {
         home = {
+          packages = [ pkgs.graphite-cli ];
           username = "victor";
           homeDirectory = "/Users/victor";
           stateVersion = "24.11";
         };
-      }
+      })
 
       ./modules/vscodium.nix
       ./modules/emacs
