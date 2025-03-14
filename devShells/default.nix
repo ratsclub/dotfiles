@@ -42,6 +42,7 @@ in
     modules = [
       ({ pkgs, lib, ... }: {
         languages = {
+          packages = [ pkgs.graphite-cli ];
           javascript.enable = true;
           javascript.package = pkgs.nodejs_20;
           javascript.yarn.enable = true;
