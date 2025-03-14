@@ -41,8 +41,8 @@ in
     inherit inputs pkgs;
     modules = [
       ({ pkgs, lib, ... }: {
+        packages = [ pkgs.graphite-cli ];
         languages = {
-          packages = [ pkgs.graphite-cli ];
           javascript.enable = true;
           javascript.package = pkgs.nodejs_20;
           javascript.yarn.enable = true;
