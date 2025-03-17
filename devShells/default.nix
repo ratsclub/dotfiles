@@ -44,7 +44,7 @@ in
         packages = [ pkgs.graphite-cli ];
         languages = {
           javascript.enable = true;
-          javascript.package = pkgs.nodejs_20;
+          javascript.package = pkgs.nodejs_22;
           javascript.yarn.enable = true;
         };
       })
