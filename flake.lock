@@ -80,7 +80,7 @@
         "git-hooks": "git-hooks",
         "nix": "nix",
         "nixpkgs": [
-          "nixpkgs"
+          "stable"
         ]
       },
       "locked": {
