@@ -34,6 +34,34 @@
     ];
   };
 
+  code = inputs.homeManager.lib.homeManagerConfiguration {
+    pkgs = import inputs.nixpkgs {
+      system = "x86_64-linux";
+      overlays = [
+        inputs.nur.overlays.default
+        self.overlays.modifications
+      ];
+      config = {
+        allowUnfree = true;
+      };
+    };
+    modules = [
+      inputs.agenix.homeManagerModules.age
+    ]
+    ++ [
+      ./modules
+      ./modules/bash.nix
+      ./modules/cli.nix
+      ./modules/direnv.nix
+      ./modules/emacs
+      (import ./modules/git.nix { userName = "Victor Freire"; userEmail = "victor@freire.dev.br"; })
+    ];
+
+    extraSpecialArgs = {
+      inherit inputs;
+    };
+  };
+
   victor = inputs.homeManager.lib.homeManagerConfiguration {
     pkgs = import inputs.nixpkgs {
       system = "x86_64-linux";
