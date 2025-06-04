@@ -53,7 +53,6 @@
       ./modules/bash.nix
       ./modules/cli.nix
       ./modules/direnv.nix
-      ./modules/emacs
       (import ./modules/git.nix { userName = "Victor Freire"; userEmail = "victor@freire.dev.br"; })
     ];
 
