@@ -22,14 +22,13 @@
           packages = [ pkgs.graphite-cli ];
           stateVersion = "24.11";
         };
-
-        programs.direnv.enableZshIntegration = true;
       })
 
       ./modules/vscodium.nix
       ./modules/emacs
       ./modules/cli.nix
       ./modules/direnv.nix
+      ./modules/zsh.nix
       (import ./modules/git.nix { userName = "Victor Freire"; userEmail = "victor@theformfactory.co"; })
     ];
   };
