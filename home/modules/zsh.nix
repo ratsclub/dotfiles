@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
-let gt = "${pkgs.graphite-cli}/bin/gt";
+let
+  gt = "${pkgs.graphite-cli}/bin/gt";
 in
 {
   programs.direnv.enableZshIntegration = true;
@@ -15,7 +16,7 @@ in
     shellAliases = {
       giss = "npm i && ${gt} sync && ${gt} submit";
       gss = "${gt} sync && ${gt} submit";
-      gms = "${gt} modify -a && ${gt} sync";
+      gmss = "${gt} modify -a && ${gt} sync && ${gt} submit";
     };
   };
 }
