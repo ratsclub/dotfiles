@@ -102,7 +102,6 @@ in
         yzhang.markdown-all-in-one
 
         # Misc
-        eamodio.gitlens
         editorconfig.editorconfig
         esbenp.prettier-vscode
         gruntfuggly.todo-tree
