@@ -51,7 +51,7 @@ in
     system = "x86_64-linux";
     pkgs = mkPkgs {
       inherit system;
-      overlay = final: prev: {};
+      overlay = final: prev: { };
       nixpkgs = stable;
     };
 

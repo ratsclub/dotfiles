@@ -18,6 +18,9 @@
         home = {
           username = "victor";
           homeDirectory = "/Users/victor";
+          sessionPath = [
+            "$HOME/.local/bin"
+          ];
 
           packages = [ pkgs.graphite-cli ];
           stateVersion = "24.11";
@@ -30,6 +33,41 @@
       ./modules/direnv.nix
       ./modules/zsh.nix
       (import ./modules/git.nix { userName = "Victor Freire"; userEmail = "victor@theformfactory.co"; })
+    ];
+  };
+
+  air = inputs.homeManager.lib.homeManagerConfiguration {
+    pkgs = import inputs.nixpkgs {
+      system = "aarch64-darwin";
+      overlays = [
+        inputs.nur.overlays.default
+        self.overlays.modifications
+      ];
+      config = {
+        allowUnfree = true;
+      };
+    };
+
+    modules = [
+      ({ pkgs, ... }: {
+        home = {
+          username = "victor";
+          homeDirectory = "/Users/victor";
+          sessionPath = [
+            "$HOME/.local/bin"
+          ];
+
+          packages = [ pkgs.graphite-cli ];
+          stateVersion = "24.11";
+        };
+      })
+
+      ./modules/vscodium.nix
+      ./modules/emacs
+      ./modules/cli.nix
+      ./modules/direnv.nix
+      ./modules/zsh.nix
+      (import ./modules/git.nix { userName = "Victor Freire"; userEmail = "victor@freire.dev.br"; })
     ];
   };
 
