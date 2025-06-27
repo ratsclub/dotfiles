@@ -24,5 +24,8 @@ in
     username = "victor";
     homeDirectory = "/home/victor";
     stateVersion = "22.11";
+    sessionPath = [
+      "$HOME/.local/bin"
+    ];
   };
 }
