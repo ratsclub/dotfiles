@@ -71,8 +71,8 @@ in
 
       extensions = with pkgs.vscode-extensions; [
         # .NET
-        ionide.ionide-fsharp
-        ms-dotnettools.csharp
+        # ionide.ionide-fsharp
+        # ms-dotnettools.csharp
 
         # Angular
         angular.ng-template
