@@ -67,6 +67,12 @@
 	read-file-name-completion-ignore-case t
 	read-buffer-completion-ignore-case t)
 
+  ;; set command as meta key on macOS
+  (if (eq system-type 'darwin)
+      (setq mac-command-modifier      'meta
+	    mac-option-modifier       'alt
+	    mac-right-option-modifier 'alt))
+
   ;; backup and lock files
   ;; Instead of littering the current project's directory, we can use
   ;; the xdg variables we defined to improve things up.
