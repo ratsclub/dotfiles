@@ -71,6 +71,7 @@
   (if (eq system-type 'darwin)
       (setq mac-command-modifier      'meta
 	    mac-option-modifier       'alt
+	    mac-function-modifier     'control
 	    mac-right-option-modifier 'alt))
 
   ;; backup and lock files
