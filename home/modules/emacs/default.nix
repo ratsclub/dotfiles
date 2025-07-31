@@ -20,7 +20,6 @@ in
       corfu-terminal
       citeproc
       direnv
-      editorconfig
       eglot
       eglot-fsharp
       forge
@@ -36,7 +35,6 @@ in
       treemacs-projectile
       typescript-mode
       vertico
-      which-key
 
       # org
       org-contrib
