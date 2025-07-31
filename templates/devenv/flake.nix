@@ -9,6 +9,11 @@
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
     in
     {
+      packages = forAllSystems (system: {
+        devenv-up = self.devShells.${system}.default.config.procfileScript;
+        devenv-test = self.devShells.${system}.default.config.test;
+      });
+
       devShells = forAllSystems (system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
