@@ -47,22 +47,6 @@ in
     specialArgs = { inherit inputs; };
   };
 
-  node = stable.lib.nixosSystem rec {
-    system = "x86_64-linux";
-    pkgs = mkPkgs {
-      inherit system;
-      overlay = final: prev: { };
-      nixpkgs = stable;
-    };
-
-    modules = [
-      ./node
-      inputs.nixBitcoin.nixosModules.default
-      inputs.agenix.nixosModules.default
-    ];
-    specialArgs = { inherit inputs; };
-  };
-
   davila = stable.lib.nixosSystem rec {
     system = "x86_64-linux";
     pkgs = mkPkgs {
