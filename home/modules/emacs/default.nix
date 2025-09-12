@@ -40,7 +40,6 @@ in
       org-contrib
       org-drill
       org-super-agenda
-      ox-hugo
 
       # treesitter
       treesit-grammars.with-all-grammars

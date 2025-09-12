@@ -266,7 +266,6 @@
   :defines org-element-use-cache
   :config
   (use-package citeproc)
-  (use-package ox-hugo :defer t)
   (use-package org-drill
     :defer t
     :config
@@ -432,15 +431,3 @@
   (proced-auto-update-interval 3)
   (proced-enable-color-flag t)
   (proced-show-remote-processes t))
-
-;; my functions
-(defun my/slugify-hugo-heading ()
-  "Gets the current heading title, slugifies it and sets the
-`EXPORT_FILE_NAME` and `EXPORT_HUGO_SLUG` properties with its
-value."
-  (interactive)
-  (let* ((title (org-entry-get nil "ITEM"))
-	 (slug (org-hugo-slug title)))
-    (org-entry-put nil "EXPORT_FILE_NAME" slug)
-    (org-entry-put nil "EXPORT_HUGO_SLUG" slug)
-    (message "Successfully added '%s' slug." slug)))
