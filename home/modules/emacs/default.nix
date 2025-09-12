@@ -38,7 +38,6 @@ in
 
       # org
       org-contrib
-      org-drill
 
       # treesitter
       treesit-grammars.with-all-grammars

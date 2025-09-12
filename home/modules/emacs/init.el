@@ -266,10 +266,6 @@
   :defines org-element-use-cache
   :config
   (use-package citeproc)
-  (use-package org-drill
-    :defer t
-    :config
-    (setq org-drill-spaced-repetition-algorithm 'sm2))
 
   ;; add items to structure template list
   (add-to-list 'org-structure-template-alist '("d" . "description"))
@@ -302,8 +298,6 @@
 	;; todo file used on org-capture for org-agenda
 	+org-capture-todo-file (concat org-directory "/todo.org")
 
-	;; org-drill file used for SRS
-	+org-capture-drill-file (concat org-directory "/drill.org")
 	org-capture-templates `(("p" "Personal")
 				("pt" "Personal todo" entry
 				 (file+headline +org-capture-todo-file "Personal")
