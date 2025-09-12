@@ -34,6 +34,10 @@
       ./modules/zsh.nix
       (import ./modules/git.nix { userName = "Victor Freire"; userEmail = "victor@theformfactory.co"; })
     ];
+
+    extraSpecialArgs = {
+      inherit inputs self;
+    };
   };
 
   air = inputs.homeManager.lib.homeManagerConfiguration {
@@ -69,6 +73,10 @@
       ./modules/zsh.nix
       (import ./modules/git.nix { userName = "Victor Freire"; userEmail = "victor@freire.dev.br"; })
     ];
+
+    extraSpecialArgs = {
+      inherit inputs self;
+    };
   };
 
   victor = inputs.homeManager.lib.homeManagerConfiguration {
@@ -100,7 +108,7 @@
     ];
 
     extraSpecialArgs = {
-      inherit inputs;
+      inherit inputs self;
     };
   };
 }
