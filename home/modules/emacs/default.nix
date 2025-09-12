@@ -6,7 +6,7 @@ let
   '';
 
   customEmacs = pkgs.emacs.override {
-    withGTK3 = true;
+    withGTK3 = !pkgs.stdenv.hostPlatform.isDarwin;
     withTreeSitter = true;
   };
 in

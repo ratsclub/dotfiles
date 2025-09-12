@@ -290,48 +290,7 @@
                                      (t csl))
 
 	;; set source block indentation to 0
-	org-edit-src-content-indentation 0
-
-	;; todo keywords to cycle through
-	org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAIT(w)" "IDEA(i)" "|" "DONE(d)"))
-
-	;; todo file used on org-capture for org-agenda
-	+org-capture-todo-file (concat org-directory "/todo.org")
-
-	org-capture-templates `(("p" "Personal")
-				("pt" "Personal todo" entry
-				 (file+headline +org-capture-todo-file "Personal")
-				 "* TODO %?  :personal:\n" :prepend t)
-				("pi" "Personal idea" entry
-				 (file+headline +org-capture-todo-file "Personal")
-				 "* IDEA %? \n" :prepend t)
-				("pn" "Personal note" entry
-				 (file+headline +org-capture-todo-file "Personal")
-				 "* TODO %?  :personal:\n%i\n%a" :prepend t)
-				("w" "Work")
-				("wt" "Work todo" entry
-				 (file+headline +org-capture-todo-file "Work")
-				 "* TODO %?  :work:\n%i\n" :prepend t)
-				("wn" "Work note" entry
-				 (file+headline +org-capture-todo-file "Work")
-				 "* TODO %?  :work:\n%i\n%a" :prepend t)
-				("d" "Drill")
-				("dd" "Drill simple" entry
-				 (file +org-capture-drill-file)
-				 "* Item :drill:\n%?\n")
-				("dc" "Drill cloze 2" entry
-				 (file +org-capture-drill-file)
-				 ,(concat "* Item           :drill:\n"
-					  ":PROPERTIES:\n"
-					  ":drill_card_type: hide2cloze\n\n"
-					  ":END:\n"
-					  "%?\n")))
-
-  :hook
-  ((org-capture-mode . org-align-all-tags))
-
-  :bind
-  (("C-c c" .  'org-capture)))
+	org-edit-src-content-indentation 0))
 
 (use-package fsharp-mode :defer t)
 (use-package sml-mode
