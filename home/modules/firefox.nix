@@ -27,11 +27,5 @@
         "browser.toolbars.bookmarks.visibility" = "never";
       };
     };
-    extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-      bitwarden
-      multi-account-containers
-      privacy-badger
-      ublock-origin
-    ];
   };
 }

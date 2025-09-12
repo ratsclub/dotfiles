@@ -5,7 +5,6 @@
     pkgs = import inputs.nixpkgs {
       system = "aarch64-darwin";
       overlays = [
-        inputs.nur.overlays.default
         self.overlays.modifications
       ];
       config = {
@@ -40,7 +39,6 @@
     pkgs = import inputs.nixpkgs {
       system = "aarch64-darwin";
       overlays = [
-        inputs.nur.overlays.default
         self.overlays.modifications
       ];
       config = {
@@ -75,7 +73,6 @@
     pkgs = import inputs.nixpkgs {
       system = "x86_64-linux";
       overlays = [
-        inputs.nur.overlays.default
         self.overlays.modifications
       ];
       config = {
@@ -102,7 +99,6 @@
     pkgs = import inputs.nixpkgs {
       system = "x86_64-linux";
       overlays = [
-        inputs.nur.overlays.default
         self.overlays.modifications
       ];
       config = {
