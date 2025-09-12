@@ -271,10 +271,6 @@
     :config
     (setq org-drill-spaced-repetition-algorithm 'sm2))
 
-  (use-package org-super-agenda
-    :after org-agenda
-    :config (org-super-agenda-mode))
-
   ;; add items to structure template list
   (add-to-list 'org-structure-template-alist '("d" . "description"))
 
@@ -337,42 +333,11 @@
 					  ":END:\n"
 					  "%?\n")))
 
-	;; org-agenda
-	org-agenda-files (list org-directory)
-	org-agenda-skip-scheduled-if-done t
-        org-agenda-skip-deadline-if-done t
-        org-agenda-include-deadlines t
-        org-agenda-block-separator nil
-        org-agenda-tags-column 100 ;; from testing this seems to be a good value
-        org-agenda-compact-blocks t
-        org-agenda-custom-commands
-        '(("o" "Overview"
-           ((agenda "" ((org-agenda-span 'day)
-                        (org-super-agenda-groups
-                         '((:name "Today"
-				  :time-grid t
-				  :date today
-				  :todo "TODAY"
-				  :scheduled today
-				  :order 1)))))
-            (alltodo "" ((org-agenda-overriding-header "")
-                         (org-super-agenda-groups
-                          '((:name "Important"    :tag "Important" :priority "A" :order 6)
-                            (:name "Due Today"    :deadline today  :order 2)
-                            (:name "Due Soon"     :deadline future :order 8)
-                            (:name "Overdue"      :deadline past   :face error :order 7)
-
-                            (:name "To read"      :tag "read"      :order 30)
-                            (:name "Waiting"      :todo "WAIT"     :order 20)
-                            (:name "Work"         :tag "work"      :order 32)
-                            (:name "Personal"     :tag "personal"  :order 14)
-			    (:name "Future Ideas" :todo "IDEA"     :order 32)))))))))
   :hook
   ((org-capture-mode . org-align-all-tags))
 
   :bind
-  (("C-c c" .  'org-capture)
-   ("C-c a" . 'org-agenda)))
+  (("C-c c" .  'org-capture)))
 
 (use-package fsharp-mode :defer t)
 (use-package sml-mode

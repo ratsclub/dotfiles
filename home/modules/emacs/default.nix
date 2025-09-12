@@ -39,7 +39,6 @@ in
       # org
       org-contrib
       org-drill
-      org-super-agenda
 
       # treesitter
       treesit-grammars.with-all-grammars
