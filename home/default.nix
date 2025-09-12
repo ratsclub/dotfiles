@@ -69,32 +69,6 @@
     ];
   };
 
-  code = inputs.homeManager.lib.homeManagerConfiguration {
-    pkgs = import inputs.nixpkgs {
-      system = "x86_64-linux";
-      overlays = [
-        self.overlays.modifications
-      ];
-      config = {
-        allowUnfree = true;
-      };
-    };
-    modules = [
-      inputs.agenix.homeManagerModules.age
-    ]
-    ++ [
-      ./modules
-      ./modules/bash.nix
-      ./modules/cli.nix
-      ./modules/direnv.nix
-      (import ./modules/git.nix { userName = "Victor Freire"; userEmail = "victor@freire.dev.br"; })
-    ];
-
-    extraSpecialArgs = {
-      inherit inputs;
-    };
-  };
-
   victor = inputs.homeManager.lib.homeManagerConfiguration {
     pkgs = import inputs.nixpkgs {
       system = "x86_64-linux";
