@@ -26,10 +26,11 @@
         };
       })
 
-      ./modules/vscodium.nix
-      ./modules/emacs
       ./modules/cli.nix
       ./modules/direnv.nix
+      ./modules/emacs
+      ./modules/nix.nix
+      ./modules/vscodium.nix
       ./modules/zsh.nix
       (import ./modules/git.nix { userName = "Victor Freire"; userEmail = "victor@theformfactory.co"; })
     ];
@@ -60,10 +61,11 @@
         };
       })
 
-      ./modules/vscodium.nix
-      ./modules/emacs
       ./modules/cli.nix
       ./modules/direnv.nix
+      ./modules/emacs
+      ./modules/nix.nix
+      ./modules/vscodium.nix
       ./modules/zsh.nix
       (import ./modules/git.nix { userName = "Victor Freire"; userEmail = "victor@freire.dev.br"; })
     ];
@@ -89,11 +91,12 @@
       ./modules/cli.nix
       ./modules/direnv.nix
       ./modules/emacs
+      ./modules/gui.nix
+      ./modules/nix.nix
+      ./modules/vscodium.nix
       # ./modules/email.nix
       # ./modules/firefox.nix
       (import ./modules/git.nix { userName = "Victor Freire"; userEmail = "victor@freire.dev.br"; })
-      ./modules/gui.nix
-      ./modules/vscodium.nix
     ];
 
     extraSpecialArgs = {
