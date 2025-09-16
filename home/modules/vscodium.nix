@@ -26,10 +26,17 @@ in
           "**/.devenv" = true;
         };
 
+        "terminal.integrated.tabs.enabled" = true;
+        "terminal.integrated.defaultProfile.osx" = "zsh";
+        "terminal.integrated.profiles.osx" = {
+          "zsh" = {
+            "path" = "zsh";
+            "args" = [ ];
+          };
+        };
+
         "workbench.tree.indent" = 15;
         "workbench.colorTheme" = "Default Dark Modern";
-
-        "terminal.integrated.tabs.enabled" = true;
 
         "window.titleBarStyle" = "custom";
         "window.zoomLevel" = 0;
