@@ -265,7 +265,6 @@
   :ensure org-contrib
   :defines org-element-use-cache
   :config
-  (use-package citeproc)
 
   ;; add items to structure template list
   (add-to-list 'org-structure-template-alist '("d" . "description"))
@@ -278,16 +277,6 @@
 
 	;; use the language's major mode indentation
 	org-src-tab-acts-natively t
-
-	;; configure reference file
-	org-cite-global-bibliography (list (concat org-directory "/references.bib"))
-
-	;; configure cite export
-	org-cite-export-processors '((latex biblatex)
-                                     (moderncv basic)
-				     (md csl)
-                                     (html csl)
-                                     (t csl))
 
 	;; set source block indentation to 0
 	org-edit-src-content-indentation 0))

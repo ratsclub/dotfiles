@@ -18,7 +18,6 @@ in
       consult
       corfu
       corfu-terminal
-      citeproc
       direnv
       eglot
       eglot-fsharp
