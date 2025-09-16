@@ -21,7 +21,7 @@
             "$HOME/.local/bin"
           ];
 
-          packages = [ pkgs.graphite-cli ];
+          packages = [ ];
           stateVersion = "24.11";
         };
       })
@@ -60,7 +60,7 @@
             "$HOME/.local/bin"
           ];
 
-          packages = [ pkgs.graphite-cli ];
+          packages = [ ];
           stateVersion = "24.11";
         };
       })

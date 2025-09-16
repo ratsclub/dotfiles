@@ -1,8 +1,5 @@
 { pkgs, ... }:
 
-let
-  gt = "${pkgs.graphite-cli}/bin/gt";
-in
 {
   programs.direnv.enableZshIntegration = true;
   home.shell.enableZshIntegration = true;
@@ -13,11 +10,7 @@ in
     history.save = 1000000000;
 
     autosuggestion.enable = true;
-    shellAliases = {
-      giss = "npm i && ${gt} sync && ${gt} submit";
-      gss = "${gt} sync && ${gt} submit";
-      gmss = "${gt} modify -a && ${gt} sync && ${gt} submit";
-    };
+    shellAliases = { };
 
     initContent = ''
       export NVM_DIR="$HOME/.nvm"
