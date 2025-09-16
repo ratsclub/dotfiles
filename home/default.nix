@@ -13,6 +13,7 @@
     };
 
     modules = [
+      inputs.macAppUtil.homeManagerModules.default
       ({ pkgs, ... }: {
         home = {
           username = "victor";
@@ -52,6 +53,7 @@
     };
 
     modules = [
+      inputs.macAppUtil.homeManagerModules.default
       ({ pkgs, ... }: {
         home = {
           username = "victor";
