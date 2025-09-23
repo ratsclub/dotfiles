@@ -21,7 +21,7 @@
             "$HOME/.local/bin"
           ];
 
-          packages = [ ];
+          packages = with pkgs; [ bun gh ];
           stateVersion = "24.11";
         };
       })
