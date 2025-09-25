@@ -29,10 +29,10 @@
       ./modules/cli.nix
       ./modules/direnv.nix
       ./modules/emacs
+      ./modules/git.nix
       ./modules/nix.nix
       ./modules/vscodium.nix
       ./modules/zsh.nix
-      (import ./modules/git.nix { userName = "Victor Freire"; userEmail = "victor@theformfactory.co"; })
     ];
 
     extraSpecialArgs = {
@@ -68,10 +68,10 @@
       ./modules/cli.nix
       ./modules/direnv.nix
       ./modules/emacs
+      ./modules/git.nix
       ./modules/nix.nix
       ./modules/vscodium.nix
       ./modules/zsh.nix
-      (import ./modules/git.nix { userName = "Victor Freire"; userEmail = "victor@freire.dev.br"; })
     ];
 
     extraSpecialArgs = {
@@ -104,7 +104,7 @@
       ./modules/vscodium.nix
       # ./modules/email.nix
       # ./modules/firefox.nix
-      (import ./modules/git.nix { userName = "Victor Freire"; userEmail = "victor@freire.dev.br"; })
+      ./modules/git.nix
     ];
 
     extraSpecialArgs = {

@@ -1,14 +1,9 @@
-{ userName, userEmail }:
-
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   programs.git = {
     enable = true;
     package = pkgs.gitFull;
-
-    userName = userName;
-    userEmail = userEmail;
 
     ignores = [
       # nix
@@ -52,6 +47,24 @@
         };
       };
     };
+
+    includes = [
+      {
+        condition = "gitdir:~/Projects/Personal/";
+        contents.user = {
+          email = "victor@freire.dev.br";
+          name = "Victor Freire";
+        };
+      }
+      {
+        condition = "gitdir:~/Projects/Work/";
+        contents.user = {
+          email = "victor@theformfactory.co";
+          name = "Victor Freire";
+        };
+      }
+    ];
+
     extraConfig = {
       rerere.enabled = true;
       merge = {
