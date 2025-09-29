@@ -77,16 +77,6 @@ in
       };
 
       extensions = with pkgs.vscode-extensions; [
-        # .NET
-        # ionide.ionide-fsharp
-        # ms-dotnettools.csharp
-
-        # Angular
-        angular.ng-template
-
-        # Deno
-        denoland.vscode-deno
-
         # Nix
         jnoortheen.nix-ide
 
@@ -96,17 +86,8 @@ in
         # Go
         golang.go
 
-        # Python
-        ms-python.python
-        ms-toolsai.jupyter
-        ms-pyright.pyright
-        charliermarsh.ruff
-
         # Rust
         rust-lang.rust-analyzer
-
-        # SML
-        azdavis.millet
 
         # Markdown
         yzhang.markdown-all-in-one
