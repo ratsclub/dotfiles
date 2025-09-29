@@ -90,6 +90,9 @@ in
         # Nix
         jnoortheen.nix-ide
 
+        # Gleam
+        gleam.gleam
+
         # Go
         golang.go
 
