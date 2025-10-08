@@ -14,6 +14,25 @@ in
       inherit (final.vscode-utils) buildVscodeMarketplaceExtension;
     in
     {
+      typos = prev.typos.overrideAttrs (_old: rec {
+        pname = "typos";
+        version = "1.38.1";
+
+        src = final.fetchFromGitHub {
+          owner = "crate-ci";
+          repo = "typos";
+          tag = "v${version}";
+          hash = "sha256-xr3k3wx9EWKm00kt1GxE31Mw5wa3N3VJJCKaUbQa4ic=";
+        };
+
+        doCheck = false;
+
+        cargoDeps = final.rustPlatform.fetchCargoVendor {
+          inherit src;
+          hash = "sha256-2XgnCXYqBvx7LRWaPt4iXznIXIEzYBlWMXbwEVZyGA8=";
+        };
+
+      });
       vscode-extensions = recursiveUpdate prev.vscode-extensions
         {
           ionide.ionide-fsharp = buildVscodeMarketplaceExtension {
