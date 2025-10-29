@@ -230,7 +230,7 @@
 (use-package eglot
   :hook ((go-ts-mode . eglot-ensure)
 	 (rust-ts-mode . eglot-ensure)
-	 (typescript-mode . eglot-ensure)
+	 (typescript-ts-mode . eglot-ensure)
 	 (nix-mode . eglot-ensure)
 	 (sml-mode . eglot-ensure)
 	 (eglot-managed-mode . (lambda ()
@@ -250,7 +250,6 @@
 	      ;; sometimes ionide acts up
 	      ("C-c l R" . eglot-reconnect))
   :config
-  (use-package typescript-mode :defer t)
   (add-to-list 'eglot-server-programs '((rust-ts-mode) "rust-analyzer"))
   (add-to-list 'eglot-server-programs '((sml-mode) "millet-ls"))
   (add-to-list 'eglot-server-programs
@@ -308,10 +307,18 @@
   (treemacs-git-mode 'extended))
 
 (use-package treesit
+  :mode
+  (("\\.tsx\\'"  . tsx-ts-mode)
+   ("\\.js\\'"   . typescript-ts-mode)
+   ("\\.mjs\\'"  . typescript-ts-mode)
+   ("\\.mts\\'"  . typescript-ts-mode)
+   ("\\.cjs\\'"  . typescript-ts-mode)
+   ("\\.ts\\'"   . typescript-ts-mode)
+   ("\\.jsx\\'"  . tsx-ts-mode)
+   ("\\.json\\'" . json-ts-mode))
   :preface
   (dolist (mapping '((python-mode . python-ts-mode)
                      (css-mode . css-ts-mode)
-                     (typescript-mode . tsx-ts-mode)
 		     (rust-mode . rust-ts-mode)
 		     (go-mode . go-ts-mode)
                      (js-mode . js-ts-mode)

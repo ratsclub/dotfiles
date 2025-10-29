@@ -30,7 +30,6 @@ in
       switch-window
       treemacs
       treemacs-projectile
-      typescript-mode
       vertico
 
       # org
