@@ -20,9 +20,7 @@ in
       corfu-terminal
       direnv
       eglot
-      eglot-fsharp
       forge
-      fsharp-mode
       magit
       magit-todos
       marginalia

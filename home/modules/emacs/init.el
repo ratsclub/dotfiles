@@ -229,7 +229,6 @@
 
 (use-package eglot
   :hook ((go-ts-mode . eglot-ensure)
-	 (fsharp-mode . eglot-ensure)
 	 (rust-ts-mode . eglot-ensure)
 	 (typescript-mode . eglot-ensure)
 	 (nix-mode . eglot-ensure)
@@ -251,15 +250,12 @@
 	      ;; sometimes ionide acts up
 	      ("C-c l R" . eglot-reconnect))
   :config
-  (use-package eglot-fsharp :defer t)
   (use-package typescript-mode :defer t)
-  (require 'eglot-fsharp)
   (add-to-list 'eglot-server-programs '((rust-ts-mode) "rust-analyzer"))
   (add-to-list 'eglot-server-programs '((sml-mode) "millet-ls"))
   (add-to-list 'eglot-server-programs
 	       '((javascript-mode typescript-ts-mode) "typescript-language-server" "--stdio"))
-  (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
-  (add-to-list 'eglot-server-programs '((fsharp-mode) "fsautocomplete")))
+  (add-to-list 'eglot-server-programs '(nix-mode . ("nil"))))
 
 (use-package org
   :ensure org-contrib
@@ -281,7 +277,6 @@
 	;; set source block indentation to 0
 	org-edit-src-content-indentation 0))
 
-(use-package fsharp-mode :defer t)
 (use-package sml-mode
   :defer t
   :mode ("\\.\\(sml\\|sig\\)\\'" . sml-mode))
