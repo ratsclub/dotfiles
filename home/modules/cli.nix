@@ -1,8 +1,5 @@
 { pkgs, ... }:
 
-let
-  inherit (pkgs) callPackage;
-in
 {
   programs = {
     aria2.enable = true;
@@ -21,7 +18,7 @@ in
     hut
     jq
     ncdu
-    nixpkgs-fmt
+    nixfmt
     ripgrep
     wget
 
