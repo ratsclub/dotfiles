@@ -2,7 +2,7 @@
 
 let
   inherit (pkgs)
-    nixpkgs-fmt
+    nixfmt
     nil
     rust-analyzer
     ;
@@ -58,7 +58,7 @@ in
         # Nix
         "nix" = {
           "enableLanguageServer" = true;
-          "formatterPath" = "${nixpkgs-fmt}/bin/nixpkgs-fmt";
+          "formatterPath" = "${nixfmt}/bin/nixfmt";
           "serverPath" = "${nil}/bin/nil";
         };
         "[nix]" = {

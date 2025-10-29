@@ -284,7 +284,7 @@
   :defer t
   :mode "\\.nix\\'"
   :config
-  (setq nix-nixfmt-bin "nixpkgs-fmt"))
+  (setq nix-nixfmt-bin "nixfmt"))
 
 (use-package direnv
   :config (direnv-mode)
