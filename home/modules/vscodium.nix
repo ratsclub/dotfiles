@@ -17,7 +17,10 @@ in
 
         "editor.formatOnSave" = false;
         "editor.linkedEditing" = true;
-        "editor.rulers" = [ 80 120 ];
+        "editor.rulers" = [
+          80
+          120
+        ];
 
         # excluded files
         "files.exclude" = {

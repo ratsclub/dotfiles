@@ -13,7 +13,10 @@ in
     msmtp.enable = true;
     notmuch = {
       enable = true;
-      new.tags = [ "unread" "inbox" ];
+      new.tags = [
+        "unread"
+        "inbox"
+      ];
       hooks = {
         preNew = "mbsync --all";
         postNew = ''

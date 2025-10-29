@@ -4,7 +4,6 @@
   programs.direnv.enableZshIntegration = true;
   home.shell.enableZshIntegration = true;
 
-
   programs.zsh = {
     enable = true;
     history.save = 1000000000;

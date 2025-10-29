@@ -4,7 +4,13 @@
     stable.url = "github:NixOS/nixpkgs/nixos-23.05";
   };
 
-  outputs = { self, unstable, stable, ... }:
+  outputs =
+    {
+      self,
+      unstable,
+      stable,
+      ...
+    }:
     let
       # change the system if needed
       system = "x86_64-linux";
