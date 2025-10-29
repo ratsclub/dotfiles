@@ -7,7 +7,13 @@ let
     small
     ;
 
-  mkPkgs = { nixpkgs, system, overlay, ... }:
+  mkPkgs =
+    {
+      nixpkgs,
+      system,
+      overlay,
+      ...
+    }:
     import nixpkgs {
       inherit system;
       overlays = [
@@ -35,10 +41,12 @@ in
       nixpkgs = stable;
 
       # TODO: until v9 reaches nixpkgs stable
-      overlay = (final: prev: {
-        forgejo = small.legacyPackages.${system}.forgejo;
-        forgejo-runner = small.legacyPackages.${system}.forgejo-runner;
-      });
+      overlay = (
+        final: prev: {
+          forgejo = small.legacyPackages.${system}.forgejo;
+          forgejo-runner = small.legacyPackages.${system}.forgejo-runner;
+        }
+      );
     };
     modules = [
       ./capivaras
@@ -55,10 +63,12 @@ in
       nixpkgs = stable;
 
       # TODO: until v9 reaches nixpkgs stable
-      overlay = (final: prev: {
-        forgejo = small.legacyPackages.${system}.forgejo;
-        forgejo-runner = small.legacyPackages.${system}.forgejo-runner;
-      });
+      overlay = (
+        final: prev: {
+          forgejo = small.legacyPackages.${system}.forgejo;
+          forgejo-runner = small.legacyPackages.${system}.forgejo-runner;
+        }
+      );
     };
     modules = [
       ./davila

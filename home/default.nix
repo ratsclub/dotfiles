@@ -13,18 +13,25 @@
     };
 
     modules = [
-      ({ pkgs, ... }: {
-        home = {
-          username = "victor";
-          homeDirectory = "/Users/victor";
-          sessionPath = [
-            "$HOME/.local/bin"
-          ];
+      (
+        { pkgs, ... }:
+        {
+          home = {
+            username = "victor";
+            homeDirectory = "/Users/victor";
+            sessionPath = [
+              "$HOME/.local/bin"
+            ];
 
-          packages = with pkgs; [ bun gh typos ];
-          stateVersion = "24.11";
-        };
-      })
+            packages = with pkgs; [
+              bun
+              gh
+              typos
+            ];
+            stateVersion = "24.11";
+          };
+        }
+      )
 
       ./modules/cli.nix
       ./modules/direnv.nix
@@ -52,18 +59,21 @@
     };
 
     modules = [
-      ({ pkgs, ... }: {
-        home = {
-          username = "victor";
-          homeDirectory = "/Users/victor";
-          sessionPath = [
-            "$HOME/.local/bin"
-          ];
+      (
+        { pkgs, ... }:
+        {
+          home = {
+            username = "victor";
+            homeDirectory = "/Users/victor";
+            sessionPath = [
+              "$HOME/.local/bin"
+            ];
 
-          packages = [ ];
-          stateVersion = "24.11";
-        };
-      })
+            packages = [ ];
+            stateVersion = "24.11";
+          };
+        }
+      )
 
       ./modules/cli.nix
       ./modules/direnv.nix

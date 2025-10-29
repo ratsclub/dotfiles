@@ -1,4 +1,10 @@
-{ config, lib, pkgs, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
   # customize kernel version
   boot.kernelPackages = pkgs.linuxPackages_5_15;
 

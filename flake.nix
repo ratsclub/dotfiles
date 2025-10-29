@@ -22,7 +22,8 @@
     };
   };
 
-  outputs = { self, ... }@inputs:
+  outputs =
+    { self, ... }@inputs:
     let
       inherit (self) outputs;
       forAllSystems = inputs.nixpkgs.lib.genAttrs [
@@ -33,10 +34,13 @@
       ];
     in
     {
-      packages = forAllSystems
-        (system:
-          let pkgs = import inputs.nixpkgs { inherit system; };
-          in import ./pkgs { inherit pkgs; });
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = import inputs.nixpkgs { inherit system; };
+        in
+        import ./pkgs { inherit pkgs; }
+      );
 
       overlays = import ./overlays { inherit (inputs) nixpkgs small; };
       homeConfigurations = import ./home { inherit inputs self; };

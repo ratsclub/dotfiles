@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
@@ -15,25 +20,24 @@ let
     esac
   '';
 
-  apprise = pkgs.writeScript "apprise"
-    ''
-      #! ${pkgs.runtimeShell}
+  apprise = pkgs.writeScript "apprise" ''
+    #! ${pkgs.runtimeShell}
 
-      apprise -vv \
-        -t "Status of service $2" \
-        -b "$(systemctl status --full $2)" \
-        --config=${cfg.configFile}
-    '';
+    apprise -vv \
+      -t "Status of service $2" \
+      -b "$(systemctl status --full $2)" \
+      --config=${cfg.configFile}
+  '';
 in
 
 {
   options = {
     systemd.services = mkOption {
-      type = with types; attrsOf (
-        submodule {
+      type =
+        with types;
+        attrsOf (submodule {
           config.onFailure = [ "apprise@%n.service" ];
-        }
-      );
+        });
     };
 
     systemd.apprise = {
