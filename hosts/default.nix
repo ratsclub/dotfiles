@@ -33,6 +33,16 @@ in
     specialArgs = { inherit inputs; };
   };
 
+  pi = nixpkgs.lib.nixosSystem rec {
+    system = "aarch64-linux";
+    pkgs = mkPkgs {
+      inherit nixpkgs system;
+      overlay = (final: prev: {});
+    };
+    modules = [ ./pi ];
+    specialArgs = { inherit inputs; };
+  };
+
   capivaras = stable.lib.nixosSystem rec {
     system = "aarch64-linux";
     pkgs = mkPkgs {
