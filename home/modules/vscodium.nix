@@ -2,6 +2,7 @@
 
 let
   inherit (pkgs)
+    millet
     nixfmt
     nil
     rust-analyzer
@@ -65,6 +66,7 @@ in
           "serverPath" = "${nil}/bin/nil";
         };
         "[nix]" = {
+          "editor.formatOnSave" = true;
           "editor.insertSpaces" = true;
           "editor.tabSize" = 2;
         };
@@ -77,20 +79,28 @@ in
 
         # Rust
         "rust-analyzer.server.path" = "${rust-analyzer}/bin/rust-analyzer";
+
+        # Standard ML
+        "[sml]" = {
+          "editor.defaultFormatter" = "azdavis.millet";
+          "editor.formatOnSave" = true;
+        };
+        "millet.format.engine" = "smlfmt";
+        "millet.server.path" = "${millet}/bin/millet-ls";
       };
 
       extensions = with pkgs.vscode-extensions; [
         # Nix
         jnoortheen.nix-ide
 
-        # Gleam
-        gleam.gleam
-
         # Go
         golang.go
 
         # Rust
         rust-lang.rust-analyzer
+
+        # Standard ML
+        azdavis.millet
 
         # Markdown
         yzhang.markdown-all-in-one
