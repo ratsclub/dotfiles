@@ -1,20 +1,6 @@
 { inputs, self, ... }:
 
 {
-  nix.registry = {
-    nixpkgs = {
-      from = {
-        type = "indirect";
-        id = "nixpkgs";
-      };
-      flake = inputs.nixpkgs;
-    };
-    self = {
-      from = {
-        type = "indirect";
-        id = "self";
-      };
-      flake = self;
-    };
-  };
+  nix.registry.nixpkgs.flake = inputs.nixpkgs;
+  nix.registry.self.flake = self;
 }
