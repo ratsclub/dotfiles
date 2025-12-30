@@ -25,6 +25,7 @@
 
             packages = with pkgs; [
               bun
+              claude-code
               gh
               typos
             ];
@@ -69,7 +70,7 @@
               "$HOME/.local/bin"
             ];
 
-            packages = [ ];
+            packages = with pkgs; [ claude-code ];
             stateVersion = "24.11";
           };
         }
