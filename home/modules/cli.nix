@@ -19,6 +19,7 @@
     jq
     ncdu
     nixfmt
+    nixfmt-tree
     ripgrep
     wget
 
