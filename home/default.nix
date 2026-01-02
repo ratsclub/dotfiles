@@ -37,7 +37,7 @@
       ./modules/cli.nix
       ./modules/direnv.nix
       ./modules/emacs
-      ./modules/git.nix
+      ./modules/vcs.nix
       ./modules/nix.nix
       ./modules/vscodium.nix
       ./modules/zsh.nix
@@ -79,7 +79,7 @@
       ./modules/cli.nix
       ./modules/direnv.nix
       ./modules/emacs
-      ./modules/git.nix
+      ./modules/vcs.nix
       ./modules/nix.nix
       ./modules/vscodium.nix
       ./modules/zsh.nix
@@ -115,7 +115,7 @@
       ./modules/vscodium.nix
       # ./modules/email.nix
       # ./modules/firefox.nix
-      ./modules/git.nix
+      ./modules/vcs.nix
     ];
 
     extraSpecialArgs = {
