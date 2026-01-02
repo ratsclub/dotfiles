@@ -16,6 +16,10 @@
     };
   };
 
+  programs.jujutsu = {
+    enable = true;
+  };
+
   programs.git = {
     enable = true;
     package = pkgs.gitFull;
