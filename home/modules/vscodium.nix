@@ -3,8 +3,8 @@
 let
   inherit (pkgs)
     millet
-    nixfmt
-    nil
+    nixfmt-tree
+    nixd
     rust-analyzer
     ;
 in
@@ -62,8 +62,12 @@ in
         # Nix
         "nix" = {
           "enableLanguageServer" = true;
-          "formatterPath" = "${nixfmt}/bin/nixfmt";
-          "serverPath" = "${nil}/bin/nil";
+          "serverPath" = "${nixd}/bin/nixd";
+          "formatterPath" = [
+            "${nixfmt-tree}/bin/treefmt"
+            "--stdin"
+            "{file}"
+          ];
         };
         "[nix]" = {
           "editor.formatOnSave" = true;
