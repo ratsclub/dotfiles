@@ -4,7 +4,6 @@ let
 
   inherit (inputs)
     nixpkgs
-    stable
     devenv
     ;
 
@@ -32,7 +31,7 @@ in
 forAllSystems (
   system:
   let
-    pkgs = (nixpkgsFor stable)."${system}";
+    pkgs = (nixpkgsFor nixpkgs).${system};
   in
   {
     web = devenv.lib.mkShell {
@@ -43,9 +42,12 @@ forAllSystems (
           {
             packages = [ ];
             languages = {
-              javascript.enable = true;
-              javascript.package = pkgs.nodejs_22;
-              javascript.yarn.enable = true;
+              javascript = {
+                enable = true;
+                package = pkgs.nodejs;
+                yarn.enable = true;
+                bun.enable = true;
+              };
             };
           }
         )
