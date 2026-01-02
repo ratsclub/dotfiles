@@ -35,22 +35,6 @@ forAllSystems (
     pkgs = (nixpkgsFor stable)."${system}";
   in
   {
-    java = devenv.lib.mkShell {
-      inherit inputs pkgs;
-      modules = [
-        (
-          { pkgs, lib, ... }:
-          {
-            languages = {
-              java.enable = true;
-              java.jdk.package = pkgs.jdk17_headless;
-              java.maven.enable = true;
-            };
-          }
-        )
-      ];
-    };
-
     web = devenv.lib.mkShell {
       inherit inputs pkgs;
       modules = [
