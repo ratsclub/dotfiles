@@ -46,6 +46,7 @@ forAllSystems (
                 enable = true;
                 package = pkgs.nodejs;
                 yarn.enable = true;
+                pnpm.enable = true;
                 bun.enable = true;
               };
             };
