@@ -20,6 +20,8 @@
     enable = true;
   };
 
+  home.packages = with pkgs; [ git-town ];
+
   programs.git = {
     enable = true;
     package = pkgs.gitFull;
