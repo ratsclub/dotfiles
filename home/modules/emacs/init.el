@@ -158,6 +158,7 @@
   (corfu-quit-at-boundary nil)
   (corfu-preselect-first t)
   (corfu-popupinfo-mode)
+  (corfu-quit-no-match t)
   :hook
   '((prog-mode . corfu-mode)
     (shell-mode . corfu-mode)
