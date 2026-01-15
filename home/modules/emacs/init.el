@@ -335,6 +335,16 @@
   (setq switch-window-shortcut-style 'qwerty)
   :bind (("C-x o" . switch-window)))
 
+(use-package eshell
+  :ensure nil
+  :defer t
+  :init
+  (setq eshell-hist-ignoredups t
+	eshell-history-size 10000)
+  (defun p/setup-eshell ()
+    (keymap-set eshell-mode-map "C-r" 'consult-history))
+  :hook ((eshell-mode . p/setup-eshell)))
+
 (use-package proced
   :custom
   (proced-auto-update-flag t)
