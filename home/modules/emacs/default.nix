@@ -16,6 +16,7 @@ in
     package = customEmacs;
     extraPackages =
       epkgs: with epkgs; [
+        avy
         consult
         corfu
         corfu-terminal
