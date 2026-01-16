@@ -26,6 +26,7 @@ in
         magit
         magit-todos
         marginalia
+        multiple-cursors
         nix-mode
         orderless
         sml-mode

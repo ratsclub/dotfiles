@@ -351,3 +351,10 @@
   (proced-auto-update-interval 3)
   (proced-enable-color-flag t)
   (proced-show-remote-processes t))
+
+(use-package multiple-cursors
+  :bind
+  (("C-M-c" . mc/edit-lines)
+   ("C->" . mc/mark-next-like-this)
+   ("C-<" . mc/mark-previous-like-this)
+   ("C-c C-<" . mc/mark-all-like-this)))
