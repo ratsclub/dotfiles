@@ -212,7 +212,7 @@
   (marginalia-mode))
 
 (use-package magit
-  :defer t
+  :after project
   :config
   (use-package forge :defer t)
   (use-package magit-todos
@@ -222,6 +222,10 @@
   ;; makes magit fullscreen and restore the windows when closing
   (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-topleft-v1
 	magit-bury-buffer-function 'magit-restore-window-configuration))
+
+(use-package project
+  :config
+  (add-to-list 'project-switch-commands '(magit-project-status "Magit" ?m)))
 
 (use-package orderless
   :custom
