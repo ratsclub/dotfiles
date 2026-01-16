@@ -165,11 +165,19 @@
     (eshell-mode . corfu-mode))
 
   :config
-  (use-package corfu-terminal :defer t)
-  (unless (display-graphic-p)
-    (corfu-terminal-mode +1))
   (global-corfu-mode)
-  (corfu-popupinfo-mode))
+  (corfu-popupinfo-mode)
+
+  :bind
+  (:map corfu-map
+        ("SPC" . corfu-insert-separator)
+        ("C-n" . corfu-next)
+        ("C-p" . corfu-previous)))
+
+(use-package corfu-terminal
+  :if (not (display-graphic-p))
+  :config
+  (corfu-terminal-mode))
 
 (use-package consult
   :hook ((completion-list-mode . consult-preview-at-point-mode))
