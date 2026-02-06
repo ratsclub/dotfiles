@@ -39,6 +39,9 @@
       # jetbrains
       ".idea"
 
+      # claude
+      ".claude/settings.*.json"
+
       # vscode
       ".vscode"
     ];
