@@ -51,7 +51,7 @@
         ca = "commit --amend";
         cm = "commit -m";
         co = "checkout";
-        cu = ''!f(){ git stash && git checkout $1 && git fetch --all --prune && git pull origin $1; };f'';
+        cu = "!f(){ git stash && git checkout $1 && git fetch --all --prune && git pull origin $1; };f";
         df = "diff";
         hist = "log --graph --pretty=format:'%Cred%h%Creset %s%C(yellow)%d%Creset %Cgreen(%cr)%Creset [%an]' --abbrev-commit --date=relative";
         ri = "rebase --interactive --autosquash";
