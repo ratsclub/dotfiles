@@ -39,8 +39,12 @@ forAllSystems (
       modules = [
         (
           { pkgs, lib, ... }:
+
+          let
+            inherit (pkgs) typescript-go;
+          in
           {
-            packages = [ ];
+            packages = [ typescript-go ];
             languages = {
               javascript = {
                 enable = true;
@@ -49,6 +53,7 @@ forAllSystems (
                 pnpm.enable = true;
                 bun.enable = true;
               };
+
             };
           }
         )
