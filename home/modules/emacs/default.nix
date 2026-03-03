@@ -1,8 +1,6 @@
 { inputs, pkgs, ... }:
 
 let
-  smallPkgs = inputs.small.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-
   emacsConfig = pkgs.writeTextDir "config/init.el" ''
     (load "${./init.el}")
   '';
@@ -39,11 +37,7 @@ in
 
         # org
         org-contrib
-
-        # treesitter
-        # TODO: wait to reach unstable https://github.com/nixos/nixpkgs/pull/491704
-        # treesit-grammars.with-all-grammars
-        smallPkgs.emacsPackages.treesit-grammars.with-all-grammars
+        treesit-grammars.with-all-grammars
       ];
   };
 
