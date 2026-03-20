@@ -40,7 +40,7 @@
       ".idea"
 
       # claude
-      ".claude/settings.*.json"
+      ".claude"
 
       # vscode
       ".vscode"
