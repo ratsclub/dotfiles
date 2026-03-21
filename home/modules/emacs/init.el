@@ -149,7 +149,7 @@
   (corfu-auto t)
   (corfu-auto-prefix 2)
   (corfu-auto-delay 0.25)
-  (corfu-popupinfo-delay corfu-auto-delay)
+  (corfu-popupinfo-delay 0.25)
   (corfu-min-width 40)
   (corfu-max-width 80)
   (corfu-count 14)
