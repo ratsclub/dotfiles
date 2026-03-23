@@ -41,6 +41,7 @@
 
       # claude
       ".claude"
+      ".mcp.json"
 
       # vscode
       ".vscode"
