@@ -100,6 +100,10 @@ in
         # Go
         golang.go
 
+        # F#
+        ms-dotnettools.csharp
+        ionide.ionide-fsharp
+
         # Rust
         rust-lang.rust-analyzer
 
@@ -108,6 +112,9 @@ in
 
         # Markdown
         yzhang.markdown-all-in-one
+
+        # oCaml
+        ocamllabs.ocaml-platform
 
         # Misc
         editorconfig.editorconfig
