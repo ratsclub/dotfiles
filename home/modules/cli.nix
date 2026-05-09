@@ -20,6 +20,8 @@
     ncdu
     nixfmt
     nixfmt-tree
+    nodejs
+    qmd
     ripgrep
     wget
 

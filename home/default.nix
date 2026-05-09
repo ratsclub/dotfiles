@@ -5,7 +5,7 @@
     pkgs = import inputs.nixpkgs {
       system = "aarch64-darwin";
       overlays = [
-        self.overlays.modifications
+        self.overlays.default
       ];
       config = {
         allowUnfree = true;
@@ -52,7 +52,7 @@
     pkgs = import inputs.nixpkgs {
       system = "aarch64-darwin";
       overlays = [
-        self.overlays.modifications
+        self.overlays.default
       ];
       config = {
         allowUnfree = true;
@@ -94,7 +94,7 @@
     pkgs = import inputs.nixpkgs {
       system = "x86_64-linux";
       overlays = [
-        self.overlays.modifications
+        self.overlays.default
       ];
       config = {
         allowUnfree = true;

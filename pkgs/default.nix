@@ -1,1 +1,4 @@
-{ pkgs, ... }: { }
+{ pkgs, ... }:
+{
+  qmd = pkgs.callPackage ./qmd { };
+}
