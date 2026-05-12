@@ -16,11 +16,19 @@
     };
   };
 
-  programs.jujutsu = {
+  home.packages = with pkgs; [
+    # atlassian cli for bitbucket
+    acli
+    git-town
+  ];
+
+  programs.gh = {
     enable = true;
   };
 
-  home.packages = with pkgs; [ git-town ];
+  programs.jujutsu = {
+    enable = true;
+  };
 
   programs.git = {
     enable = true;

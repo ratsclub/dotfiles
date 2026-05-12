@@ -26,7 +26,6 @@
             packages = with pkgs; [
               bun
               claude-code
-              gh
               typos
             ];
             stateVersion = "24.11";
