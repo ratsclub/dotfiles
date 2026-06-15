@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     small.url = "github:nixos/nixpkgs/nixos-unstable-small";
-    stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    stable.url = "github:nixos/nixpkgs/nixos-26.05";
 
     devenv = {
       url = "github:cachix/devenv";
