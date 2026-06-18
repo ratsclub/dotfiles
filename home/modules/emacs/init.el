@@ -247,6 +247,12 @@
   :config
   (add-to-list 'project-switch-commands '(magit-project-status "Magit" ?m)))
 
+(use-package ediff
+  :ensure nil
+  :custom
+  ;; keep ediff in a single frame instead of spawning a control frame
+  (ediff-window-setup-function 'ediff-setup-windows-plain))
+
 (use-package orderless
   :custom
   (completion-styles '(orderless basic))
