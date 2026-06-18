@@ -127,6 +127,10 @@
    ;; colors in compilation-mode
    (compilation-filter . ansi-color-compilation-filter))
 
+  :bind
+  ;; kill up to, but not including, the next occurrence of a char
+  (("M-z" . zap-up-to-char))
+
   :mode
   (("\\.go\\'" . go-ts-mode)
    ("/go\\.mod\\'" . go-mod-ts-mode)
