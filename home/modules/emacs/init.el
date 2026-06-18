@@ -134,6 +134,12 @@
    ("\\.rs$" . rust-ts-mode)
    ("\\.toml$" . toml-ts-mode)))
 
+(use-package uniquify
+  :ensure nil
+  :custom
+  ;; disambiguate same-named buffers by path instead of <2> suffixes
+  (uniquify-buffer-name-style 'forward))
+
 (use-package windmove
   :bind
   (("C-c <left>" .  'windmove-left)
