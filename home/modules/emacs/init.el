@@ -114,6 +114,9 @@
   ;; smoother scrolling
   (pixel-scroll-precision-mode)
 
+  ;; remember point position in visited files
+  (save-place-mode 1)
+
   :hook
   ((prog-mode . display-line-numbers-mode)
    (org-mode . display-line-numbers-mode)
