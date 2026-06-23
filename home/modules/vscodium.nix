@@ -30,6 +30,7 @@ in
 
         "editor.formatOnSave" = false;
         "editor.linkedEditing" = true;
+        "editor.fontLigatures" = true;
         "editor.rulers" = [
           80
           120
