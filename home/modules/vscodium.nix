@@ -16,6 +16,7 @@ in
       userSettings = {
         "update.mode" = "none";
 
+        "git.autofetch" = true;
         "git.blame.editorDecoration.enabled" = true;
         "git.blame.statusBarItem.enabled" = true;
 
