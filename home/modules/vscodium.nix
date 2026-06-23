@@ -16,6 +16,9 @@ in
       userSettings = {
         "update.mode" = "none";
 
+        "git.blame.editorDecoration.enabled" = true;
+        "git.blame.statusBarItem.enabled" = true;
+
         "editor.formatOnSave" = false;
         "editor.linkedEditing" = true;
         "editor.rulers" = [
