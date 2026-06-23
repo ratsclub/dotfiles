@@ -31,6 +31,7 @@ in
         "editor.formatOnSave" = false;
         "editor.linkedEditing" = true;
         "editor.fontLigatures" = true;
+        "editor.stickyScroll.enabled" = true;
         "editor.rulers" = [
           80
           120
