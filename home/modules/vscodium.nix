@@ -19,6 +19,10 @@ in
         "telemetry.telemetryLevel" = "off";
         "redhat.telemetry.enabled" = false;
 
+        "files.trimTrailingWhitespace" = true;
+        "files.insertFinalNewline" = true;
+        "files.trimFinalNewlines" = true;
+
         "git.autofetch" = true;
         "git.blame.editorDecoration.enabled" = true;
         "git.blame.statusBarItem.enabled" = true;
