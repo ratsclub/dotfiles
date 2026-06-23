@@ -57,6 +57,8 @@ in
         "workbench.colorTheme" = "Default Dark Modern";
         "workbench.editor.highlightModifiedTabs" = true;
 
+        "diffEditor.ignoreTrimWhitespace" = false;
+
         "window.titleBarStyle" = "custom";
         "window.zoomLevel" = 0;
 
