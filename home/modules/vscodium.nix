@@ -55,6 +55,7 @@ in
 
         "workbench.tree.indent" = 15;
         "workbench.colorTheme" = "Default Dark Modern";
+        "workbench.editor.highlightModifiedTabs" = true;
 
         "window.titleBarStyle" = "custom";
         "window.zoomLevel" = 0;
