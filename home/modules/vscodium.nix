@@ -24,6 +24,7 @@ in
         "files.trimFinalNewlines" = true;
 
         "git.autofetch" = true;
+        "git.confirmSync" = false;
         "git.blame.editorDecoration.enabled" = true;
         "git.blame.statusBarItem.enabled" = true;
 
