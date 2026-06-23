@@ -16,6 +16,9 @@ in
       userSettings = {
         "update.mode" = "none";
 
+        "telemetry.telemetryLevel" = "off";
+        "redhat.telemetry.enabled" = false;
+
         "git.autofetch" = true;
         "git.blame.editorDecoration.enabled" = true;
         "git.blame.statusBarItem.enabled" = true;
