@@ -54,7 +54,7 @@ in
         };
 
         "workbench.tree.indent" = 15;
-        "workbench.colorTheme" = "Default Dark Modern";
+        "workbench.colorTheme" = "Dark Modern";
         "workbench.editor.highlightModifiedTabs" = true;
 
         "diffEditor.ignoreTrimWhitespace" = false;
