@@ -1,14 +1,25 @@
+# agenix recipients. Each entry maps a secret file to the public keys allowed
+# to decrypt it. Re-run `agenix -r` after changing this file to rekey secrets.
 let
+  # People — keys allowed to edit & rekey every secret.
   users = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHcM1qHIUVmhRC0jY8Tzvu6SdTn+68cM7ArPw3AwD/LN"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIImly9yO1lUBeqsAgWYDHOYj8hYUg/zyvGb5X/qRsMNB"
-
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIey4LP6XkLhU8kBxCu0zW+LriyMu0xFyuftv29fkxKS root@capivaras"
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDzo6voZSXCw5wiAYI6s+zKb2JBkWK/E1ocEqOo9RHmb root@davilla"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOpr5uuTSdASh31etYaiBjqK9n6CBp8+ogG1V2b7ig2T"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJRpLEveihAeuMTA2PUZ3voPbK4KQVd0Hb4OZWD909cO"
   ];
+
+  systems = {
+    catarina = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGb/8HR7QfaLCB3HC78WkYI3H9lt0EflGnDSc2Y48aWx";
+  };
+
+  allSystems = builtins.attrValues systems;
 in
 {
-  "services/forgejo/mailer.age".publicKeys = users;
-  "services/forgejo/runner-token.age".publicKeys = users;
-  "appriseconfig.age".publicKeys = users;
+  "catarina/forgejo/secret-key.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/forgejo/internal-token.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/forgejo/admin-password.age".publicKeys = users ++ [ systems.catarina ];
+
+  "catarina/restic/password.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/restic/env.age".publicKeys = users ++ [ systems.catarina ];
 }

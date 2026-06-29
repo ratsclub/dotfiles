@@ -23,4 +23,14 @@ let
       config.allowUnfree = true;
     };
 in
-{ }
+{
+  catarina = nixpkgs.lib.nixosSystem rec {
+    system = "x86_64-linux";
+    pkgs = mkPkgs {
+      inherit nixpkgs system;
+      overlay = (final: prev: { });
+    };
+    modules = [ ./catarina ];
+    specialArgs = { inherit inputs; };
+  };
+}
