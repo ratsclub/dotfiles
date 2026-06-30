@@ -33,4 +33,14 @@ in
     modules = [ ./catarina ];
     specialArgs = { inherit inputs; };
   };
+
+  joan = nixpkgs.lib.nixosSystem rec {
+    system = "x86_64-linux";
+    pkgs = mkPkgs {
+      inherit nixpkgs system;
+      overlay = (final: prev: { });
+    };
+    modules = [ ./joan ];
+    specialArgs = { inherit inputs; };
+  };
 }

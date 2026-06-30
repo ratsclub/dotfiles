@@ -11,6 +11,7 @@ let
 
   systems = {
     catarina = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGb/8HR7QfaLCB3HC78WkYI3H9lt0EflGnDSc2Y48aWx";
+    joan = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBCnZ7jXHIzyVZ6nllROjNLtVUP/mSis9CBs3RvWx1m8";
   };
 
   allSystems = builtins.attrValues systems;
@@ -22,4 +23,6 @@ in
 
   "catarina/restic/password.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/restic/env.age".publicKeys = users ++ [ systems.catarina ];
+
+  "joan/forgejo/runner-token.age".publicKeys = users ++ [ systems.joan ];
 }
