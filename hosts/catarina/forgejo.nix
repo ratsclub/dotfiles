@@ -24,6 +24,11 @@ in
     owner = cfg.user;
     group = cfg.group;
   };
+  age.secrets.forgejo-mailer-password = {
+    file = ../../secrets/catarina/forgejo/mailer-password.age;
+    owner = cfg.user;
+    group = cfg.group;
+  };
 
   age.secrets.restic-password.file = ../../secrets/catarina/restic/password.age;
   age.secrets.restic-env.file = ../../secrets/catarina/restic/env.age;
@@ -38,11 +43,22 @@ in
       };
       service = {
         DISABLE_REGISTRATION = true;
+        ENABLE_NOTIFY_MAIL = true;
+        DEFAULT_KEEP_EMAIL_PRIVATE = true;
+      };
+      mailer = {
+        ENABLED = true;
+        PROTOCOL = "smtp+starttls";
+        SMTP_ADDR = "smtp.purelymail.com";
+        SMTP_PORT = 587;
+        USER = "noreply@r6b.dev";
+        FROM = "Forgejo <noreply@r6b.dev>";
       };
       other = {
         SHOW_FOOTER_VERSION = false;
       };
     };
+    mailerPasswordFile = config.age.secrets.forgejo-mailer-password.path;
     secrets.security = {
       SECRET_KEY = lib.mkForce config.age.secrets.forgejo-secret-key.path;
       INTERNAL_TOKEN = lib.mkForce config.age.secrets.forgejo-internal-token.path;

@@ -20,6 +20,7 @@ in
   "catarina/forgejo/secret-key.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/forgejo/internal-token.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/forgejo/admin-password.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/forgejo/mailer-password.age".publicKeys = users ++ [ systems.catarina ];
 
   "catarina/restic/password.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/restic/env.age".publicKeys = users ++ [ systems.catarina ];
