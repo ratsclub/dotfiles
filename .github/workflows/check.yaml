@@ -1,0 +1,23 @@
+name: Check Nix Flake
+
+run-name: "Check Nix Flake"
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - name: Check formatting
+        run: nix fmt -- --ci
+      - name: Run nix flake check
+        # --impure lets the devenv-based devShell resolve its working directory.
+        run: nix flake check --impure

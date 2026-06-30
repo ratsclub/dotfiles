@@ -42,6 +42,8 @@
         import ./pkgs { inherit pkgs; }
       );
 
+      formatter = forAllSystems (system: (import inputs.nixpkgs { inherit system; }).nixfmt-tree);
+
       overlays = import ./overlays { inherit (inputs) nixpkgs small; };
       homeConfigurations = import ./home { inherit inputs self; };
       nixosConfigurations = import ./hosts { inherit inputs outputs; };
