@@ -12,20 +12,15 @@ jobs:
   update:
     runs-on: ubuntu-latest
 
-    permissions:
-      # Give the default GITHUB_TOKEN write permission to commit and push the
-      # added or changed files to the repository.
-      contents: write
-
     steps:
-      - uses: actions/checkout@v4
+      - uses: https://code.forgejo.org/actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.FORGEJO_TOKEN }}
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@main
+        uses: https://github.com/cachix/install-nix-action@v31
       - name: Run nix flake update
         run: nix flake update
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: https://github.com/stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: nix flake update"
