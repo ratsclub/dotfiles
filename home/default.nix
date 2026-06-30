@@ -25,7 +25,6 @@
 
             packages = with pkgs; [
               bun
-              claude-code
               typos
             ];
             stateVersion = "24.11";
@@ -33,6 +32,7 @@
         }
       )
 
+      ./modules/claude-code.nix
       ./modules/cli.nix
       ./modules/direnv.nix
       ./modules/emacs
@@ -69,12 +69,14 @@
               "$HOME/.local/bin"
             ];
 
-            packages = with pkgs; [ claude-code ];
+            packages = with pkgs; [ reasonix ];
+
             stateVersion = "24.11";
           };
         }
       )
 
+      ./modules/claude-code.nix
       ./modules/cli.nix
       ./modules/direnv.nix
       ./modules/emacs
