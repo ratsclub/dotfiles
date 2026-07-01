@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: https://code.forgejo.org/actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.head_ref }}
           token: ${{ secrets.FORGEJO_TOKEN }}
@@ -22,7 +22,7 @@ jobs:
         # which install-nix-action requires.
         run: apt-get update && apt-get install -y sudo
       - name: Install Nix
-        uses: https://github.com/cachix/install-nix-action@v31
+        uses: actions/install-nix-action@v31
       - name: Run nix flake update
         run: nix flake update
       - uses: https://github.com/stefanzweifel/git-auto-commit-action@v5

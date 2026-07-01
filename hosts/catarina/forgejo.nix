@@ -8,6 +8,7 @@
 let
   cfg = config.services.forgejo;
   domain = "src.r6b.dev";
+  rootDomain = "https://${domain}";
 in
 {
   age.secrets.forgejo-secret-key = {
@@ -38,12 +39,15 @@ in
     enable = true;
     database.type = "postgres";
     settings = {
+      actions = {
+        DEFAULT_ACTIONS_URL = rootDomain;
+      };
       repository = {
         FORCE_PRIVATE = true;
       };
       server = {
         DOMAIN = domain;
-        ROOT_URL = "https://${domain}/";
+        ROOT_URL = rootDomain;
 
         # Git-over-SSH is served by Forgejo's own built-in server on an internal
         # port, kept separate from the host's admin sshd. teresa's caddy-l4
@@ -61,7 +65,8 @@ in
         DEFAULT_KEEP_EMAIL_PRIVATE = true;
         DEFAULT_USER_VISIBILITY = "private";
         DEFAULT_ORG_VISIBILITY = "private";
-        REQUIRE_SIGNIN_VIEW = true;
+        # Set to false as reusable workflows can't be private.
+        REQUIRE_SIGNIN_VIEW = false;
       };
       "service.explore" = {
         DISABLE_USERS_PAGE = true;
