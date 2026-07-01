@@ -39,6 +39,9 @@ in
     enable = true;
     database.type = "postgres";
     settings = {
+      repository = {
+        FORCE_PRIVATE = true;
+      };
       server = {
         DOMAIN = domain;
         ROOT_URL = "https://${domain}/";
@@ -57,6 +60,12 @@ in
         DISABLE_REGISTRATION = true;
         ENABLE_NOTIFY_MAIL = true;
         DEFAULT_KEEP_EMAIL_PRIVATE = true;
+        DEFAULT_USER_VISIBILITY = "private";
+        DEFAULT_ORG_VISIBILITY = "private";
+        REQUIRE_SIGNIN_VIEW = true;
+      };
+      "service.explore" = {
+        DISABLE_USERS_PAGE = true;
       };
       mailer = {
         ENABLED = true;
