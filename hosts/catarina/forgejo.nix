@@ -114,6 +114,23 @@ in
         --password "$(tr -d '\n' < ${pwd})" || true
     '';
 
+  # Custom branding
+  systemd.tmpfiles.rules =
+    let
+      img = "${cfg.customDir}/public/assets/img";
+      logoSvg = ../../assets/img/shy-rat.svg;
+      logoPng = ../../assets/img/shy-rat.png;
+    in
+    [
+      "d ${cfg.customDir}/public        0750 ${cfg.user} ${cfg.group} - -"
+      "d ${cfg.customDir}/public/assets 0750 ${cfg.user} ${cfg.group} - -"
+      "d ${img}                         0750 ${cfg.user} ${cfg.group} - -"
+      "L+ ${img}/logo.svg    - - - - ${logoSvg}"
+      "L+ ${img}/logo.png    - - - - ${logoPng}"
+      "L+ ${img}/favicon.svg - - - - ${logoSvg}"
+      "L+ ${img}/favicon.png - - - - ${logoPng}"
+    ];
+
   services.restic.backups.forgejo = {
     initialize = true;
 
