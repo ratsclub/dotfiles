@@ -26,6 +26,13 @@
   networking.hostName = "catarina";
   networking.networkmanager.enable = true;
 
+  # Forgejo HTTP (3000) and built-in git-SSH (2222) are reachable only over
+  # Tailscale, where teresa's Caddy/caddy-l4 front them to the public internet.
+  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
+    3000
+    2222
+  ];
+
   # postgresql
   services.postgresql.package = pkgs.postgresql_17;
 

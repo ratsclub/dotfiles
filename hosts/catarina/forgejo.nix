@@ -7,6 +7,8 @@
 
 let
   cfg = config.services.forgejo;
+  # Public hostname fronted by teresa (Caddy for HTTP, caddy-l4 for git-SSH).
+  domain = "git.r6b.dev";
 in
 {
   age.secrets.forgejo-secret-key = {
@@ -38,8 +40,18 @@ in
     database.type = "postgres";
     settings = {
       server = {
-        DOMAIN = "catarina";
-        ROOT_URL = "http://${cfg.settings.server.DOMAIN}:${toString cfg.settings.server.HTTP_PORT}/";
+        DOMAIN = domain;
+        ROOT_URL = "https://${domain}/";
+
+        # Git-over-SSH is served by Forgejo's own built-in server on an internal
+        # port, kept separate from the host's admin sshd. teresa's caddy-l4
+        # forwards public :2222 here over Tailscale. SSH_DOMAIN/SSH_PORT are what
+        # clone URLs advertise, so they name teresa's public endpoint.
+        START_SSH_SERVER = true;
+        SSH_LISTEN_PORT = 2222;
+        SSH_DOMAIN = domain;
+        SSH_PORT = 2222;
+        SSH_USER = cfg.user;
       };
       service = {
         DISABLE_REGISTRATION = true;
@@ -58,10 +70,14 @@ in
         SHOW_FOOTER_VERSION = false;
       };
     };
-    mailerPasswordFile = config.age.secrets.forgejo-mailer-password.path;
-    secrets.security = {
-      SECRET_KEY = lib.mkForce config.age.secrets.forgejo-secret-key.path;
-      INTERNAL_TOKEN = lib.mkForce config.age.secrets.forgejo-internal-token.path;
+    secrets = {
+      mailer = {
+        PASSWD = config.age.secrets.forgejo-mailer-password.path;
+      };
+      security = {
+        SECRET_KEY = lib.mkForce config.age.secrets.forgejo-secret-key.path;
+        INTERNAL_TOKEN = lib.mkForce config.age.secrets.forgejo-internal-token.path;
+      };
     };
   };
 
