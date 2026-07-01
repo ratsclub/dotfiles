@@ -10,10 +10,8 @@ let
     inputs.self.nixosConfigurations.catarina.config.services.forgejo.settings.server.ROOT_URL;
 in
 {
-  # Registration token, as a systemd EnvironmentFile (contents: TOKEN=<token>).
   age.secrets.forgejo-runner-token.file = ../../secrets/joan/forgejo/runner-token.age;
 
-  # docker-compat socket backs the runner's docker:// labels.
   virtualisation.podman = {
     enable = true;
     dockerSocket.enable = true;
@@ -22,30 +20,36 @@ in
   # Cache server port, reachable only from the podman bridge.
   networking.firewall.interfaces."podman0".allowedTCPPorts = [ 42000 ];
 
-  services.gitea-actions-runner = {
-    package = pkgs.forgejo-runner;
+  services.forgejo-runner = {
     instances.joan = {
       enable = true;
-      name = config.networking.hostName;
-      url = forgejoUrl;
-      tokenFile = config.age.secrets.forgejo-runner-token.path;
+
       settings = {
+        runner.labels = [
+          "docker:docker://node:24-bookworm"
+          "ubuntu-latest:docker://node:24-bookworm"
+          "native:host"
+        ];
+
+        server.connections.default = {
+          url = forgejoUrl;
+          uuid = "27536b59-cbfd-4c07-a1cd-7cc416c81b36";
+        };
+
         # Built-in cache server, advertised to jobs via podman's host alias.
         cache = {
           enabled = true;
           host = "host.containers.internal";
           port = 42000;
         };
+
         # Pin jobs to the default bridge so the gateway/interface stay stable.
         container.network = "podman";
       };
-      # docker:// runs in podman; native:host runs on the host (needs the Nix daemon).
-      labels = [
-        "docker:docker://node:24-bookworm"
-        "ubuntu-latest:docker://node:24-bookworm"
-        "native:host"
-      ];
-      # PATH for nix:host jobs (host-mode runs with only these on PATH).
+
+      secrets.server.connections.default.token_url = config.age.secrets.forgejo-runner-token.path;
+
+      # PATH for native:host jobs (host-mode runs with only these on PATH).
       hostPackages = with pkgs; [
         bash
         coreutils
