@@ -39,6 +39,10 @@ in
     enable = true;
     database.type = "postgres";
     settings = {
+      DEFAULT = {
+        APP_NAME = "r6b";
+        APP_SLOGAN = "personal code forge";
+      };
       actions = {
         DEFAULT_ACTIONS_URL = rootDomain;
       };
