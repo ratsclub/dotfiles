@@ -7,8 +7,7 @@
 
 let
   cfg = config.services.forgejo;
-  # Public hostname fronted by teresa (Caddy for HTTP, caddy-l4 for git-SSH).
-  domain = "git.r6b.dev";
+  domain = "src.r6b.dev";
 in
 {
   age.secrets.forgejo-secret-key = {
