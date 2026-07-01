@@ -52,6 +52,7 @@ in
       server = {
         DOMAIN = domain;
         ROOT_URL = rootDomain;
+        LANDING_PAGE = "explore";
 
         # Git-over-SSH is served by Forgejo's own built-in server on an internal
         # port, kept separate from the host's admin sshd. teresa's caddy-l4
