@@ -6,10 +6,12 @@
 }:
 
 let
-  inherit (inputs) nixpkgs;
+  inherit (inputs) nixpkgs agenix;
 in
 {
-  imports = [ ];
+  imports = [
+    agenix.homeManagerModules.default
+  ];
 
   fonts.fontconfig.enable = true;
 
@@ -26,9 +28,6 @@ in
   };
 
   home = {
-    username = "victor";
-    homeDirectory = "/home/victor";
-    stateVersion = "22.11";
     sessionPath = [
       "$HOME/.local/bin"
     ];
