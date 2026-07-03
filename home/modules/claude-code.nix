@@ -54,7 +54,7 @@ in
 
       This machine is managed with Nix. To use a CLI tool that isn't already on
       the PATH, don't install it globally or with a system package manager. Run
-      it on demand with `nix run`, e.g. `nix run nixpkgs#ripgrep -- <args>`, or
+      it on demand with `nix run`, e.g. `nix run nixpkgs#<pkg> -- <args>`, or
       drop into an ephemeral shell with `nix shell nixpkgs#<pkg>` when you need
       several invocations.
     '';
