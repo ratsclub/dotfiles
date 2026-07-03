@@ -22,6 +22,14 @@ let
     rev = "1a8324639ea08fb605600a3d5b095cd59e7e57f2";
     hash = "sha256-qg37jdb/jPRCzNRgpd/TTb6VWE48Wh3XfsWH6K5k1lM=";
   };
+
+  # Anthropic's official skills repo; individual skills live under skills/.
+  anthropic-skills = pkgs.fetchFromGitHub {
+    owner = "anthropics";
+    repo = "skills";
+    rev = "9d2f1ae187231d8199c64b5b762e1bdf2244733d";
+    hash = "sha256-U7Nt1xrFOSOEm4vuWmy4pVsEyvv+Hj4sv8yXOofmwAw=";
+  };
 in
 {
   programs.claude-code = {
@@ -33,6 +41,10 @@ in
       "${claude-plugins-official}/plugins/code-review"
       "${claude-plugins-official}/plugins/playground"
     ];
+
+    skills = {
+      skill-creator = "${anthropic-skills}/skills/skill-creator";
+    };
 
     settings = {
       attribution = {
