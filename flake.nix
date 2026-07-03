@@ -32,17 +32,27 @@
         "aarch64-darwin"
         "x86_64-darwin"
       ];
+      mkPkgs = import ./lib/mk-pkgs.nix;
     in
     {
       packages = forAllSystems (
         system:
         let
-          pkgs = import inputs.nixpkgs { inherit system; };
+          pkgs = mkPkgs {
+            inherit (inputs) nixpkgs;
+            inherit system;
+          };
         in
         import ./pkgs { inherit pkgs; }
       );
 
-      formatter = forAllSystems (system: (import inputs.nixpkgs { inherit system; }).nixfmt-tree);
+      formatter = forAllSystems (
+        system:
+        (mkPkgs {
+          inherit (inputs) nixpkgs;
+          inherit system;
+        }).nixfmt-tree
+      );
 
       overlays = import ./overlays { inherit (inputs) nixpkgs small; };
       homeConfigurations = import ./home { inherit inputs self; };

@@ -17,16 +17,10 @@ let
   # Helper function to generate an attrset '{ x86_64-linux = f "x86_64-linux"; ... }'.
   forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
 
+  mkPkgs = import ../lib/mk-pkgs.nix;
+
   # Nixpkgs instantiated for supported system types.
-  nixpkgsFor =
-    nixpkgs:
-    forAllSystems (
-      system:
-      import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      }
-    );
+  nixpkgsFor = nixpkgs: forAllSystems (system: mkPkgs { inherit nixpkgs system; });
 in
 forAllSystems (
   system:

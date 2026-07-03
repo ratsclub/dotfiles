@@ -1,17 +1,11 @@
 { inputs, self, ... }:
 
+let
+  mkHome = import ../lib/mk-home.nix { inherit inputs self; };
+in
 {
-  mini = inputs.homeManager.lib.homeManagerConfiguration {
-    pkgs = import inputs.nixpkgs {
-      system = "aarch64-darwin";
-      overlays = [
-        self.overlays.default
-      ];
-      config = {
-        allowUnfree = true;
-      };
-    };
-
+  mini = mkHome {
+    system = "aarch64-darwin";
     modules = [
       (
         { ... }:
@@ -34,23 +28,10 @@
       ./modules/vscodium.nix
       ./modules/zsh.nix
     ];
-
-    extraSpecialArgs = {
-      inherit inputs self;
-    };
   };
 
-  air = inputs.homeManager.lib.homeManagerConfiguration {
-    pkgs = import inputs.nixpkgs {
-      system = "aarch64-darwin";
-      overlays = [
-        self.overlays.default
-      ];
-      config = {
-        allowUnfree = true;
-      };
-    };
-
+  air = mkHome {
+    system = "aarch64-darwin";
     modules = [
       (
         { ... }:
@@ -73,22 +54,10 @@
       ./modules/vscodium.nix
       ./modules/zsh.nix
     ];
-
-    extraSpecialArgs = {
-      inherit inputs self;
-    };
   };
 
-  victor = inputs.homeManager.lib.homeManagerConfiguration {
-    pkgs = import inputs.nixpkgs {
-      system = "x86_64-linux";
-      overlays = [
-        self.overlays.default
-      ];
-      config = {
-        allowUnfree = true;
-      };
-    };
+  victor = mkHome {
+    system = "x86_64-linux";
     modules = [
       inputs.agenix.homeManagerModules.age
     ]
@@ -106,9 +75,5 @@
       # ./modules/firefox.nix
       ./modules/vcs.nix
     ];
-
-    extraSpecialArgs = {
-      inherit inputs self;
-    };
   };
 }
