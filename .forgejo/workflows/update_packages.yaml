@@ -1,0 +1,41 @@
+name: Update Packages
+
+run-name: "Update Packages"
+
+on:
+  workflow_dispatch:
+  schedule:
+    # run every monday
+    - cron: '0 0 * * 1'
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          token: ${{ secrets.TOKEN }}
+
+      - name: Install sudo
+        # The default Forgejo runner image runs as root but ships no sudo,
+        # which install-nix-action requires.
+        run: apt-get update && apt-get install -y sudo
+
+      - name: Install Nix
+        uses: actions/install-nix-action@v31
+
+      - name: Configure git
+        run: |
+          git config user.name "Forgejo Actions"
+          git config user.email "noreply@r6b.dev"
+
+      - name: CI shell check
+        run: nix develop .#ci --check
+
+      - name: Update packages
+        env:
+          FORGEJO_TOKEN: ${{ secrets.TOKEN }}
+          FORGEJO_SERVER_URL: ${{ github.server_url }}
+          FORGEJO_REPOSITORY: ${{ github.repository }}
+        run: nix develop .#ci -c bash scripts/update-packages.sh

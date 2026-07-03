@@ -2,16 +2,16 @@
 
 pkgs.buildGoModule (finalAttrs: {
   pname = "reasonix";
-  version = "1.9.1";
+  version = "1.15.0";
 
   src = pkgs.fetchFromGitHub {
     owner = "esengine";
     repo = "DeepSeek-Reasonix";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-SeNIu4X30Gn98UXJHIRwYc/6Fr76vx4q8w3wTUT95z8=";
+    hash = "sha256-crTERDquWivMWS/tb7ucb7EEnajCwioExkZHrE1OnFc=";
   };
 
-  vendorHash = "sha256-mbHQDoSEj+56kqrPrinuQY3XEw4oBHoOrSO6iW62R7g=";
+  vendorHash = "sha256-DHtdsmD3+iQzBSpgNHgX0tN+wRVINjlOq6yiIW75NQM=";
 
   subPackages = [ "cmd/reasonix" ];
 
@@ -22,6 +22,10 @@ pkgs.buildGoModule (finalAttrs: {
     "-w"
     "-X main.version=v${finalAttrs.version}"
   ];
+
+  passthru.updateScript = pkgs.nix-update-script {
+    extraArgs = [ "--flake" ];
+  };
 
   meta = with pkgs.lib; {
     description = "DeepSeek-native AI coding agent for your terminal";

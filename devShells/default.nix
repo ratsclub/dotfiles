@@ -28,6 +28,7 @@ forAllSystems (
     pkgs = (nixpkgsFor nixpkgs).${system};
   in
   {
+    ci = pkgs.callPackage ./ci.nix { };
     web = devenv.lib.mkShell {
       inherit inputs pkgs;
       modules = [
