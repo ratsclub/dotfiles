@@ -39,6 +39,12 @@ in
         commit = "";
         pr = "";
       };
+
+      # The Nix store is immutable; never let Claude try to edit it.
+      permissions.deny = [
+        "Edit(//nix/store/**)"
+        "Write(//nix/store/**)"
+      ];
     };
 
     context = ''
