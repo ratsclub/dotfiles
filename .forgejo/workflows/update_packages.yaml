@@ -25,9 +25,6 @@ jobs:
       - name: Install Nix
         uses: actions/install-nix-action@v31
 
-      - name: Set NIX_PATH from flake lock
-        run: echo "NIX_PATH=nixpkgs=$(nix eval --impure --raw --expr '(builtins.getFlake "path:.").inputs.nixpkgs.outPath')" >> $GITHUB_ENV
-
       - name: Configure git
         run: |
           git config user.name "Forgejo Actions"
