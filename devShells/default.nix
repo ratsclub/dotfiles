@@ -42,9 +42,11 @@ forAllSystems (
             languages = {
               javascript = {
                 enable = true;
-                package = pkgs.nodejs;
                 yarn.enable = true;
-                pnpm.enable = true;
+                pnpm = {
+                  enable = true;
+                  package = pkgs.pnpm;
+                };
                 bun.enable = true;
               };
             };
