@@ -31,26 +31,19 @@ if [ -z "$PACKAGES" ]; then
   exit 0
 fi
 
-# nix-update extracts the updateScript with `with import <nixpkgs> {}`, so
-# NIX_PATH must point to the nixpkgs revision locked in the flake.
-export NIX_PATH="nixpkgs=$(nix eval --impure --raw --expr '(builtins.getFlake "path:.").inputs.nixpkgs.outPath')"
-
 for PKG in $PACKAGES; do
   echo "::group::Checking $PKG"
 
+  PKG_DIR="pkgs/$(echo "$PKG" | tr '.' '/')"
   CURRENT=$(nix eval ".#packages.$SYSTEM.$PKG.version" --raw)
 
   nix-update --flake --use-update-script "$PKG" || true
 
-  # Derive the changed directory from git rather than computing it from the
-  # attribute name, which may not match the actual file-system path.
-  CHANGED_FILES=$(git diff --name-only -- pkgs/)
-  if [ -z "$CHANGED_FILES" ]; then
+  if git diff --quiet "$PKG_DIR"; then
     echo "$PKG is up to date ($CURRENT)"
     echo "::endgroup::"
     continue
   fi
-  PKG_DIR=$(dirname "$(echo "$CHANGED_FILES" | head -1)")
 
   LATEST=$(nix eval ".#packages.$SYSTEM.$PKG.version" --raw)
   PKG_SLUG=$(echo "$PKG" | tr '.' '-')
