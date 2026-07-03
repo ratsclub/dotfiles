@@ -14,19 +14,12 @@
 
     modules = [
       (
-        { pkgs, ... }:
+        { ... }:
         {
           home = {
             username = "victor";
             homeDirectory = "/Users/victor";
-            sessionPath = [
-              "$HOME/.local/bin"
-            ];
 
-            packages = with pkgs; [
-              bun
-              typos
-            ];
             stateVersion = "24.11";
           };
         }
@@ -60,16 +53,11 @@
 
     modules = [
       (
-        { pkgs, ... }:
+        { ... }:
         {
           home = {
             username = "victor";
             homeDirectory = "/Users/victor";
-            sessionPath = [
-              "$HOME/.local/bin"
-            ];
-
-            packages = with pkgs; [ reasonix ];
 
             stateVersion = "24.11";
           };

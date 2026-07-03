@@ -21,6 +21,7 @@
     nixfmt
     nixfmt-tree
     nodejs
+    reasonix
     ripgrep
     wget
 
