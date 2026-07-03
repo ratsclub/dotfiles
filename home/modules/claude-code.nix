@@ -42,6 +42,15 @@
       it on demand with `nix run`, e.g. `nix run nixpkgs#<pkg> -- <args>`, or
       drop into an ephemeral shell with `nix shell nixpkgs#<pkg>` when you need
       several invocations.
+
+      # Navigating code
+
+      When navigating or refactoring code symbols (definitions, references,
+      renames, type/hover info), prefer the LSP tools over text search: they
+      resolve imports and scoping, so they won't match a string in a comment or
+      an unrelated same-named symbol. Use grep/ripgrep for non-symbol text
+      (config keys, log strings, comments, filenames) and for any language with
+      no configured language server.
     '';
 
     lspServers = {
