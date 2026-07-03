@@ -25,11 +25,16 @@ in
       enable = true;
 
       settings = {
-        runner.labels = [
-          "docker:docker://node:24-bookworm"
-          "ubuntu-latest:docker://node:24-bookworm"
-          "native:host"
-        ];
+        runner = {
+          # Number of jobs to run in parallel.
+          capacity = 4;
+
+          labels = [
+            "docker:docker://node:24-bookworm"
+            "ubuntu-latest:docker://node:24-bookworm"
+            "native:host"
+          ];
+        };
 
         server.connections.default = {
           url = forgejoUrl;
