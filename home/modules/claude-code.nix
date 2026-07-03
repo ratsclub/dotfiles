@@ -1,12 +1,5 @@
 { pkgs, ... }:
 let
-  claude-hud = pkgs.fetchFromGitHub {
-    owner = "jarrodwatts";
-    repo = "claude-hud";
-    rev = "b83b44593af24de1db6183788a51d08715501c02";
-    hash = "sha256-AfFJY6Ts5qzeECFCyevrnMWcZtwQxcCjZS73k8/PQf8=";
-  };
-
   # Shopify developer tools: docs search, GraphQL/Liquid/UI-extension codegen.
   shopify-ai-toolkit = pkgs.fetchFromGitHub {
     owner = "Shopify";
@@ -36,7 +29,6 @@ in
     enable = true;
 
     plugins = [
-      claude-hud
       shopify-ai-toolkit
       "${claude-plugins-official}/plugins/code-review"
       "${claude-plugins-official}/plugins/playground"
@@ -52,13 +44,19 @@ in
         pr = "";
       };
 
-      # The Nix store is immutable; never let Claude try to edit it.
       permissions.deny = [
         "Edit(//nix/store/**)"
         "Write(//nix/store/**)"
       ];
 
       tui = "fullscreen";
+
+      statusLine = {
+        type = "command";
+        command = pkgs.lib.getExe pkgs.claude-statusline;
+        padding = 0;
+        refreshInterval = 10;
+      };
     };
 
     context = ''
