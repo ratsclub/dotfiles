@@ -45,6 +45,8 @@ in
         "Edit(//nix/store/**)"
         "Write(//nix/store/**)"
       ];
+
+      tui = "fullscreen";
     };
 
     context = ''
