@@ -49,6 +49,10 @@ in
       repository = {
         FORCE_PRIVATE = true;
       };
+      "repository.pull-request" = {
+        DEFAULT_MERGE_STYLE = "squash";
+        DEFAULT_UPDATE_STYLE = "rebase";
+      };
       server = {
         DOMAIN = domain;
         ROOT_URL = rootDomain;
