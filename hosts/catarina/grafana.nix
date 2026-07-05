@@ -72,12 +72,35 @@ in
     };
     provision = {
       enable = true;
-      datasources.settings.datasources = [
+      datasources.settings = {
+        datasources = [
+          {
+            name = "Prometheus";
+            # Pinned so the provisioned dashboard JSON can reference this
+            # datasource by a stable uid instead of Grafana's generated one.
+            uid = "prometheus";
+            type = "prometheus";
+            url = "http://127.0.0.1:9090";
+            isDefault = true;
+          }
+        ];
+        # The first deploy created "Prometheus" with an auto-generated uid.
+        # Provisioning can't retag an existing datasource with the pinned uid
+        # ("data source not found"), so delete it first and let the block above
+        # recreate it with uid "prometheus". Idempotent on later restarts.
+        deleteDatasources = [
+          {
+            name = "Prometheus";
+            orgId = 1;
+          }
+        ];
+      };
+      # Dashboards live as JSON in ./dashboards and are provisioned read-only;
+      # edit them in the repo, not the Grafana UI.
+      dashboards.settings.providers = [
         {
-          name = "Prometheus";
-          type = "prometheus";
-          url = "http://127.0.0.1:9090";
-          isDefault = true;
+          name = "default";
+          options.path = ./dashboards;
         }
       ];
     };
