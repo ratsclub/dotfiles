@@ -1,7 +1,7 @@
 { pkgs, ... }:
 pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "shopify-ai-toolkit";
-  version = "1.2.2";
+  version = "1.2.2-unstable-2026-06-30";
 
   src = pkgs.fetchFromGitHub {
     owner = "Shopify";
