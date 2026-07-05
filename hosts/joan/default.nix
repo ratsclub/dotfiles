@@ -13,6 +13,7 @@
     ../../modules/common/openssh.nix
     ../../modules/common/user.nix
     ../../modules/forgejo-runner.nix
+    ../../modules/node-exporter.nix
 
     ./forgejo-runner.nix
   ];

@@ -15,8 +15,10 @@
     ../../modules/common/nix.nix
     ../../modules/common/openssh.nix
     ../../modules/common/user.nix
+    ../../modules/node-exporter.nix
 
     ./forgejo.nix
+    ./grafana.nix
   ];
 
   # Legacy BIOS boot: GRUB on the first disk.
@@ -25,13 +27,6 @@
 
   networking.hostName = "catarina";
   networking.networkmanager.enable = true;
-
-  # Forgejo HTTP (3000) and built-in git-SSH (2222) are reachable only over
-  # Tailscale, where teresa's Caddy/caddy-l4 front them to the public internet.
-  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
-    3000
-    2222
-  ];
 
   # postgresql
   services.postgresql.package = pkgs.postgresql_17;
