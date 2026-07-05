@@ -40,7 +40,20 @@ in
           }
         ];
       }
+      {
+        job_name = "postgres";
+        static_configs = [ { targets = [ "127.0.0.1:9187" ]; } ];
+      }
     ];
+  };
+
+  services.prometheus.exporters.postgres = {
+    enable = true;
+    # Runs as the local 'postgres' OS user so it can connect via Unix socket
+    # with peer authentication — no password or extra role needed.
+    runAsLocalSuperUser = true;
+    listenAddress = "127.0.0.1";
+    port = 9187;
   };
 
   services.grafana = {

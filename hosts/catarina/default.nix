@@ -18,7 +18,7 @@
     ../../modules/node-exporter.nix
 
     ./forgejo.nix
-    ./grafana.nix
+    ./monitoring.nix
   ];
 
   # Legacy BIOS boot: GRUB on the first disk.
