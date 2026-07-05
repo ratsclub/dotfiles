@@ -46,6 +46,9 @@ in
       actions = {
         DEFAULT_ACTIONS_URL = rootDomain;
       };
+      metrics = {
+        ENABLED = true;
+      };
       repository = {
         FORCE_PRIVATE = true;
       };
@@ -169,6 +172,14 @@ in
       Persistent = true;
     };
   };
+
+  services.prometheus.scrapeConfigs = lib.mkIf cfg.enable [
+    {
+      job_name = "forgejo";
+      static_configs = [ { targets = [ "127.0.0.1:3000" ]; } ];
+      metrics_path = "/metrics";
+    }
+  ];
 
   systemd.services.restic-backups-forgejo = {
     after = [ "postgresql.service" ];
