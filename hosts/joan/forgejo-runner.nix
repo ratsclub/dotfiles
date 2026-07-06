@@ -8,6 +8,7 @@
 let
   forgejoUrl =
     inputs.self.nixosConfigurations.catarina.config.services.forgejo.settings.server.ROOT_URL;
+  proxyPort = 42001;
 in
 {
   age.secrets.forgejo-runner-token.file = ../../secrets/joan/forgejo/runner-token.age;
@@ -17,8 +18,9 @@ in
     dockerSocket.enable = true;
   };
 
-  # Cache server port, reachable only from the podman bridge.
-  networking.firewall.interfaces."podman0".allowedTCPPorts = [ 42000 ];
+  # Job containers reach the cache proxy (cache.proxy_port) over the podman
+  # bridge, so open just that pinned port.
+  networking.firewall.interfaces."podman0".allowedTCPPorts = [ proxyPort ];
 
   services.forgejo-runner = {
     instances.joan = {
@@ -42,10 +44,13 @@ in
         };
 
         # Built-in cache server, advertised to jobs via podman's host alias.
+        # Jobs connect to proxy_port; port is the host-side backend. Both are
+        # pinned so the firewall rule above can target a fixed port.
         cache = {
           enabled = true;
           host = "host.containers.internal";
           port = 42000;
+          proxy_port = proxyPort;
         };
 
         # Pin jobs to the default bridge so the gateway/interface stay stable.
