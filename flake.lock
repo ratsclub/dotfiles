@@ -111,11 +111,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1783351004,
-        "narHash": "sha256-ecHPo6/JXpsc1Brfiol1w7CwU/aSYWI5X5Rpiks8ByU=",
+        "lastModified": 1783356212,
+        "narHash": "sha256-r2BHKjqcPpJW5q2l+KmqBgVyGyAAG8Uv5qydga6KCDo=",
         "owner": "cachix",
         "repo": "devenv",
-        "rev": "732521bceb332b5336e534501d53a71af9da8385",
+        "rev": "1a3338cc3861024063a4c3bacc01c46a1874becc",
         "type": "github"
       },
       "original": {
@@ -230,11 +230,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783222121,
-        "narHash": "sha256-E/ElL373TO8lQ2aMvYyzN+k4xkVaUGoRqoa8AtM71tI=",
+        "lastModified": 1783358420,
+        "narHash": "sha256-UEyBpf+XmQe8laXfDzIlo11Er7E0rKrLS8jeMnMj0Ds=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "a1645f40777620c4bd2b6d854b290c2fc354a266",
+        "rev": "0d33882bd46c1f9ef62276700f5e5f2bd6ff6604",
         "type": "github"
       },
       "original": {
@@ -331,7 +331,6 @@
         "devenv": "devenv",
         "homeManager": "homeManager",
         "nixpkgs": "nixpkgs",
-        "small": "small",
         "stable": "stable"
       }
     },
@@ -353,22 +352,6 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "type": "github"
-      }
-    },
-    "small": {
-      "locked": {
-        "lastModified": 1783306753,
-        "narHash": "sha256-yBvwRKoVMLe2a1nQvFZCDN5/zjiO2MiMzuIJWc/VW9U=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "38f52fc9057a249e1e9c93e2781e439aad5a10bd",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable-small",
-        "repo": "nixpkgs",
         "type": "github"
       }
     },

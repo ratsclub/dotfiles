@@ -3,8 +3,6 @@
 let
   inherit (inputs)
     nixpkgs
-    stable
-    small
     ;
 
   mkPkgs = import ../lib/mk-pkgs.nix;

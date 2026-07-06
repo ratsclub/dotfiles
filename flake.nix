@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    small.url = "github:nixos/nixpkgs/nixos-unstable-small";
     stable.url = "github:nixos/nixpkgs/nixos-26.05";
 
     devenv = {
@@ -54,7 +53,7 @@
         }).nixfmt-tree
       );
 
-      overlays = import ./overlays { inherit (inputs) nixpkgs small; };
+      overlays = import ./overlays { inherit (inputs) nixpkgs; };
       homeConfigurations = import ./home { inherit inputs self; };
       nixosConfigurations = import ./hosts { inherit inputs outputs; };
       nixosModules = import ./modules;
