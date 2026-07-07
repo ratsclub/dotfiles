@@ -10,18 +10,14 @@ on:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: native
 
     steps:
-      - uses: actions/checkout@v7
-      - name: Install sudo
-        # The default Forgejo runner image runs as root but ships no sudo,
-        # which install-nix-action requires.
-        run: apt-get update && apt-get install -y sudo
-      - name: Install Nix
-        uses: actions/install-nix-action@v31
+      - name: Checkout
+        run: |
+          git clone --depth=1 --branch "${{ forgejo.ref_name }}" \
+            "https://x-access-token:${{ secrets.FORGEJO_TOKEN }}@$FORGEJO_DOMAIN/${{ forgejo.repository }}" .
       - name: Check formatting
         run: nix fmt -- --ci
       - name: Run nix flake check
-        # --impure lets the devenv-based devShell resolve its working directory.
         run: nix flake check --impure
