@@ -10,21 +10,19 @@ on:
 
 jobs:
   update:
-    runs-on: ubuntu-latest
+    runs-on: native
 
     steps:
-      - uses: actions/checkout@v7
-        with:
-          ref: ${{ github.head_ref }}
-          token: ${{ secrets.FORGEJO_TOKEN }}
-      - name: Install sudo
-        # The default Forgejo runner image runs as root but ships no sudo,
-        # which install-nix-action requires.
-        run: apt-get update && apt-get install -y sudo
-      - name: Install Nix
-        uses: actions/install-nix-action@v31
+      - name: Checkout
+        run: |
+          git clone --depth=1 --branch "${{ forgejo.ref_name }}" \
+            "https://x-access-token:${{ secrets.FORGEJO_TOKEN }}@$FORGEJO_DOMAIN/${{ forgejo.repository }}" .
       - name: Run nix flake update
         run: nix flake update
+      - name: Run nix flake check
+        run: nix flake check --impure
       - uses: https://github.com/stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: nix flake update"
+          commit_user_name: "Forgejo Actions"
+          commit_user_email: "noreply@r6b.dev"
