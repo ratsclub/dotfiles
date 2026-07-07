@@ -8,6 +8,8 @@
 let
   forgejoUrl =
     inputs.self.nixosConfigurations.catarina.config.services.forgejo.settings.server.ROOT_URL;
+  forgejoDomain =
+    inputs.self.nixosConfigurations.catarina.config.services.forgejo.settings.server.DOMAIN;
   proxyPort = 42001;
 in
 {
@@ -36,6 +38,14 @@ in
             "ubuntu-latest:docker://node:24-bookworm"
             "native:host"
           ];
+
+          envs = {
+            # Added to remove the need to strip the protocol (https://)
+            # from FORGEJO_SERVER_URL when cloning private repositories:
+            #   git clone --depth=1 --branch "${{ forgejo.ref_name }}" \
+            #     "https://x-access-token:${{ secrets.FORGEJO_TOKEN }}@$FORGEJO_DOMAIN/${{ forgejo.repository }}" .
+            FORGEJO_DOMAIN = forgejoDomain;
+          };
         };
 
         server.connections.default = {
