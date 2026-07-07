@@ -17,6 +17,7 @@
     ../../modules/common/user.nix
     ../../modules/node-exporter.nix
 
+    ./blocky.nix
     ./forgejo.nix
     ./monitoring.nix
   ];

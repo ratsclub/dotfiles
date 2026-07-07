@@ -44,6 +44,12 @@ in
         job_name = "postgres";
         static_configs = [ { targets = [ "127.0.0.1:9187" ]; } ];
       }
+      {
+        job_name = "blocky";
+        static_configs = [
+          { targets = [ "127.0.0.1:${toString config.services.blocky.settings.ports.http}" ]; }
+        ];
+      }
     ];
   };
 
