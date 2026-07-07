@@ -50,6 +50,15 @@ in
           { targets = [ "127.0.0.1:${toString config.services.blocky.settings.ports.http}" ]; }
         ];
       }
+      {
+        job_name = "caddy";
+        static_configs = [
+          {
+            targets = [ "teresa:2020" ];
+            labels.instance = "teresa";
+          }
+        ];
+      }
     ];
   };
 
@@ -101,6 +110,12 @@ in
             type = "prometheus";
             url = "http://127.0.0.1:9090";
             isDefault = true;
+            # Prometheus has no explicit global scrape_interval, so it uses the
+            # 60s default. Grafana otherwise assumes 15s and resolves
+            # $__rate_interval to ~60s — too short to hold 2 samples at a 60s
+            # scrape, so every rate()-based panel returns "No data". Telling
+            # Grafana the real interval makes $__rate_interval >= 4x it.
+            jsonData.timeInterval = "60s";
           }
         ];
         # The first deploy created "Prometheus" with an auto-generated uid.
