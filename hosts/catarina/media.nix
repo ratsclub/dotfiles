@@ -185,6 +185,12 @@ in
     };
   };
 
+  # Accessible for Bazarr that runs on another machine
+  networking.firewall.allowedTCPPorts = [
+    config.services.sonarr.settings.server.port
+    config.services.radarr.settings.server.port
+  ];
+
   # SABnzbd writes its downloads to the olga NFS mount, so don't start it until
   # the mount is up. The arr services get this via nixflix.serviceDependencies
   # above; the SABnzbd module doesn't consume that option, so wire it directly.
