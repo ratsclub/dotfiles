@@ -5,5 +5,6 @@
   claude-shopify-ai-toolkit = pkgs.callPackage ./claude-shopify-ai-toolkit { };
 
   claude-statusline = pkgs.callPackage ./claude-statusline { };
+  forgejo-runner-image = pkgs.callPackage ./forgejo-runner-image { };
   reasonix = pkgs.callPackage ./reasonix { };
 }

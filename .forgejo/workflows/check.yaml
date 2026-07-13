@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Checkout
         run: |
-          git clone --depth=1 --branch "${{ forgejo.ref_name }}" \
+          git clone --depth=1 --branch "${{ forgejo.head_ref || forgejo.ref_name }}" \
             "https://x-access-token:${{ secrets.FORGEJO_TOKEN }}@$FORGEJO_DOMAIN/${{ forgejo.repository }}" .
       - name: Check formatting
         run: nix fmt -- --ci

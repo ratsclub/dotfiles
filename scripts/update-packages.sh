@@ -37,13 +37,6 @@ for PKG in $PACKAGES; do
   PKG_DIR="pkgs/$(echo "$PKG" | tr '.' '/')"
   CURRENT=$(nix eval ".#packages.$SYSTEM.$PKG.version" --raw)
 
-  # updateScript evaluates to the argv the update framework would run, e.g.
-  #   [ "/nix/store/…/nix-update" "--flake" "--version=branch" ]
-  # Run it verbatim, passing the attribute via UPDATE_NIX_ATTR_PATH (which
-  # nix-update reads as its default attribute), exactly as nixpkgs' own
-  # update.py does. The read loop only turns the JSON array into argv. This
-  # avoids `--use-update-script`, which would `import <nixpkgs>` to re-wrap the
-  # command and so require NIX_PATH.
   UPDATE_CMD=()
   while IFS= read -r arg; do
     UPDATE_CMD+=("$arg")

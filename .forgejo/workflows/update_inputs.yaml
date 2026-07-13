@@ -10,13 +10,24 @@ on:
 
 jobs:
   update:
-    runs-on: native
+    runs-on: docker
 
     steps:
       - name: Checkout
         run: |
           git clone --depth=1 --branch "${{ forgejo.ref_name }}" \
             "https://x-access-token:${{ secrets.FORGEJO_TOKEN }}@$FORGEJO_DOMAIN/${{ forgejo.repository }}" .
+      - name: Cache Nix store
+        uses: actions/cache-nix-action@v7
+        with:
+          # flake.lock is the pre-update lock here; an exact hit warms the store
+          # for `nix flake check`, and the prefix falls back to the latest cache.
+          primary-key: nix-${{ runner.os }}-${{ hashFiles('flake.lock') }}
+          restore-prefixes-first-match: nix-${{ runner.os }}-
+          # Trim the store before saving so the cache stays a sane size. This is
+          # a local `nix store gc`, not an API call. Purge is left off because it
+          # needs GitHub's cache-management REST API, which Forgejo doesn't serve.
+          gc-max-store-size-linux: 5G
       - name: Run nix flake update
         run: nix flake update
       - name: Run nix flake check

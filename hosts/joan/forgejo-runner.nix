@@ -34,8 +34,7 @@ in
           capacity = 4;
 
           labels = [
-            "docker:docker://node:24-bookworm"
-            "ubuntu-latest:docker://node:24-bookworm"
+            "docker:docker://localhost/forgejo-runner:latest"
             "native:host"
           ];
 
@@ -53,9 +52,6 @@ in
           uuid = "27536b59-cbfd-4c07-a1cd-7cc416c81b36";
         };
 
-        # Built-in cache server, advertised to jobs via podman's host alias.
-        # Jobs connect to proxy_port; port is the host-side backend. Both are
-        # pinned so the firewall rule above can target a fixed port.
         cache = {
           enabled = true;
           host = "host.containers.internal";
@@ -63,8 +59,10 @@ in
           proxy_port = proxyPort;
         };
 
-        # Pin jobs to the default bridge so the gateway/interface stay stable.
-        container.network = "podman";
+        container = {
+          network = "podman";
+          force_pull = false;
+        };
       };
 
       secrets.server.connections.default.token_url = config.age.secrets.forgejo-runner-token.path;
@@ -83,6 +81,21 @@ in
         wget
         config.nix.package
       ];
+    };
+  };
+
+  # Load the Nix-built runner image into podman's (rootful) local storage
+  # before the runner starts, and refresh it on every activation. The runner
+  # talks to the rootful podman socket, so this must run as root too.
+  systemd.services.forgejo-runner-image-load = {
+    description = "Load the Nix-built Forgejo runner image into podman";
+    wantedBy = [ "multi-user.target" ];
+    before = [ "forgejo-runner-joan.service" ];
+    after = [ "network.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${config.virtualisation.podman.package}/bin/podman load --input ${pkgs.forgejo-runner-image}";
     };
   };
 }

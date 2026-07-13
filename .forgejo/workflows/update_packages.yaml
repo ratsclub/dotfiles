@@ -10,20 +10,16 @@ on:
 
 jobs:
   update:
-    runs-on: ubuntu-latest
+    runs-on: docker
 
     steps:
-      - uses: actions/checkout@v7
-        with:
-          token: ${{ secrets.TOKEN }}
-
-      - name: Install sudo
-        # The default Forgejo runner image runs as root but ships no sudo,
-        # which install-nix-action requires.
-        run: apt-get update && apt-get install -y sudo
-
-      - name: Install Nix
-        uses: actions/install-nix-action@v31
+      - name: Checkout
+        # This job always updates packages on master: it branches off master and
+        # opens PRs against it (see scripts/update-packages.sh), so it clones
+        # master directly rather than the triggering ref.
+        run: |
+          git clone --depth=1 --branch master \
+            "https://x-access-token:${{ secrets.TOKEN }}@$FORGEJO_DOMAIN/${{ forgejo.repository }}" .
 
       - name: Configure git
         run: |
