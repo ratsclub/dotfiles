@@ -11,6 +11,7 @@
     ./hardware-configuration.nix
 
     inputs.agenix.nixosModules.default
+    inputs.nixflix.nixosModules.default
 
     ../../modules/common/nix.nix
     ../../modules/common/openssh.nix
@@ -19,6 +20,7 @@
 
     ./blocky.nix
     ./forgejo.nix
+    ./media.nix
     ./monitoring.nix
   ];
 

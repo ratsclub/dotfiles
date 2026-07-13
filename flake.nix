@@ -19,6 +19,11 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixflix = {
+      url = "github:kiriwalawren/nixflix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

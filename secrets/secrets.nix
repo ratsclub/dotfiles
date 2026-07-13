@@ -28,5 +28,22 @@ in
   "catarina/restic/password.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/restic/env.age".publicKeys = users ++ [ systems.catarina ];
 
+  "catarina/media/sonarr/api-key.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/media/sonarr/password.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/media/radarr/api-key.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/media/radarr/password.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/media/prowlarr/api-key.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/media/prowlarr/password.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/media/seerr/api-key.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/media/jellyfin/admin-password.age".publicKeys = users ++ [ systems.catarina ];
+
+  "catarina/media/newsdemon/username.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/media/newsdemon/password.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/media/sabnzbd/api-key.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/media/sabnzbd/nzb-key.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/media/sabnzbd/web-password.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/media/nzbgeek/api-key.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/media/nzblife/api-key.age".publicKeys = users ++ [ systems.catarina ];
+
   "joan/forgejo/runner-token.age".publicKeys = users ++ [ systems.joan ];
 }

@@ -12,7 +12,10 @@ in
     system = "x86_64-linux";
     pkgs = mkPkgs {
       inherit nixpkgs system;
-      overlays = [ outputs.overlays.default ];
+      overlays = [
+        outputs.overlays.default
+        inputs.nixflix.overlays.default
+      ];
     };
     modules = [ ./catarina ];
     specialArgs = { inherit inputs; };
