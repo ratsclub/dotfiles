@@ -140,18 +140,18 @@ in
         radarr.radarr.quality_definition.qualities = [
           {
             name = "WEBDL-1080p";
-            preferred = 79;
-            max = 80;
+            preferred = 84;
+            max = 85;
           }
           {
             name = "WEBRip-1080p";
-            preferred = 79;
-            max = 80;
+            preferred = 84;
+            max = 85;
           }
           {
             name = "Bluray-1080p";
-            preferred = 79;
-            max = 80;
+            preferred = 84;
+            max = 85;
           }
         ];
 
