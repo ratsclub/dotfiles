@@ -6,16 +6,25 @@ let
 in
 {
   fileSystems."${mediaPath}" = {
-    device = "${olgaLocalIp}:/volume1/media";
-    fsType = "nfs";
+    device = "//${olgaLocalIp}/media";
+    fsType = "cifs";
     options = [
-      "nfsvers=4.1"
+      "credentials=${config.age.secrets.olga-smb-credentials.path}"
+      "uid=0"
+      "gid=${toString config.nixflix.globals.gids.media}"
+      "file_mode=0664"
+      "dir_mode=0775"
+      "vers=3.1.1"
+      "iocharset=utf8"
       "x-systemd.automount"
       "_netdev"
       "nofail"
       "noatime"
     ];
   };
+
+  # olga SMB mount credentials (contains username=/password= for the media share)
+  age.secrets.olga-smb-credentials.file = ../../secrets/catarina/media/olga/smb-credentials.age;
 
   # nixflix secrets
   age.secrets.sonarr-api-key.file = ../../secrets/catarina/media/sonarr/api-key.age;
@@ -40,11 +49,11 @@ in
     enable = true;
 
     mediaDir = "/data/media";
-    downloadsDir = "${mediaPath}/downloads";
+    downloadsDir = "/data/downloads";
     mediaUsers = [ "victor" ];
     postgres.enable = true;
 
-    # Media lives on an NFS mount reached over Tailscale, so the arr services
+    # Media lives on an SMB mount reached over Tailscale, so the arr services
     # must not touch their media dirs until both are up.
     serviceDependencies = [
       "tailscaled.service"
@@ -54,7 +63,6 @@ in
     sonarr = {
       enable = true;
       mediaDirs = [ "${mediaPath}/tvshows" ];
-      group = "users";
       config = {
         apiKey._secret = config.age.secrets.sonarr-api-key.path;
         hostConfig.password._secret = config.age.secrets.sonarr-password.path;
@@ -63,7 +71,6 @@ in
 
     radarr = {
       enable = true;
-      group = "users";
       config = {
         apiKey._secret = config.age.secrets.radarr-api-key.path;
         hostConfig.password._secret = config.age.secrets.radarr-password.path;
@@ -90,15 +97,11 @@ in
 
     usenetClients.sabnzbd = {
       enable = true;
-      group = "users";
-
-      downloadsDir = "/var/lib/sabnzbd/work";
 
       settings = {
         misc = {
           api_key._secret = config.age.secrets.sabnzbd-api-key.path;
           nzb_key._secret = config.age.secrets.sabnzbd-nzb-key.path;
-          complete_dir = "${mediaPath}/downloads/usenet/complete";
           inet_exposure = "api+web (auth needed)";
           username = "admin";
           password._secret = config.age.secrets.sabnzbd-web-password.path;
@@ -115,6 +118,34 @@ in
           }
         ];
       };
+    };
+
+    torrentClients.qbittorrent = {
+      enable = true;
+
+      serverConfig = {
+        # Seed to ratio 0, so the seed goal is met the instant a download
+        # completes, then pause (action 0) rather than delete. Radarr/Sonarr
+        # import first and remove the torrent afterwards via downloadarr's
+        # removeCompletedDownloads.
+        BitTorrent.Session = {
+          GlobalMaxRatio = 0;
+          MaxRatioAction = 0; # 0 = Pause
+        };
+
+        Preferences.WebUI = {
+          Address = "*";
+          LocalHostAuth = false;
+          AuthSubnetWhitelistEnabled = true;
+          # Tailscale subnet
+          AuthSubnetWhitelist = "100.64.0.0/10";
+        };
+      };
+    };
+
+    downloadarr = {
+      qbittorrent.removeCompletedDownloads = true;
+      sabnzbd.removeCompletedDownloads = true;
     };
 
     # TRaSH-guide quality profiles + custom formats, re-synced daily.
@@ -185,18 +216,20 @@ in
     };
   };
 
-  # Accessible for Bazarr that runs on another machine
   networking.firewall.allowedTCPPorts = [
     config.services.sonarr.settings.server.port
     config.services.radarr.settings.server.port
+    config.services.prowlarr.settings.server.port
+    config.services.qbittorrent.webuiPort
   ];
 
-  # SABnzbd writes its downloads to the olga NFS mount, so don't start it until
-  # the mount is up. The arr services get this via nixflix.serviceDependencies
-  # above; the SABnzbd module doesn't consume that option, so wire it directly.
-  # (List-valued unit deps merge with the module's own definition.)
-  systemd.services.sabnzbd = {
-    after = [ "data-media.mount" ];
-    requires = [ "data-media.mount" ];
-  };
+  # Downloads live on local disk (/data/downloads), so file modes come from
+  # qBittorrent's umask rather than the olga SMB mount's forced file_mode/dir_mode.
+  # The arrs import torrents via move (copy then delete source), and deleting the
+  # source needs group-write on its directory. qBittorrent, the arrs, and the media
+  # group all share gid media, so a 0002 umask makes qBittorrent write 0664/0775
+  # group-writable trees; without it the default 0022 umask yields 0644/0755 and the
+  # arr's post-import delete fails, so the import never completes and the torrent is
+  # never removed.
+  systemd.services.qbittorrent.serviceConfig.UMask = "0002";
 }

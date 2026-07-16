@@ -37,6 +37,9 @@ in
   "catarina/media/seerr/api-key.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/media/jellyfin/admin-password.age".publicKeys = users ++ [ systems.catarina ];
 
+  # olga (Synology) SMB mount credentials (username=/password= for the media share)
+  "catarina/media/olga/smb-credentials.age".publicKeys = users ++ [ systems.catarina ];
+
   "catarina/media/newsdemon/username.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/media/newsdemon/password.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/media/sabnzbd/api-key.age".publicKeys = users ++ [ systems.catarina ];
