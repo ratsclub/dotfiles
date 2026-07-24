@@ -1,13 +1,13 @@
 { pkgs, ... }:
 pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "anthropic-skills";
-  version = "0-unstable-2026-07-01";
+  version = "0-unstable-2026-07-17";
 
   src = pkgs.fetchFromGitHub {
     owner = "anthropics";
     repo = "skills";
-    rev = "9d2f1ae187231d8199c64b5b762e1bdf2244733d";
-    hash = "sha256-U7Nt1xrFOSOEm4vuWmy4pVsEyvv+Hj4sv8yXOofmwAw=";
+    rev = "fa0fa64bdc967915dc8399e803be67759e1e62b8";
+    hash = "sha256-QZ+zJkyLd/42rxgtJEZSUOz9R75Tse6UXW7G0nOkFS8=";
   };
 
   dontConfigure = true;
