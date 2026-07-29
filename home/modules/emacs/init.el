@@ -138,6 +138,17 @@
    ("\\.rs$" . rust-ts-mode)
    ("\\.toml$" . toml-ts-mode)))
 
+;; A windowed Emacs is started by launchd (Spotlight, Dock), so it inherits
+;; the system default PATH instead of the one zsh builds, leaving everything
+;; installed through nix invisible to magit, eglot and friends.
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns))
+  :init
+  (setq exec-path-from-shell-arguments '("-l" "-i")
+	exec-path-from-shell-check-startup-files nil)
+  :config
+  (exec-path-from-shell-initialize))
+
 (use-package uniquify
   :ensure nil
   :custom

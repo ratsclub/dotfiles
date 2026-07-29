@@ -19,6 +19,7 @@ in
         corfu-terminal
         direnv
         eglot
+        exec-path-from-shell
         forge
         ghostel
         magit
