@@ -22,7 +22,6 @@
 
       permissions.deny = [
         "Edit(//nix/store/**)"
-        "Write(//nix/store/**)"
       ];
 
       tui = "fullscreen";
