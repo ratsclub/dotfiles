@@ -1,13 +1,13 @@
 { pkgs, ... }:
 pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "shopify-ai-toolkit";
-  version = "1.2.2-unstable-2026-07-16";
+  version = "1.2.2-unstable-2026-07-27";
 
   src = pkgs.fetchFromGitHub {
     owner = "Shopify";
     repo = "Shopify-AI-Toolkit";
-    rev = "556811e94dd45c795abe5c0b1bf6b5a4b098149d";
-    hash = "sha256-xVj+4/r522s1Fun2eDZahk45fIvhbbaTtYmkLEk+C3A=";
+    rev = "0e06bc35611e505e372de7f8cdf265e6d6dbc311";
+    hash = "sha256-RrYKj1ii4Ir0JBxawUJVMeP7WyGeB79/yjw7Ie0oPNM=";
   };
 
   dontConfigure = true;
