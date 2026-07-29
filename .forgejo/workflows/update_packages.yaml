@@ -5,8 +5,8 @@ run-name: "Update Packages"
 on:
   workflow_dispatch:
   schedule:
-    # run every monday
-    - cron: '0 0 * * 1'
+    # run every 2 days
+    - cron: '0 0 */2 * *'
 
 jobs:
   update:
