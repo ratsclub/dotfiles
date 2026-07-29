@@ -3,6 +3,7 @@
 let
   customEmacs = pkgs.emacs.override {
     withGTK3 = !pkgs.stdenv.hostPlatform.isDarwin;
+    withImageMagick = true;
     withTreeSitter = true;
   };
 in
