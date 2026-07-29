@@ -1,10 +1,6 @@
 { inputs, pkgs, ... }:
 
 let
-  emacsConfig = pkgs.writeTextDir "config/init.el" ''
-    (load "${./init.el}")
-  '';
-
   customEmacs = pkgs.emacs.override {
     withGTK3 = !pkgs.stdenv.hostPlatform.isDarwin;
     withTreeSitter = true;
@@ -23,6 +19,7 @@ in
         direnv
         eglot
         forge
+        ghostel
         magit
         magit-todos
         marginalia
@@ -42,6 +39,6 @@ in
   };
 
   # this is needed because `programs.emacs.extraConfig` is appended to
-  # `default.nix`, so some things can't run there
+  # `default.el`, so some things can't run there
   home.file.".emacs.d/init.el".source = ./init.el;
 }

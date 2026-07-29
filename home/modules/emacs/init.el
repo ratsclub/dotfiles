@@ -379,6 +379,21 @@
     (keymap-set eshell-mode-map "C-r" 'consult-history))
   :hook ((eshell-mode . p/setup-eshell)))
 
+(use-package ghostel
+  :defer t
+  :bind
+  (("C-x m" . ghostel)
+   :map ghostel-semi-char-mode-map
+   ("C-s" . consult-line)
+   :map project-prefix-map
+   ("t" . ghostel-project)
+   ("T" . ghostel-project-list-buffers))
+
+  :config
+  ;; ?m is already taken by magit-project-status
+  (add-to-list 'project-switch-commands '(ghostel-project "Ghostel" ?t) t)
+  (add-to-list 'project-switch-commands '(ghostel-project-list-buffers "Ghostel buffers" ?T) t))
+
 (use-package proced
   :custom
   (proced-auto-update-flag t)
