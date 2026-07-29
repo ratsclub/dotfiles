@@ -3,11 +3,12 @@
   programs.claude-code = {
     enable = true;
 
-    plugins = [
-      pkgs.claude-shopify-ai-toolkit
-      "${pkgs.claude-plugins-official}/plugins/code-review"
-      "${pkgs.claude-plugins-official}/plugins/playground"
-    ];
+    plugins = {
+      shopify-ai-toolkit = pkgs.claude-shopify-ai-toolkit;
+      team = pkgs.claude-team;
+      code-review = "${pkgs.claude-plugins-official}/plugins/code-review";
+      playground = "${pkgs.claude-plugins-official}/plugins/playground";
+    };
 
     skills = {
       skill-creator = "${pkgs.claude-anthropic-skills}/skills/skill-creator";
