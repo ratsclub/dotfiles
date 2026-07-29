@@ -264,7 +264,9 @@
 
 (use-package project
   :config
-  (add-to-list 'project-switch-commands '(magit-project-status "Magit" ?m)))
+  (add-to-list 'project-switch-commands '(magit-project-status "Magit" ?m))
+  (add-to-list 'project-switch-commands '(ghostel-project "Ghostel" ?t) t)
+  (add-to-list 'project-switch-commands '(ghostel-project-list-buffers "Ghostel buffers" ?T) t))
 
 (use-package ediff
   :ensure nil
@@ -395,19 +397,14 @@
   :hook ((eshell-mode . p/setup-eshell)))
 
 (use-package ghostel
-  :defer t
+  :after project
   :bind
   (("C-x m" . ghostel)
    :map ghostel-semi-char-mode-map
    ("C-s" . consult-line)
    :map project-prefix-map
    ("t" . ghostel-project)
-   ("T" . ghostel-project-list-buffers))
-
-  :config
-  ;; ?m is already taken by magit-project-status
-  (add-to-list 'project-switch-commands '(ghostel-project "Ghostel" ?t) t)
-  (add-to-list 'project-switch-commands '(ghostel-project-list-buffers "Ghostel buffers" ?T) t))
+   ("T" . ghostel-project-list-buffers)))
 
 (use-package proced
   :custom
