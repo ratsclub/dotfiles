@@ -142,7 +142,11 @@
 ;; the system default PATH instead of the one zsh builds, leaving everything
 ;; installed through nix invisible to magit, eglot and friends.
 (use-package exec-path-from-shell
-  :if (memq window-system '(mac ns))
+  ;; `window-system' is nil while a daemon's init runs, so guarding on it
+  ;; silently skips this in `emacs --daemon' and every emacsclient frame
+  ;; inherits the bare launchd PATH.
+  :if (and (eq system-type 'darwin)
+	   (or (display-graphic-p) (daemonp)))
   :init
   (setq exec-path-from-shell-arguments '("-l" "-i")
 	exec-path-from-shell-check-startup-files nil)
