@@ -1,5 +1,11 @@
 { pkgs, ... }:
 
+let
+  personal = {
+    email = "victor@freire.dev.br";
+    name = "Victor Freire";
+  };
+in
 {
   programs.delta = {
     enable = true;
@@ -79,10 +85,7 @@
     includes = [
       {
         condition = "gitdir:~/Projects/Personal/";
-        contents.user = {
-          email = "victor@freire.dev.br";
-          name = "Victor Freire";
-        };
+        contents.user = personal;
       }
       {
         condition = "gitdir:~/Projects/Work/";
@@ -90,6 +93,13 @@
           email = "victor@theformfactory.co";
           name = "Victor Freire";
         };
+      }
+      # The org vault sits outside ~/Projects, and its commits are made
+      # unattended by the sync in the emacs module, so it needs an identity of
+      # its own rather than inheriting one.
+      {
+        condition = "gitdir:~/org/";
+        contents.user = personal;
       }
     ];
   };

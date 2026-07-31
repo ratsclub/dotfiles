@@ -36,6 +36,7 @@ in
 
         # org
         org-contrib
+        org-roam
         treesit-grammars.with-all-grammars
       ];
   };

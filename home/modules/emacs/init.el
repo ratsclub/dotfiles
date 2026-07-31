@@ -308,6 +308,140 @@
 	       '((javascript-mode typescript-ts-mode) "typescript-language-server" "--stdio"))
   (add-to-list 'eglot-server-programs '(nix-mode . ("nil"))))
 
+(defvar p/org-vault-root (expand-file-name "~/org")
+  "Working tree of the git-backed org vault.")
+
+(defvar p/org-sync-process nil
+  "Handle of the in-flight sync, so that runs cannot stack up.")
+
+(defun p/org-vault-repo-p ()
+  "Return non-nil when the vault exists and is a git repository."
+  (file-directory-p (expand-file-name ".git" p/org-vault-root)))
+
+;; Separate from `org-roam-directory' so it can be read before org-roam loads.
+(defvar p/org-roam-directory (expand-file-name "roam" p/org-vault-root)
+  "Directory holding the roam notes inside the vault.")
+
+(defun p/org-vault-ensure ()
+  "Refuse to proceed unless the vault exists as a git repository."
+  (unless (p/org-vault-repo-p)
+    (user-error "No git repository at %s; create or clone it first"
+		p/org-vault-root))
+  (make-directory p/org-roam-directory t)
+  (when (and (fboundp 'org-roam-db-autosync-mode)
+	     (not (bound-and-true-p org-roam-db-autosync-mode)))
+    (org-roam-db-autosync-mode 1)))
+
+(defun p/org-sync--steps ()
+  "The git invocations making up one round-trip, in order.
+Without an upstream there is nothing to pull and the push must create it."
+  (let* ((default-directory (file-name-as-directory p/org-vault-root))
+	 (upstream (magit-get-upstream-branch)))
+    `(,@(and upstream '(("pull" "--rebase" "--autostash")))
+      ("add" "-A")
+      ("commit" "-m" ,(format "sync(%s): %s"
+			      (system-name)
+			      (format-time-string "%Y-%m-%d %H:%M:%S")))
+      ,(if upstream
+	   '("push")
+	 '("push" "--set-upstream" "origin" "HEAD")))))
+
+(defun p/org-sync--skip-p (step)
+  "Return non-nil when STEP has nothing to do.
+Both cases exit non-zero, which would read as failure and abort the rest.
+Checked per step, not upfront: the commit creates the HEAD the push wants."
+  (pcase (car step)
+    ("commit" (not (magit-anything-staged-p)))
+    ;; An unchanged vault would otherwise pay a network round-trip every
+    ;; five idle minutes to be told nothing happened.
+    ("push" (or (not (magit-rev-verify "HEAD"))
+		(when-let* ((upstream (magit-get-upstream-branch)))
+		  (magit-rev-ancestor-p "HEAD" upstream))))
+    (_ nil)))
+
+(defun p/org-sync--report-failure (step)
+  "Report STEP as the point where the sync gave up."
+  (message "org: vault sync failed on `git %s'" (string-join step " ")))
+
+(defun p/org-sync--failed (step)
+  "Report STEP as the point of failure and open the vault in magit."
+  (setq p/org-sync-process nil)
+  (p/org-sync--report-failure step)
+  (magit-status-setup-buffer p/org-vault-root))
+
+(defun p/org-sync--run (steps)
+  "Run STEPS in order, each starting only once its predecessor succeeded."
+  (if (null steps)
+      (progn (setq p/org-sync-process nil)
+	     (message "org: vault synced"))
+    (let* ((default-directory (file-name-as-directory p/org-vault-root))
+	   ;; Save unasked, or an unsaved capture is committed in its old state.
+	   (magit-save-repository-buffers 'dontask)
+	   ;; Magit would otherwise refresh whichever repository was current when
+	   ;; the timer fired, once per step, reverting every file buffer with it.
+	   (magit-inhibit-refresh t)
+	   (step (car steps)))
+      (if (p/org-sync--skip-p step)
+	  (p/org-sync--run (cdr steps))
+	(let ((process (apply #'magit-run-git-async step)))
+	  (setq p/org-sync-process process)
+	  ;; `magit-start-process' documents replacing the sentinel before the
+	  ;; process runs; magit's own still runs first, keeping its bookkeeping.
+	  (set-process-sentinel
+	   process
+	   (lambda (proc event)
+	     (magit-process-sentinel proc event)
+	     ;; A pty sentinel can fire twice for one exit, so only the call
+	     ;; still owning `p/org-sync-process' may advance or fail the chain.
+	     (when (and (memq (process-status proc) '(exit signal))
+			(eq p/org-sync-process proc))
+	       (if (zerop (process-exit-status proc))
+		   (p/org-sync--run (cdr steps))
+		 (p/org-sync--failed step))))))))))
+
+(defun p/org-sync-start ()
+  "Begin a sync unless one is already in flight."
+  (require 'magit)
+  (unless (process-live-p p/org-sync-process)
+    (p/org-sync--run (p/org-sync--steps))))
+
+(defun p/org-sync ()
+  "Pull, commit and push the org vault."
+  (interactive)
+  (p/org-vault-ensure)
+  (p/org-sync-start))
+
+(defun p/org-sync-idle ()
+  "Sync from the idle timer, staying quiet when there is no repository yet.
+Runs even on a clean worktree, or a machine only read from never pulls."
+  (when (p/org-vault-repo-p)
+    (p/org-sync-start)))
+
+(defun p/org-sync-on-exit ()
+  "Synchronously sync the vault while leaving Emacs.
+Blocks because the async chain would be killed mid-flight; prompting is off
+so quitting cannot hang on a passphrase nobody can see."
+  (when (p/org-vault-repo-p)
+    (require 'magit)
+    (when (process-live-p p/org-sync-process)
+      (kill-process p/org-sync-process))
+    (let ((default-directory (file-name-as-directory p/org-vault-root))
+	  (magit-save-repository-buffers 'dontask))
+      (with-environment-variables (("GIT_TERMINAL_PROMPT" "0")
+				   ("GIT_SSH_COMMAND" "ssh -o BatchMode=yes"))
+	(catch 'p/org-sync-failed
+	  (dolist (step (p/org-sync--steps))
+	    (unless (p/org-sync--skip-p step)
+	      (unless (zerop (apply #'magit-call-git step))
+		(p/org-sync--report-failure step)
+		(throw 'p/org-sync-failed nil)))))))))
+
+;; Cancel first, so re-evaluating this file does not stack up timers.
+(cancel-function-timers #'p/org-sync-idle)
+(run-with-idle-timer (* 5 60) t #'p/org-sync-idle)
+
+(add-hook 'kill-emacs-hook #'p/org-sync-on-exit)
+
 (use-package org
   :ensure org-contrib
   :defines org-element-use-cache
@@ -316,8 +450,11 @@
   ;; add items to structure template list
   (add-to-list 'org-structure-template-alist '("d" . "description"))
 
-  (setq org-directory "~/org"
+  (setq org-directory p/org-vault-root
 	org-log-done 'time
+
+	org-id-locations-file (expand-file-name "org-id-locations"
+						user-emacs-data-directory)
 
 	org-element-use-cache nil
 	org-startup-indented t
@@ -327,6 +464,52 @@
 
 	;; set source block indentation to 0
 	org-edit-src-content-indentation 0))
+
+(use-package org-roam
+  :preface
+  (defun p/org-vault-ensure-advice (&rest _)
+    "Swallow arguments so `p/org-vault-ensure' can advise other commands."
+    (p/org-vault-ensure))
+
+  (defun p/org-roam-capture-note ()
+    "Capture a new note."
+    (interactive)
+    (org-roam-capture nil "n"))
+
+  :init
+  (setq org-roam-directory p/org-roam-directory
+	org-roam-dailies-directory "daily/"
+	org-roam-db-location (expand-file-name "org-roam.db" user-emacs-cache-directory))
+
+  (setq org-roam-capture-templates
+	'(("n" "note" plain "%?"
+	   :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+			      "#+title: ${title}\n#+filetags:\n\n")
+	   :unnarrowed t)))
+
+  (setq org-roam-dailies-capture-templates
+	'(("d" "entry" entry "* %<%H:%M> %?"
+	   :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
+
+  :config
+  (when (file-directory-p org-roam-directory)
+    (org-roam-db-autosync-mode))
+
+  ;; Every path creating a note funnels through `org-roam-capture-': captures,
+  ;; dailies, and `org-roam-node-insert' on a node that does not exist yet.
+  (advice-add 'org-roam-capture- :before #'p/org-vault-ensure-advice)
+
+  :bind
+  (("C-c n f" . org-roam-node-find)
+   ("C-c n i" . org-roam-node-insert)
+   ("C-c n l" . org-roam-buffer-toggle)
+   ("C-c n a" . org-roam-alias-add)
+   ("C-c n c" . p/org-roam-capture-note)
+   ("C-c n s" . p/org-sync)
+   ("C-c n d t" . org-roam-dailies-goto-today)
+   ("C-c n d y" . org-roam-dailies-goto-yesterday)
+   ("C-c n d d" . org-roam-dailies-goto-date)
+   ("C-c n d n" . org-roam-dailies-capture-today)))
 
 (use-package sml-mode
   :defer t
