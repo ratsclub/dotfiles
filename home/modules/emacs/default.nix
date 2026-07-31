@@ -41,6 +41,10 @@ in
       ];
   };
 
+  # A launchd agent on darwin, so `emacsclient' skips the startup cost.
+  # `defaultEditor' stays off: it would conflict with cli.nix's EDITOR.
+  services.emacs.enable = true;
+
   # this is needed because `programs.emacs.extraConfig` is appended to
   # `default.el`, so some things can't run there
   home.file.".emacs.d/init.el".source = ./init.el;

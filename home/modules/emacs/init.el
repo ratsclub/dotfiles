@@ -153,6 +153,18 @@
   :config
   (exec-path-from-shell-initialize))
 
+(use-package server
+  :ensure nil
+  :preface
+  ;; The daemon is not the frontmost app, so its frames open behind whatever
+  ;; is on screen. Focusing reaches NS's `x-focus-frame', which activates emacs.
+  (defun p/focus-client-frame ()
+    "Raise and focus the frame `emacsclient' just created."
+    (when (display-graphic-p)
+      (select-frame-set-input-focus (selected-frame))))
+
+  :hook (server-after-make-frame . p/focus-client-frame))
+
 (use-package uniquify
   :ensure nil
   :custom

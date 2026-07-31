@@ -31,7 +31,7 @@
 
   programs.fzf.enable = true;
   home.sessionVariables = {
-    EDITOR = "emacs -nw";
+    EDITOR = "emacsclient -nw -a emacs";
     FZF_DEFAULT_OPTS = ''--prompt \" λ \"'';
   };
 }
