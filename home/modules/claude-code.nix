@@ -6,6 +6,7 @@
     plugins = {
       shopify-ai-toolkit = pkgs.claude-shopify-ai-toolkit;
       team = pkgs.claude-team;
+      mattpocock-skills = pkgs.claude-mattpocock-skills;
       code-review = "${pkgs.claude-plugins-official}/plugins/code-review";
       playground = "${pkgs.claude-plugins-official}/plugins/playground";
     };
