@@ -1,11 +1,31 @@
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  customEmacs = pkgs.emacs.override {
-    withGTK3 = !pkgs.stdenv.hostPlatform.isDarwin;
-    withImageMagick = true;
-    withTreeSitter = true;
-  };
+  customEmacs =
+    (pkgs.emacs.override {
+      withGTK3 = !pkgs.stdenv.hostPlatform.isDarwin;
+      withImageMagick = true;
+      withTreeSitter = true;
+    }).overrideAttrs
+      (old: {
+        # Run emacsclient instead of a new `emacs` instance.
+        postInstall =
+          (old.postInstall or "")
+          + lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
+            app=$out/Applications/Emacs.app/Contents/MacOS/Emacs
+            rm $app
+            cat > $app <<EOF
+            #!${pkgs.runtimeShell}
+            exec $out/bin/emacsclient -c -n -a ""
+            EOF
+            chmod +x $app
+          '';
+      });
 in
 {
   programs.emacs = {
