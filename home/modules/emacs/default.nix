@@ -13,6 +13,7 @@ in
     package = customEmacs;
     extraPackages =
       epkgs: with epkgs; [
+        agent-shell
         avy
         consult
         corfu
@@ -41,8 +42,8 @@ in
       ];
   };
 
-  # A launchd agent on darwin, so `emacsclient' skips the startup cost.
-  # `defaultEditor' stays off: it would conflict with cli.nix's EDITOR.
+  home.packages = [ pkgs.claude-agent-acp ];
+
   services.emacs.enable = true;
 
   # this is needed because `programs.emacs.extraConfig` is appended to

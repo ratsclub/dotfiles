@@ -601,6 +601,24 @@ so quitting cannot hang on a passphrase nobody can see."
    ("t" . ghostel-project)
    ("T" . ghostel-project-list-buffers)))
 
+(use-package agent-shell
+  :defer t
+  :init
+  (setq agent-shell-preferred-agent-config 'claude-code)
+
+  ;; The shell renders the agent's markdown, where trailing whitespace is
+  ;; meaningful rather than a mistake worth highlighting.
+  (defun p/setup-agent-shell ()
+    (setq-local show-trailing-whitespace nil
+		indicate-empty-lines nil))
+
+  :hook ((agent-shell-mode . p/setup-agent-shell))
+
+  :bind
+  (("C-c a a" . agent-shell)
+   ("C-c a t" . agent-shell-toggle)
+   ("C-c a c" . agent-shell-prompt-compose)))
+
 (use-package proced
   :custom
   (proced-auto-update-flag t)
