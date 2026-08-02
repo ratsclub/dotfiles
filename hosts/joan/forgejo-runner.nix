@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   inputs,
   ...
@@ -11,6 +12,20 @@ let
   forgejoDomain =
     inputs.self.nixosConfigurations.catarina.config.services.forgejo.settings.server.DOMAIN;
   proxyPort = 42001;
+
+  image = pkgs.forgejo-runner-image;
+  tools = pkgs.forgejo-runner-tools;
+
+  containerVolumes = [
+    {
+      host = "/nix";
+      guest = "/nix";
+    }
+    {
+      host = "${tools}/bin";
+      guest = "/bin";
+    }
+  ];
 in
 {
   age.secrets.forgejo-runner-token.file = ../../secrets/joan/forgejo/runner-token.age;
@@ -19,6 +34,15 @@ in
     enable = true;
     dockerSocket.enable = true;
   };
+
+  users.users.${image.user} = {
+    uid = image.uid;
+    group = image.user;
+    isSystemUser = true;
+    home = "/var/empty";
+    description = "Runs Forgejo CI jobs inside the runner container";
+  };
+  users.groups.${image.user}.gid = image.gid;
 
   # Job containers reach the cache proxy (cache.proxy_port) over the podman
   # bridge, so open just that pinned port.
@@ -62,6 +86,9 @@ in
         container = {
           network = "podman";
           force_pull = false;
+
+          options = lib.concatMapStringsSep " " (v: "-v ${v.host}:${v.guest}") containerVolumes;
+          valid_volumes = map (v: v.host) containerVolumes;
         };
       };
 

@@ -8,5 +8,6 @@
 
   claude-statusline = pkgs.callPackage ./claude-statusline { };
   forgejo-runner-image = pkgs.callPackage ./forgejo-runner-image { };
+  forgejo-runner-tools = pkgs.callPackage ./forgejo-runner-tools { };
   reasonix = pkgs.callPackage ./reasonix { };
 }
