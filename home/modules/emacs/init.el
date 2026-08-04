@@ -95,22 +95,6 @@
   (column-number-mode)
   (display-time)
 
-  ;; theme
-  (load-theme 'modus-vivendi t)
-  (setq modus-themes-region '(accented)
-	modus-themes-org-blocks 'gray-background
-	modus-themes-fringes 'subtle
-	modus-themes-italic-constructs t
-	modus-themes-bold-constructs t
-	modus-themes-syntax '(green-strings)
-	modus-themes-hl-line '(intense)
-	modus-themes-paren-match '(intense)
-	modus-themes-mode-line '(moody borderless)
-	modus-themes-headings (quote ((1 . (overline variable-pitch 1.4))
-                                      (2 . (overline variable-pitch 1.25))
-                                      (3 . (overline 1.1))
-                                      (t . (monochrome)))))
-
   ;; smoother scrolling
   (pixel-scroll-precision-mode)
 
@@ -137,6 +121,40 @@
    ("\\.ya?ml$" . yaml-ts-mode)
    ("\\.rs$" . rust-ts-mode)
    ("\\.toml$" . toml-ts-mode)))
+
+(use-package modus-themes
+  :ensure nil
+  :no-require t
+  :demand t
+  :init
+  (setq modus-themes-italic-constructs t
+	modus-themes-bold-constructs t
+	modus-themes-mixed-fonts t
+	modus-themes-disable-other-themes t
+	modus-themes-to-toggle '(modus-vivendi modus-operandi)
+	modus-themes-prompts '(bold)
+	modus-themes-completions '((matches . (extrabold))
+				   (selection . (semibold)))
+	modus-themes-headings '((1 . (overline variable-pitch 1.4))
+				(2 . (overline variable-pitch 1.25))
+				(3 . (overline 1.1))
+				(t . (monochrome))))
+
+  (setq modus-themes-common-palette-overrides
+	'((bg-region bg-lavender)
+	  ;; Keep syntax highlighting visible through the selection.
+	  (fg-region unspecified)
+	  (string green-cooler)
+	  (bg-hl-line bg-cyan-nuanced)
+	  (bg-paren-match bg-magenta-intense)
+	  (border-mode-line-active unspecified)
+	  (border-mode-line-inactive unspecified)))
+
+  :config
+  (load-theme 'modus-vivendi t)
+
+  :bind
+  (("<f5>" . modus-themes-toggle)))
 
 ;; A windowed Emacs is started by launchd (Spotlight, Dock), so it inherits
 ;; the system default PATH instead of the one zsh builds, leaving everything
