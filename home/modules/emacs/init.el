@@ -614,8 +614,15 @@ so quitting cannot hang on a passphrase nobody can see."
   :init
   (setq agent-shell-preferred-agent-config 'claude-code)
 
-  ;; The shell renders the agent's markdown, where trailing whitespace is
-  ;; meaningful rather than a mistake worth highlighting.
+  :config
+  (setq agent-shell-anthropic-authentication
+        (agent-shell-anthropic-make-authentication :login t))
+
+  ;; Inherit environment ($PATH and others) from GNU Emacs
+  (setq agent-shell-anthropic-claude-environment
+        (agent-shell-make-environment-variables :inherit-env t))
+
+  ;; Don't paint whitespaces on screen
   (defun p/setup-agent-shell ()
     (setq-local show-trailing-whitespace nil
 		indicate-empty-lines nil))
