@@ -10,6 +10,7 @@ let
   inherit (lib)
     foldlAttrs
     literalExpression
+    literalMD
     mkEnableOption
     mkIf
     mkOption
@@ -17,13 +18,13 @@ let
     mkRemovedOptionModule
     mkRenamedOptionModule
     nameValuePair
-    optionalAttrs
     optionals
     types
     ;
 
   cfg = config.services.forgejo-runner;
   settingsFormat = pkgs.formats.yaml { };
+  config' = config;
 
   # An option type for cfg.secrets that is like cfg.settings (free-form yaml), but limited
   # to just path and attrsOf path. It uses the same implementation primivites as
@@ -31,22 +32,14 @@ let
   # The alternative would be something like types.any, which is too weak, or a hard-coded
   # max-depth by chaining multiple types.oneOf and types.attrsOf together, which is both
   # longer in code and less future-proof.
-  pathType = types.pathWith {
-    inStore = false;
-    absolute = true;
-  };
   secretsTypeBase = types.oneOf [
-    pathType
+    types.externalPath
     (types.attrsOf secretsTypeBase)
   ];
   secretsType = secretsTypeBase // {
-    description = "nested attribute set of ${pathType.description}";
+    description = "nested attribute set of ${types.externalPath.description}";
   };
 
-  # provide shorthands for whether container runtimes are enabled
-  hasDocker = config.virtualisation.docker.enable;
-  hasPodman = config.virtualisation.podman.enable;
-  hasContainerRuntime = hasDocker || hasPodman;
   labels =
     instance:
     instance.settings.runner.labels
@@ -130,17 +123,37 @@ in
               '')
             ];
 
-            config = {
+            config = mkIf config.enable {
               assertions = [
                 {
-                  assertion = config.isDockerRunner -> hasContainerRuntime;
+                  assertion =
+                    lib.any (label: lib.hasInfix ":docker" label) (labels config)
+                    -> (
+                      config.runtimes.docker
+                      || config.runtimes.podman
+                      # Mute assertion as an escape hatch for end-users
+                      # that override our options.runtimes default.
+                      || options.runtimes.docker.highestPrio < (lib.mkOptionDefault { }).priority
+                      || options.runtimes.podman.highestPrio < (lib.mkOptionDefault { }).priority
+                    );
                   message = ''
                     The option `${options.settings}' has at least one label of
-                    type `:docker:' configured, but no compatible container runtime enabled.
+                    type `docker' configured, but no compatible container runtime enabled.
 
                     You need to enable either
                     `config.virtualisation.docker.enable' or
                     `config.virtualisation.podman.enable'.
+
+                    If you are absolutely sure what you are doing
+                    and are certain this is wrong, may can set
+                    `${options.runtimes.docker}' or
+                    `${options.runtimes.podman}' to dismiss this assertion.
+                  '';
+                }
+                {
+                  assertion = config.settings.server.connections != { };
+                  message = ''
+                    The option `${options.settings}.server.connections' requires at least one connection.
                   '';
                 }
               ]
@@ -171,6 +184,8 @@ in
                   options = {
                     runner = {
                       labels = mkOption {
+                        # TODO: Support new attrset format (yaml map)
+                        # https://code.forgejo.org/forgejo/runner/pulls/1571
                         type = types.listOf types.str;
                         example = literalExpression ''
                           [
@@ -188,10 +203,16 @@ in
                           Many common actions require {command}`bash`, {command}`git` and {command}`node`,
                           as well as a filesystem that follows the filesystem hierarchy standard.
 
-                          If you specify a label of type `:docker:`, the resulting runner service
+                          If you specify a label of type `docker`, the resulting runner service
                           will be automatically added to the *Podman* or *Docker* group.
 
                           See <https://forgejo.org/docs/latest/admin/actions/configuration/#choosing-labels>.
+
+                          ::: {.note}
+                          Labels of type [`lxc`] are currently not supported.
+                          :::
+
+                          [`lxc`]: https://forgejo.org/docs/latest/admin/actions/configuration/#lxc
                         '';
                       };
                     };
@@ -247,7 +268,7 @@ in
 
                                       Hint:
                                       `${options.secrets}.server.connections.${name}.token_url' will set
-                                      `${options.settings}.settings.server.connections.${name}.token_url' for you.
+                                      `${options.settings}.server.connections.${name}.token_url' for you.
                                     '';
                                   }
                                 ];
@@ -348,7 +369,7 @@ in
                 '';
                 description = ''
                   List of packages, that are available to your workflow and actions, when the
-                  runner is configured with a label of type `:host`.
+                  runner is configured with a label of type `host` ({option}`${options.runtimes.host}`).
 
                   ::: {.note}
                   {command}`gitMinimal` is always part of the environment because {command}`forgejo-runner`
@@ -358,20 +379,55 @@ in
                 '';
               };
 
-              isDockerRunner = mkOption {
-                internal = true;
-                readOnly = true;
-                type = types.bool;
-                default = lib.any (label: lib.hasInfix ":docker:" label) (labels config);
-                description = "Whether this instance has at least one label of type `:docker:`.";
-              };
+              runtimes = {
+                host = mkOption {
+                  type = types.bool;
+                  default = lib.any (label: lib.hasSuffix ":host" label) (labels config);
+                  defaultText = literalMD "Whether this instance has at least one label with suffix `:host`.";
+                  description = ''
+                    Whether to configure the systemd service for jobs with the backend of type `host`.
 
-              isHostRunner = mkOption {
-                internal = true;
-                readOnly = true;
-                type = types.bool;
-                default = lib.any (label: lib.hasSuffix ":host" label) (labels config);
-                description = "Whether this instance has at least one label of type `:host`.";
+                    ::: {.warning}
+                    Setting this will override the automatic detection and safeguards.
+                    :::
+                  '';
+                };
+
+                docker = mkOption {
+                  type = types.bool;
+                  default =
+                    lib.any (label: lib.hasInfix ":docker" label) (labels config)
+                    && config'.virtualisation.docker.enable;
+                  defaultText = literalMD ''
+                    Whether this instance has at least one label with infix `:docker`
+                    and {option}`config.virtualisation.docker.enable` set to `true`.
+                  '';
+                  description = ''
+                    Whether to configure the systemd service to work with Docker.
+
+                    ::: {.warning}
+                    Setting this will override the automatic detection and safeguards.
+                    :::
+                  '';
+                };
+
+                podman = mkOption {
+                  type = types.bool;
+                  default =
+                    lib.any (label: lib.hasInfix ":docker" label) (labels config)
+                    && config'.virtualisation.podman.enable;
+                  defaultText = literalMD ''
+                    Whether this instance has at least one label with infix `:docker`
+                    and {option}`config.virtualisation.podman.enable` set to `true`.
+                  '';
+                  description = ''
+                    Whether to configure the systemd service to work with Podman.
+
+                    ::: {.warning}
+                    Setting this will override the automatic detection and safeguards.
+                    :::
+                  '';
+                };
               };
 
               configFile = mkOption {
@@ -420,10 +476,11 @@ in
         after = [
           "network-online.target"
         ]
-        ++ optionals (instance.isDockerRunner && hasDocker) [
+        ++ optionals instance.runtimes.docker [
           "docker.service"
         ]
-        ++ optionals (instance.isDockerRunner && hasPodman) [
+        ++ optionals instance.runtimes.podman [
+          # TODO: Add support for rootless Podman
           "podman.service"
         ];
         wantedBy = [
@@ -431,12 +488,8 @@ in
         ];
         environment = {
           HOME = "/var/lib/forgejo-runner/${name}";
-        }
-        // optionalAttrs (instance.isDockerRunner && hasPodman) {
-          # TODO: Add support for rootless Podman
-          DOCKER_HOST = "unix:///run/podman/podman.sock";
         };
-        path = optionals instance.isHostRunner instance.hostPackages ++ [ pkgs.gitMinimal ];
+        path = optionals instance.runtimes.host instance.hostPackages ++ [ pkgs.gitMinimal ];
 
         serviceConfig = {
           DynamicUser = true;
@@ -447,7 +500,7 @@ in
           # which has the side-effect of setting nosuid and noexec as mount option.
           # Users of host runners expect to be able to execute scripts in their
           # pipeline, so we override the noexec mount option by setting ExecPaths.
-          ExecPaths = optionals instance.isHostRunner [ "/var/lib/forgejo-runner/${name}" ];
+          ExecPaths = optionals instance.runtimes.host [ "/var/lib/forgejo-runner/${name}" ];
           ExecStart = toString [
             (lib.getExe cfg.package)
             "daemon"
@@ -463,10 +516,10 @@ in
           ) instance.secrets;
 
           SupplementaryGroups =
-            optionals (instance.isDockerRunner && hasDocker) [
+            optionals instance.runtimes.docker [
               "docker"
             ]
-            ++ optionals (instance.isDockerRunner && hasPodman) [
+            ++ optionals instance.runtimes.podman [
               "podman"
             ];
         };
