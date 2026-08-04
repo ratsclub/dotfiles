@@ -593,6 +593,14 @@ so quitting cannot hang on a passphrase nobody can see."
 
 (use-package ghostel
   :after project
+  :config
+  ;; Don't paint whitespaces on screen
+  (defun p/setup-ghostel ()
+    (setq-local show-trailing-whitespace nil
+		indicate-empty-lines nil))
+
+  :hook ((ghostel-mode . p/setup-ghostel))
+
   :bind
   (("C-x m" . ghostel)
    :map ghostel-semi-char-mode-map
