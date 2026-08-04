@@ -614,6 +614,20 @@ so quitting cannot hang on a passphrase nobody can see."
   :init
   (setq agent-shell-preferred-agent-config 'claude-code)
 
+  ;; Transcripts and screenshots go under `user-emacs-data-directory`
+  ;; not the project's folder.
+  (defun p/agent-shell-dot-subdir (subdir)
+    "Resolve agent-shell's SUBDIR under `user-emacs-data-directory'.
+Keyed by the project's full path, so same-named checkouts stay distinct."
+    (file-name-concat user-emacs-data-directory
+		      "agent-shell"
+		      (replace-regexp-in-string
+		       "/" "-" (string-remove-prefix
+				"/" (directory-file-name (agent-shell-cwd))))
+		      subdir))
+
+  (setq agent-shell-dot-subdir-function #'p/agent-shell-dot-subdir)
+
   :config
   (setq agent-shell-anthropic-authentication
         (agent-shell-anthropic-make-authentication :login t))
