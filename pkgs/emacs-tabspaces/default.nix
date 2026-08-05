@@ -8,10 +8,11 @@ emacsPackages.trivialBuild (finalAttrs: {
   pname = "tabspaces";
   version = "0-unstable-2026-08-04";
 
-  src = pkgs.fetchFromCodeberg {
-    owner = "mclear-tools";
+  src = pkgs.fetchFromForgejo {
+    domain = "src.r6b.dev";
+    owner = "emacs";
     repo = "tabspaces";
-    rev = "ef19a5dc4147f6e69442bd2e64c00672438eeb04";
+    rev = "ef19a5dc4147f6e69442bd2e64c00672438ebe04";
     hash = "sha256-kSxk6/NqDtAOLFSsuekBv2dkaZhga55RxaI1I7wLjDI=";
   };
 
