@@ -8,6 +8,8 @@
   claude-team = pkgs.callPackage ./claude-team { };
 
   claude-statusline = pkgs.callPackage ./claude-statusline { };
+  emacs-agent-shell = pkgs.callPackage ./emacs-agent-shell { };
+  emacs-shell-maker = pkgs.callPackage ./emacs-shell-maker { };
   forgejo-runner-image = pkgs.callPackage ./forgejo-runner-image { };
   forgejo-runner-tools = pkgs.callPackage ./forgejo-runner-tools { };
   reasonix = pkgs.callPackage ./reasonix { };

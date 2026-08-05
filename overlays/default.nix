@@ -1,8 +1,20 @@
 { ... }:
 
 {
-  default = final: _prev: import ../pkgs { pkgs = final; };
-  modifications = final: _prev: {
-
-  };
+  default =
+    final: prev:
+    prev.lib.recursiveUpdate (import ../pkgs { pkgs = final; }) {
+      emacsPackagesFor =
+        emacs:
+        (prev.emacsPackagesFor emacs).overrideScope (
+          efinal: _eprev: {
+            agent-shell = final.callPackage ../pkgs/emacs-agent-shell {
+              emacsPackages = efinal;
+            };
+            shell-maker = final.callPackage ../pkgs/emacs-shell-maker {
+              emacsPackages = efinal;
+            };
+          }
+        );
+    };
 }
