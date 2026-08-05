@@ -51,8 +51,10 @@ in
         orderless
         sml-mode
         switch-window
+        tabspaces
         treemacs
         treemacs-projectile
+        treemacs-tab-bar
         vertico
 
         # org

@@ -298,6 +298,199 @@
   (add-to-list 'project-switch-commands '(ghostel-project "Ghostel" ?t) t)
   (add-to-list 'project-switch-commands '(ghostel-project-list-buffers "Ghostel buffers" ?T) t))
 
+(use-package tab-bar
+  :ensure nil
+  :preface
+  (defvar p/tab-bar-tab-min-width 10
+    "Narrowest a workspace tab may be squeezed to, in characters.")
+
+  (defvar p/tab-bar-tab-max-width 30
+    "Widest a workspace tab may grow to, in characters.")
+
+  (defconst p/tab-bar-tab-slack 2
+    "Columns a tab costs beyond its name: `tab-bar-separator', plus the box.")
+
+  (defun p/tab-bar-tab-width ()
+    "Width to give every tab, shrunk to keep them all on screen when crowded."
+    (let* ((count (max 1 (length (funcall tab-bar-tabs-function))))
+	   (budget (/ (frame-width) count))
+	   ;; Slack off the shrunk width too, or the separators overflow the bar.
+	   (fitted (if (>= (+ p/tab-bar-tab-max-width p/tab-bar-tab-slack) budget)
+		       (- budget p/tab-bar-tab-slack)
+		     p/tab-bar-tab-max-width)))
+      (max p/tab-bar-tab-min-width (min p/tab-bar-tab-max-width fitted))))
+
+  (defun p/tab-bar-tab-name-format-pad (name _tab _i)
+    "Centre NAME in a fixed-width field, truncating it when it does not fit.
+Uniform widths are what let the boxed faces read as tabs instead of as runs of
+text with ragged lengths.  Hooked ahead of `tab-bar-tab-name-format-face' so
+the face, and with it the box, covers the padding as well as the name."
+    (let* ((reserved (if (and tab-bar-close-button-show tab-bar-close-button)
+			 (length tab-bar-close-button)
+		       0))
+	   (width (- (p/tab-bar-tab-width) reserved))
+	   (name (string-trim name))
+	   (len (length name)))
+      (if (>= len width)
+	  (concat " " (truncate-string-to-width name (max 1 (- width 2))) "…")
+	(let* ((padded (concat (make-string (/ (- width len) 2) ?\s) name)))
+	  (concat padded (make-string (- width (length padded)) ?\s))))))
+
+  (defun p/set-tab-bar-theme (&optional frame)
+    "Give FRAME's workspace tabs an Atom-like look, derived from the active theme.
+The current tab takes the buffer's own background so it reads as continuous
+with the buffer beneath it, while the rest recede into a mode-line-coloured
+bar.  Hover is left alone: tab-bar highlights with the global `highlight'
+face, so styling it here would leak out into everything else."
+    (let ((frame (or frame (selected-frame))))
+      ;; Per frame, not globally: a `-nw' client and a GUI frame have different
+      ;; colours. Terminal frames keep the stock faces -- a box needs pixels.
+      (when (display-graphic-p frame)
+	(let ((bar (face-attribute 'mode-line :background frame))
+	      (fg (face-attribute 'default :foreground frame))
+	      (current (face-attribute 'default :background frame)))
+	  ;; With no graphical frame these are `unspecified', or the strings
+	  ;; "unspecified-bg"/"unspecified-fg" -- strings, but not colours.
+	  (when (and (stringp bar) (stringp fg) (stringp current)
+		     (color-defined-p bar frame)
+		     (color-defined-p fg frame)
+		     (color-defined-p current frame))
+	    ;; Vertical breathing room. Neither side may be 0, a zero-width box
+	    ;; being invalid; the horizontal 1 keeps the column arithmetic honest.
+	    (let ((pad (cons 1 (max 1 (/ (frame-char-height frame) 4)))))
+	      (set-face-attribute 'tab-bar frame
+				  :background bar :foreground fg :height 0.8
+				  :inherit nil
+				  :box (list :line-width -1 :color bar))
+	      (set-face-attribute 'tab-bar-tab frame
+				  :background current :foreground fg
+				  :weight 'normal :inherit nil
+				  :box (list :line-width pad :color current))
+	      (set-face-attribute 'tab-bar-tab-inactive frame
+				  :background bar :foreground fg
+				  :weight 'normal :inherit nil
+				  :box (list :line-width pad :color bar))))))))
+
+  (defun p/set-tab-bar-theme-all-frames (&rest _)
+    "Restyle the tabs on every frame, for hooks that fire once per theme change."
+    (mapc #'p/set-tab-bar-theme (frame-list)))
+
+  :custom
+  (tab-bar-new-tab-choice "*scratch*")
+  (tab-bar-close-button-show nil)
+  (tab-bar-new-button-show nil)
+
+  ;; Runs after `tab-bar-tab-name-format-functions' and pads at the end of the
+  ;; name, undoing the centring above.
+  (tab-bar-auto-width nil)
+
+  :config
+  (tab-bar-mode 1)
+  (add-hook 'tab-bar-tab-name-format-functions #'p/tab-bar-tab-name-format-pad)
+
+  ;; The colours come from the live theme, so they go stale on every `<f5>'.
+  (add-hook 'enable-theme-functions #'p/set-tab-bar-theme-all-frames)
+
+  ;; Per-frame faces, so every new frame needs its own pass. Both hooks fire for
+  ;; an `emacsclient' frame and the styling is idempotent.
+  (add-hook 'after-make-frame-functions #'p/set-tab-bar-theme)
+  (add-hook 'server-after-make-frame-hook #'p/set-tab-bar-theme)
+
+  (p/set-tab-bar-theme))
+
+(use-package tabspaces
+  :preface
+  (defun p/tabspace-explore ()
+    "Explore the current workspace's project in treemacs.
+Reduces this tab's treemacs workspace to that one project, because
+`treemacs-tab-bar' seeds a new tab's workspace from the previous one and so
+can start out showing projects belonging to other tabspaces."
+    (interactive)
+    (treemacs-add-and-display-current-project-exclusively))
+
+  (defun p/tabspaces-session-file (project-root)
+    "Session file for PROJECT-ROOT, under `user-emacs-data-directory'.
+Keyed by the project's full path, the way `p/agent-shell-dot-subdir' is:
+tabspaces names a project's session file after the directory's basename alone,
+so a plain store directory would have ~/src/app and ~/work/app share one file
+-- overwriting each other on save, and restoring the wrong workspace."
+    (file-name-concat user-emacs-data-directory
+		      "tabspaces"
+		      (concat (replace-regexp-in-string
+			       "/" "-"
+			       (string-remove-prefix
+				"/" (directory-file-name
+				     (expand-file-name project-root))))
+			      "-session.el")))
+
+  ;; Keeps the `let' in the ghostel restore below dynamic even under a compiled
+  ;; init, where `(require 'ghostel)' comes too late to mark it special.
+  (defvar ghostel-buffer-name)
+
+  :hook (after-init . tabspaces-mode)
+
+  :init
+  (setq tabspaces-use-filtered-buffers-as-default t
+	tabspaces-keymap-prefix (kbd "C-c t")
+	tabspaces-project-switch-opens-workspace t
+	tabspaces-initialize-project-with-todo nil
+	tabspaces-session t
+	tabspaces-session-auto-restore t
+	tabspaces-session-auto-save-delay 300
+
+	tabspaces-session-file (expand-file-name "tabsession.el" user-emacs-data-directory)
+	tabspaces-session-project-session-store #'p/tabspaces-session-file)
+
+  :config
+  ;; The one buffer kind of ours that tabspaces cannot restore by itself.
+  ;; Registered here, not under `ghostel': a restore runs before it is loaded.
+  (tabspaces-register-buffer-kind
+   'ghostel
+   (lambda (buffer)
+     (with-current-buffer buffer
+       (when (derived-mode-p 'ghostel-mode)
+	 (list :kind 'ghostel
+	       :dir default-directory
+	       :name (buffer-name)))))
+   (lambda (record)
+     ;; A restore can be the first thing to touch ghostel.
+     (require 'ghostel)
+     (let ((name (plist-get record :name))
+	   (dir (plist-get record :dir)))
+       (when (and (stringp dir) (file-directory-p dir))
+	 (or (tabspaces-reuse-existing-buffer name)
+	     (condition-case err
+		 (let ((default-directory dir)
+		       (ghostel-buffer-name name))
+		   ;; Fresh, as the built-in handlers are: `(ghostel)' matches
+		   ;; by identity across all buffers, stealing another tab's.
+		   (ghostel t))
+	       (error
+		(message "tabspaces: ghostel restore skipped (%s): %S" dir err)
+		nil)))))))
+
+  (with-eval-after-load 'consult
+    (defvar p/consult-source-workspace
+      `( :name     "Workspace Buffers"
+	 :narrow   ?w
+	 :category buffer
+	 :face     consult-buffer
+	 :history  buffer-name-history
+	 :state    ,#'consult--buffer-state
+	 :default  t
+	 :items
+	 ,(lambda () (consult--buffer-query :predicate #'tabspaces--local-buffer-p
+					    :sort 'visibility
+					    :as #'consult--buffer-pair)))
+      "Buffers of the current workspace, as a `consult-buffer' source.")
+
+    (consult-customize consult-source-buffer :hidden t :default nil)
+    (add-to-list 'consult-buffer-sources 'p/consult-source-workspace))
+
+  :bind
+  (:map tabspaces-command-map
+	("e" . p/tabspace-explore)))
+
 (use-package ediff
   :ensure nil
   :custom
@@ -566,8 +759,19 @@ so quitting cannot hang on a passphrase nobody can see."
 
 (use-package treemacs
   :defer t
+  :init
+  (setq treemacs-persist-file (expand-file-name "treemacs/persist"
+						user-emacs-data-directory)
+	treemacs-last-error-persist-file (expand-file-name "treemacs/persist-at-last-error"
+							   user-emacs-data-directory))
   :config
   (use-package treemacs-projectile :defer t)
+
+  (use-package treemacs-tab-bar
+    :demand t
+    :config
+    (treemacs-set-scope-type 'Tabs))
+
   (setq treemacs-no-png-images t)
   (treemacs-git-mode 'extended))
 
