@@ -14,6 +14,9 @@
             shell-maker = final.callPackage ../pkgs/emacs-shell-maker {
               emacsPackages = efinal;
             };
+            tabspaces = final.callPackage ../pkgs/emacs-tabspaces {
+              emacsPackages = efinal;
+            };
           }
         );
     };
