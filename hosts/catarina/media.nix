@@ -6,11 +6,10 @@
 }:
 
 let
-  mediaPath = config.nixflix.mediaDir;
   olgaLocalIp = "192.168.18.5";
 in
 {
-  fileSystems."${mediaPath}" = {
+  fileSystems."${config.nixflix.mediaDir}" = {
     device = "//${olgaLocalIp}/media";
     fsType = "cifs";
     options = [
@@ -24,10 +23,18 @@ in
       "noauto"
       "noatime"
       "x-systemd.automount"
-      "x-systemd.mount-timeout=30"
+      "X-systemd.mount-timeout=30"
       "_netdev"
       "x-systemd.after=network-online.target"
     ];
+  };
+
+  # The mount above forces gid=169 and olga's library is only group-writable, so
+  # the media group must hold that gid or every arr write fails with EACCES.
+  # nixflix's qbittorrent module force-clears this group (its group *is* media),
+  # discarding nixflix's own gid, so pin it at a priority that beats mkForce.
+  users.groups.media = lib.mkOverride 40 {
+    gid = config.nixflix.globals.gids.media;
   };
 
   # NM activated enp3s0 as soon as IPv6 came up and released
@@ -41,12 +48,12 @@ in
     "ipv4.required-timeout" = 20000;
   };
 
-  # The mount above forces gid=169 and olga's library is only group-writable, so
-  # the media group must hold that gid or every arr write fails with EACCES.
-  # nixflix's qbittorrent module force-clears this group (its group *is* media),
-  # discarding nixflix's own gid, so pin it at a priority that beats mkForce.
-  users.groups.media = lib.mkOverride 40 {
-    gid = config.nixflix.globals.gids.media;
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      intel-compute-runtime
+    ];
   };
 
   # olga SMB mount credentials (contains username=/password= for the media share)
@@ -61,6 +68,7 @@ in
   age.secrets.prowlarr-password.file = ../../secrets/catarina/media/prowlarr/password.age;
   age.secrets.seerr-api-key.file = ../../secrets/catarina/media/seerr/api-key.age;
   age.secrets.jellyfin-admin-password.file = ../../secrets/catarina/media/jellyfin/admin-password.age;
+  age.secrets.jellyfin-api-key.file = ../../secrets/catarina/media/jellyfin/api-key.age;
 
   # usenet secrets
   age.secrets.newsdemon-username.file = ../../secrets/catarina/media/newsdemon/username.age;
@@ -86,9 +94,74 @@ in
       "data-media.mount"
     ];
 
+    jellyfin = {
+      enable = true;
+      openFirewall = true;
+
+      apiKey._secret = config.age.secrets.jellyfin-api-key.path;
+
+      system.metadataCountryCode = "BR";
+
+      libraries =
+        let
+          defaultLibraryOptions = {
+            enableLUFSScan = false;
+            enableChapterImageExtraction = false;
+            extractChapterImagesDuringLibraryScan = false;
+            saveTrickplayWithMedia = true;
+
+            metadataSavers = [ "Nfo" ];
+            localMetadataReaderOrder = [ "Nfo" ];
+            subtitleFetcherOrder = [ "Open Subtitles" ];
+            subtitleDownloadLanguages = [
+              "eng"
+              "pob"
+            ];
+          };
+        in
+        {
+          Movies = defaultLibraryOptions;
+          Shows = defaultLibraryOptions;
+
+          Courses = defaultLibraryOptions // {
+            collectionType = "tvshows";
+            paths = [ "${config.nixflix.mediaDir}/courses" ];
+
+            saveLocalMetadata = false;
+            subtitleDownloadLanguages = [ ];
+            enableTrickplayImageExtraction = false;
+            extractTrickplayImagesDuringLibraryScan = false;
+            saveTrickplayWithMedia = false;
+          };
+        };
+
+      users.victor = {
+        mutable = true;
+        password._secret = config.age.secrets.jellyfin-admin-password.path;
+        policy.isAdministrator = true;
+      };
+
+      encoding = {
+        enableHardwareEncoding = true;
+        hardwareAccelerationType = "vaapi";
+        vaapiDevice = "/dev/dri/renderD128";
+
+        hardwareDecodingCodecs = [
+          "h264"
+          "hevc"
+          "vp9"
+        ];
+
+        allowHevcEncoding = true;
+        enableTonemapping = true;
+        enableVppTonemapping = true;
+        enableSubtitleExtraction = true;
+      };
+    };
+
     sonarr = {
       enable = true;
-      mediaDirs = [ "${mediaPath}/tvshows" ];
+      mediaDirs = [ "${config.nixflix.mediaDir}/tvshows" ];
       config = {
         apiKey._secret = config.age.secrets.sonarr-api-key.path;
         hostConfig.password._secret = config.age.secrets.sonarr-password.path;
@@ -232,9 +305,6 @@ in
       apiKey._secret = config.age.secrets.seerr-api-key.path;
 
       jellyfin = {
-        hostname = "${olgaLocalIp}";
-        port = 8096;
-        useSsl = false;
         adminUsername = "victor";
         adminPassword._secret = config.age.secrets.jellyfin-admin-password.path;
         externalHostname = "https://flix.capivaras.dev";
