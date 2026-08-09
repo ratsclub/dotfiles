@@ -6,8 +6,6 @@
 
 {
   imports = [
-    # Generated on the VM with `nixos-generate-config`. Replace the placeholder
-    # in this directory with the real one before installing.
     ./hardware-configuration.nix
 
     inputs.agenix.nixosModules.default
@@ -24,20 +22,17 @@
     ./monitoring.nix
   ];
 
-  # Legacy BIOS boot: GRUB on the first disk.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "catarina";
   networking.networkmanager.enable = true;
 
-  # postgresql
   services.postgresql.package = pkgs.postgresql_17;
 
-  # tailscale
   services.tailscale.enable = true;
 
   time.timeZone = "America/Sao_Paulo";
 
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
 }

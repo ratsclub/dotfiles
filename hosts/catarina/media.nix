@@ -1,4 +1,9 @@
-{ config, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   mediaPath = config.nixflix.mediaDir;
@@ -16,11 +21,32 @@ in
       "dir_mode=0775"
       "vers=3.1.1"
       "iocharset=utf8"
-      "x-systemd.automount"
-      "_netdev"
-      "nofail"
+      "noauto"
       "noatime"
+      "x-systemd.automount"
+      "x-systemd.mount-timeout=30"
+      "_netdev"
+      "x-systemd.after=network-online.target"
     ];
+  };
+
+  # NM activated enp3s0 as soon as IPv6 came up and released
+  # network-online.target ~1.3s before the DHCPv4 lease landed, so the
+  # IPv4-literal CIFS mount died with ENETUNREACH and took the arr
+  # stack with it. This makes NM wait for IPv4 even when IPv6 wins,
+  # then fall back to IPv6 only rather than failing the connection as
+  # ipv4.may-fail=false would.
+  networking.networkmanager.settings.connection-lan = {
+    match-device = "interface-name:enp3s0";
+    "ipv4.required-timeout" = 20000;
+  };
+
+  # The mount above forces gid=169 and olga's library is only group-writable, so
+  # the media group must hold that gid or every arr write fails with EACCES.
+  # nixflix's qbittorrent module force-clears this group (its group *is* media),
+  # discarding nixflix's own gid, so pin it at a priority that beats mkForce.
+  users.groups.media = lib.mkOverride 40 {
+    gid = config.nixflix.globals.gids.media;
   };
 
   # olga SMB mount credentials (contains username=/password= for the media share)

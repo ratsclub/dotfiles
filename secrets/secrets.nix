@@ -10,7 +10,7 @@ let
   ];
 
   systems = {
-    catarina = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGb/8HR7QfaLCB3HC78WkYI3H9lt0EflGnDSc2Y48aWx";
+    catarina = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBLGRHTL7BZoFDQEkjGCe0fto91S7J2wQXYdaZaOzggs";
     joan = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBCnZ7jXHIzyVZ6nllROjNLtVUP/mSis9CBs3RvWx1m8";
   };
 
