@@ -6,13 +6,13 @@
 
 emacsPackages.trivialBuild (finalAttrs: {
   pname = "shell-maker";
-  version = "0.95.3";
+  version = "0.96.1";
 
   src = pkgs.fetchFromGitHub {
     owner = "xenodium";
     repo = "shell-maker";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-KC/dE35hdQPJ6fgmp5nVlDtRjACzTnTIeh7rluORVYA=";
+    hash = "sha256-+zVA2rbXXOISbKbugnp4MuEsPBCf/MJd/5jgPySsnoc=";
   };
 
   postPatch = ''
