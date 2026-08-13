@@ -235,7 +235,7 @@ in
 
       systemd.tmpfiles.settings."10-tunarr" = {
         ${cfg.dataDir}.d = {
-          mode = "0755";
+          mode = "0750";
           user = "root";
           group = "root";
         };
