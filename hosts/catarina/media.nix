@@ -23,7 +23,7 @@ in
       "noauto"
       "noatime"
       "x-systemd.automount"
-      "X-systemd.mount-timeout=30"
+      "x-systemd.mount-timeout=30"
       "_netdev"
       "x-systemd.after=network-online.target"
     ];
