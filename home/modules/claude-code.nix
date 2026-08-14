@@ -14,6 +14,7 @@
 
     skills = {
       skill-creator = "${pkgs.claude-anthropic-skills}/skills/skill-creator";
+      simple-english = "${pkgs.claude-simple-english}/skills/simple-english";
     };
 
     settings = {
