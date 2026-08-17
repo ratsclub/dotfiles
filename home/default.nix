@@ -17,7 +17,7 @@ in
         }
       )
 
-      ./modules/claude-code.nix
+      ./modules/claude-code
       ./modules/cli.nix
       ./modules/direnv.nix
       ./modules/emacs
@@ -42,7 +42,7 @@ in
         }
       )
 
-      ./modules/claude-code.nix
+      ./modules/claude-code
       ./modules/cli.nix
       ./modules/direnv.nix
       ./modules/emacs

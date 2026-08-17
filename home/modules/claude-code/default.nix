@@ -17,7 +17,15 @@
       simple-english = "${pkgs.claude-simple-english}/skills/simple-english";
     };
 
+    outputStyles = {
+      #   curl -o home/modules/claude-code/attention-kind.md \
+      #     https://raw.githubusercontent.com/alexgreensh/attention-span/<tag>/output-styles/attention-kind.md
+      attention-kind = ./attention-kind.md;
+    };
+
     settings = {
+      outputStyle = "Attention-kind";
+
       attribution = {
         commit = "";
         pr = "";
