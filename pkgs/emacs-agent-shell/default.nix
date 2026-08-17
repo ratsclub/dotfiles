@@ -6,13 +6,13 @@
 
 emacsPackages.trivialBuild (finalAttrs: {
   pname = "agent-shell";
-  version = "0.70.2";
+  version = "0.73.2";
 
   src = pkgs.fetchFromGitHub {
     owner = "xenodium";
     repo = "agent-shell";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-LSeV8xpPuloh4XRh6HrYUwnozWlxh/J17DC53E+WCy8=";
+    hash = "sha256-5/IzIjb9qfkW5nGx1LesJaJZsNKeAM9ttQYRkyMuRyc=";
   };
 
   packageRequires = [
