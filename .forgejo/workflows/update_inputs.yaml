@@ -17,6 +17,8 @@ jobs:
         run: |
           git clone --depth=1 --branch "${{ forgejo.ref_name }}" \
             "https://x-access-token:${{ secrets.FORGEJO_TOKEN }}@$FORGEJO_DOMAIN/${{ forgejo.repository }}" .
+      - name: Run nix flake update
+        run: nix flake update
       - name: Run nix flake check
         run: nix flake check --impure
       - uses: https://github.com/stefanzweifel/git-auto-commit-action@v5
