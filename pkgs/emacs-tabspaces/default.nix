@@ -10,8 +10,8 @@ emacsPackages.trivialBuild (finalAttrs: {
 
   src = pkgs.fetchFromForgejo {
     domain = "src.r6b.dev";
-    owner = "emacs";
-    repo = "tabspaces";
+    owner = "vendor";
+    repo = "mclear-tools.tabspaces";
     rev = "ef19a5dc4147f6e69442bd2e64c00672438ebe04";
     hash = "sha256-kSxk6/NqDtAOLFSsuekBv2dkaZhga55RxaI1I7wLjDI=";
   };

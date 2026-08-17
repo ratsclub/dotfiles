@@ -8,9 +8,10 @@ emacsPackages.trivialBuild (finalAttrs: {
   pname = "shell-maker";
   version = "0.97.1";
 
-  src = pkgs.fetchFromGitHub {
-    owner = "xenodium";
-    repo = "shell-maker";
+  src = pkgs.fetchFromForgejo {
+    domain = "src.r6b.dev";
+    owner = "vendor";
+    repo = "xenodium.shell-maker";
     tag = "v${finalAttrs.version}";
     hash = "sha256-+47QCEVfR6yh+Tq5YDHucnxhRlen3NzJe/gM808K2rE=";
   };
