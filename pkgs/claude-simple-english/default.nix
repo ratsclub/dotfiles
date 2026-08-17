@@ -19,6 +19,7 @@ pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
 
   passthru.updateScript = pkgs.nix-update-script {
     extraArgs = [
+      "--flake"
       "--version-regex"
       "^v(.*)$"
     ];

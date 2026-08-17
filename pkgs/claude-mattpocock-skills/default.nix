@@ -1,13 +1,13 @@
 { pkgs, ... }:
 pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "claude-mattpocock-skills";
-  version = "1.1.0";
+  version = "1.2.3";
 
   src = pkgs.fetchFromGitHub {
     owner = "mattpocock";
     repo = "skills";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-XqF709Y9GMKINzZITlbCTyatG9AxRZh0qn2vcv1Z8yo=";
+    hash = "sha256-I/EXHGW92nXz6JCLp8SKGgzXrbbUTkLAfxv8bc/ThwQ=";
   };
 
   dontConfigure = true;
@@ -19,6 +19,7 @@ pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
 
   passthru.updateScript = pkgs.nix-update-script {
     extraArgs = [
+      "--flake"
       "--version-regex"
       "^v(.*)$"
     ];
