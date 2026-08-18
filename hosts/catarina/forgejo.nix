@@ -49,6 +49,9 @@ in
       metrics = {
         ENABLED = true;
       };
+      mirror = {
+        DEFAULT_INTERVAL = "1h";
+      };
       repository = {
         FORCE_PRIVATE = true;
       };
