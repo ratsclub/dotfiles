@@ -14,9 +14,9 @@ jobs:
 
     steps:
       - name: Checkout
-        run: |
-          git clone --depth=1 --branch "${{ forgejo.ref_name }}" \
-            "https://x-access-token:${{ secrets.FORGEJO_TOKEN }}@$FORGEJO_DOMAIN/${{ forgejo.repository }}" .
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.FORGEJO_TOKEN }}
       - name: Run nix flake update
         run: nix flake update
       - name: Run nix flake check
