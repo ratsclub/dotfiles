@@ -19,9 +19,6 @@ in
     group = "grafana";
   };
 
-  # Prometheus scrapes node-exporter on both hosts. joan is reachable over
-  # Tailscale MagicDNS; swap for the full joan.<tailnet>.ts.net name if the short
-  # name doesn't resolve.
   services.prometheus = {
     enable = true;
     listenAddress = "127.0.0.1";
@@ -33,10 +30,6 @@ in
           {
             targets = [ "127.0.0.1:9100" ];
             labels.instance = "catarina";
-          }
-          {
-            targets = [ "joan:9100" ];
-            labels.instance = "joan";
           }
         ];
       }

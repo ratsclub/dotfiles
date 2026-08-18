@@ -11,7 +11,6 @@ let
 
   systems = {
     catarina = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBLGRHTL7BZoFDQEkjGCe0fto91S7J2wQXYdaZaOzggs";
-    joan = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBCnZ7jXHIzyVZ6nllROjNLtVUP/mSis9CBs3RvWx1m8";
   };
 
   allSystems = builtins.attrValues systems;
@@ -48,6 +47,4 @@ in
   "catarina/media/sabnzbd/web-password.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/media/nzbgeek/api-key.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/media/nzblife/api-key.age".publicKeys = users ++ [ systems.catarina ];
-
-  "joan/forgejo/runner-token.age".publicKeys = users ++ [ systems.joan ];
 }
