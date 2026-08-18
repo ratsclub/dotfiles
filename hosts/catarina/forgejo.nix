@@ -93,6 +93,8 @@ in
       };
       other = {
         SHOW_FOOTER_VERSION = false;
+        ENABLE_SITEMAP = false;
+        ENABLE_FEED = false;
       };
     };
     secrets = {
@@ -127,11 +129,16 @@ in
       img = "${cfg.customDir}/public/assets/img";
       logoSvg = ../../assets/img/shy-rat.svg;
       logoPng = ../../assets/img/shy-rat.png;
+      robotsTxt = pkgs.writeText "forgejo-robots.txt" ''
+        User-agent: *
+        Disallow: /
+      '';
     in
     [
       "d ${cfg.customDir}/public        0750 ${cfg.user} ${cfg.group} - -"
       "d ${cfg.customDir}/public/assets 0750 ${cfg.user} ${cfg.group} - -"
       "d ${img}                         0750 ${cfg.user} ${cfg.group} - -"
+      "L+ ${cfg.customDir}/public/robots.txt - - - - ${robotsTxt}"
       "L+ ${img}/logo.svg    - - - - ${logoSvg}"
       "L+ ${img}/logo.png    - - - - ${logoPng}"
       "L+ ${img}/favicon.svg - - - - ${logoSvg}"
