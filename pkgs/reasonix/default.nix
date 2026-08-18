@@ -2,16 +2,16 @@
 
 pkgs.buildGoModule (finalAttrs: {
   pname = "reasonix";
-  version = "1.24.2";
+  version = "1.25.4";
 
   src = pkgs.fetchFromGitHub {
     owner = "esengine";
     repo = "DeepSeek-Reasonix";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-0uo39pgF3pnDZcejoU32A1c91Zl7/eE2Qf1j0eFrhaA=";
+    hash = "sha256-0KYfoWg6Tedy89dK42ffwGuOTpAHV0XPDhCD6oCnXUQ=";
   };
 
-  vendorHash = "sha256-uKrReMcR7L+8E4t/jY32/YW11bXROgtwl9kl4KxgQdM=";
+  vendorHash = "sha256-dCPVp5E+d2HcnSlCsQSebK8THdai1XjyKCKQlfpj80I=";
 
   subPackages = [ "cmd/reasonix" ];
 
