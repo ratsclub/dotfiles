@@ -9,6 +9,7 @@
     ./hardware-configuration.nix
 
     inputs.agenix.nixosModules.default
+    inputs.microvm.nixosModules.host
     inputs.nixflix.nixosModules.default
 
     ../../modules/common/nix.nix
@@ -19,6 +20,7 @@
 
     ./blocky.nix
     ./forgejo.nix
+    ./forgejo-runner.nix
     ./media.nix
     ./monitoring.nix
   ];
