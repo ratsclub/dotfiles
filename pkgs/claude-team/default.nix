@@ -1,13 +1,13 @@
 { pkgs, ... }:
 pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "claude-team";
-  version = "0.51.0";
+  version = "0.52.0";
 
   src = pkgs.fetchFromGitHub {
     owner = "bostonaholic";
     repo = "team";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-X+vWvPnFrf+Khkld9LzJHjS3zo6DaTEAa6o5ve5sPqM=";
+    hash = "sha256-bXGrFcHwo6r5omJYIrmWWZEmMnNCJVqhj/RMlV7dnyk=";
   };
 
   dontConfigure = true;
