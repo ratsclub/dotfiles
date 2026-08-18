@@ -6,14 +6,14 @@
 
 emacsPackages.trivialBuild (finalAttrs: {
   pname = "shell-maker";
-  version = "0.97.1";
+  version = "0.97.2";
 
   src = pkgs.fetchFromForgejo {
     domain = "src.r6b.dev";
     owner = "vendor";
     repo = "xenodium.shell-maker";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-+47QCEVfR6yh+Tq5YDHucnxhRlen3NzJe/gM808K2rE=";
+    hash = "sha256-+bqe2Ss879Dj5iypzL4jRH+UEGQ/9HVxU7qIUAG8NI8=";
   };
 
   postPatch = ''
