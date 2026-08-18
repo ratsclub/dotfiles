@@ -10,13 +10,11 @@ on:
 
 jobs:
   check:
-    runs-on: native
+    runs-on: docker
 
     steps:
       - name: Checkout
-        run: |
-          git clone --depth=1 --branch "${{ forgejo.head_ref || forgejo.ref_name }}" \
-            "https://x-access-token:${{ secrets.FORGEJO_TOKEN }}@$FORGEJO_DOMAIN/${{ forgejo.repository }}" .
+        uses: actions/checkout@v7
       - name: Check formatting
         run: nix fmt -- --ci
       - name: Run nix flake check

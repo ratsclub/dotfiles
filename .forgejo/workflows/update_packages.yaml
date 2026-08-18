@@ -14,12 +14,7 @@ jobs:
 
     steps:
       - name: Checkout
-        # This job always updates packages on master: it branches off master and
-        # opens PRs against it (see scripts/update-packages.sh), so it clones
-        # master directly rather than the triggering ref.
-        run: |
-          git clone --depth=1 --branch master \
-            "https://x-access-token:${{ secrets.TOKEN }}@$FORGEJO_DOMAIN/${{ forgejo.repository }}" .
+        uses: actions/checkout@v7
 
       - name: Configure git
         run: |
