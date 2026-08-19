@@ -300,13 +300,6 @@ in
       };
     };
 
-    tunarr = {
-      enable = true;
-      openFirewall = true;
-
-      gpu.enable = true;
-    };
-
     seerr = {
       enable = true;
       apiKey._secret = config.age.secrets.seerr-api-key.path;

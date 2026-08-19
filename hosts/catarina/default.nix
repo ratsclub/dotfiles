@@ -16,7 +16,6 @@
     ../../modules/common/openssh.nix
     ../../modules/common/user.nix
     ../../modules/node-exporter.nix
-    ../../modules/tunarr.nix
 
     ./blocky.nix
     ./forgejo.nix
