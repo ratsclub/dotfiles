@@ -60,6 +60,7 @@ in
         # org
         org-contrib
         org-roam
+        org-super-agenda
         treesit-grammars.with-all-grammars
       ];
   };

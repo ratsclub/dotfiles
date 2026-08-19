@@ -545,6 +545,9 @@ so a plain store directory would have ~/src/app and ~/work/app share one file
 (defvar p/org-roam-directory (expand-file-name "roam" p/org-vault-root)
   "Directory holding the roam notes inside the vault.")
 
+(defvar p/org-capture-todo-file (expand-file-name "todo.org" p/org-vault-root)
+  "Single file every captured task lands in, under the synced vault.")
+
 (defun p/org-vault-ensure ()
   "Refuse to proceed unless the vault exists as a git repository."
   (unless (p/org-vault-repo-p)
@@ -554,6 +557,10 @@ so a plain store directory would have ~/src/app and ~/work/app share one file
   (when (and (fboundp 'org-roam-db-autosync-mode)
 	     (not (bound-and-true-p org-roam-db-autosync-mode)))
     (org-roam-db-autosync-mode 1)))
+
+(defun p/org-vault-ensure-advice (&rest _)
+  "Swallow arguments so `p/org-vault-ensure' can advise other commands."
+  (p/org-vault-ensure))
 
 (defun p/org-sync--steps ()
   "The git invocations making up one round-trip, in order.
@@ -668,6 +675,16 @@ so quitting cannot hang on a passphrase nobody can see."
 (use-package org
   :ensure org-contrib
   :defines org-element-use-cache
+  :preface
+  (defun p/org-agenda-overview ()
+    "Open the Overview agenda, skipping the dispatcher."
+    (interactive)
+    (org-agenda nil "o"))
+
+  :bind (("C-c c c" . org-capture)
+	 ("C-c c a" . p/org-agenda-overview)
+	 ("C-c c A" . org-agenda)
+	 ("C-c c s" . p/org-sync))
   :config
 
   ;; add items to structure template list
@@ -686,14 +703,72 @@ so quitting cannot hang on a passphrase nobody can see."
 	org-src-tab-acts-natively t
 
 	;; set source block indentation to 0
-	org-edit-src-content-indentation 0))
+	org-edit-src-content-indentation 0
+
+	;; only top level files, no roam files
+	org-agenda-files (list p/org-vault-root)
+
+	org-todo-keywords '((sequence "TODO(t)" "TODAY(T)" "DOING(s!)" "WAIT(w@)"
+				      "IDEA(i)" "|" "DONE(d)" "CANCELLED(c@)"))
+
+	;; clocking in starts a task
+	org-clock-in-switch-to-state "DOING"
+
+	org-log-into-drawer t
+
+	org-agenda-skip-scheduled-if-done t
+	org-agenda-skip-deadline-if-done t
+	org-agenda-include-deadlines t
+	org-agenda-block-separator nil
+	org-agenda-tags-column 100
+	org-agenda-compact-blocks t)
+
+  (advice-add 'org-capture :before #'p/org-vault-ensure-advice)
+
+  (setq org-capture-templates
+	'(("t" "Todo" entry
+	   (file p/org-capture-todo-file)
+	   "* TODO %?  :personal:\n%a\n%i" :prepend t)
+	  ("w" "Work todo" entry
+	   (file p/org-capture-todo-file)
+	   "* TODO %?  :work:\n%a\n%i" :prepend t)))
+
+  (setq org-agenda-custom-commands
+	'(("o" "Overview"
+	   ((agenda "" ((org-agenda-span 'day)
+			(org-super-agenda-groups
+			 '((:name "Today"
+				  :time-grid t
+				  :date today
+				  :todo "TODAY"
+				  :scheduled today
+				  :order 1)))))
+	    (alltodo "" ((org-agenda-overriding-header "")
+			 (org-super-agenda-groups
+			  ;; Definition order is match order: the first group to
+			  ;; match an item takes it. Work sits above the status
+			  ;; groups so the whole job is one block to find, which
+			  ;; costs work items their Due Today/Waiting headers;
+			  ;; only Overdue outranks it, so late work still surfaces.
+			  '((:name "In progress"  :todo "DOING"    :order 1)
+			    (:name "Overdue"      :deadline past   :face error :order 2)
+			    (:name "Work"         :tag "work"      :order 3)
+			    (:name "Important"    :priority "A"    :order 4)
+			    (:name "Due Today"    :deadline today  :order 5)
+			    (:name "Due Soon"     :deadline future :order 6)
+			    (:name "Waiting"      :todo "WAIT"     :order 7)
+			    (:name "Future Ideas" :todo "IDEA"     :order 8)
+			    (:name "Personal"     :tag "personal"  :order 9)
+			    ;; Anything typed straight into the file, so a
+			    ;; hand-written task cannot fall off the view.
+			    (:name "Tasks"        :anything t      :order 10))))))))))
+
+(use-package org-super-agenda
+  :after org
+  :config (org-super-agenda-mode))
 
 (use-package org-roam
   :preface
-  (defun p/org-vault-ensure-advice (&rest _)
-    "Swallow arguments so `p/org-vault-ensure' can advise other commands."
-    (p/org-vault-ensure))
-
   (defun p/org-roam-capture-note ()
     "Capture a new note."
     (interactive)
@@ -723,16 +798,15 @@ so quitting cannot hang on a passphrase nobody can see."
   (advice-add 'org-roam-capture- :before #'p/org-vault-ensure-advice)
 
   :bind
-  (("C-c n f" . org-roam-node-find)
-   ("C-c n i" . org-roam-node-insert)
-   ("C-c n l" . org-roam-buffer-toggle)
-   ("C-c n a" . org-roam-alias-add)
-   ("C-c n c" . p/org-roam-capture-note)
-   ("C-c n s" . p/org-sync)
-   ("C-c n d t" . org-roam-dailies-goto-today)
-   ("C-c n d y" . org-roam-dailies-goto-yesterday)
-   ("C-c n d d" . org-roam-dailies-goto-date)
-   ("C-c n d n" . org-roam-dailies-capture-today)))
+  (("C-c c n f" . org-roam-node-find)
+   ("C-c c n i" . org-roam-node-insert)
+   ("C-c c n l" . org-roam-buffer-toggle)
+   ("C-c c n a" . org-roam-alias-add)
+   ("C-c c n c" . p/org-roam-capture-note)
+   ("C-c c n d t" . org-roam-dailies-goto-today)
+   ("C-c c n d y" . org-roam-dailies-goto-yesterday)
+   ("C-c c n d d" . org-roam-dailies-goto-date)
+   ("C-c c n d n" . org-roam-dailies-capture-today)))
 
 (use-package sml-mode
   :defer t
