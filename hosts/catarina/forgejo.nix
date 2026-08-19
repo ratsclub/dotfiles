@@ -32,9 +32,6 @@ in
     group = cfg.group;
   };
 
-  age.secrets.restic-password.file = ../../secrets/catarina/restic/password.age;
-  age.secrets.restic-env.file = ../../secrets/catarina/restic/env.age;
-
   services.forgejo = {
     enable = true;
     database.type = "postgres";

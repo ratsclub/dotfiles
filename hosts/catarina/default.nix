@@ -24,6 +24,10 @@
     ./monitoring.nix
   ];
 
+  # shared by every restic job on this host
+  age.secrets.restic-password.file = ../../secrets/catarina/restic/password.age;
+  age.secrets.restic-env.file = ../../secrets/catarina/restic/env.age;
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
