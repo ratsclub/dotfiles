@@ -19,7 +19,6 @@ in
   "catarina/forgejo/secret-key.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/forgejo/internal-token.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/forgejo/admin-password.age".publicKeys = users ++ [ systems.catarina ];
-  "catarina/forgejo/mailer-password.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/forgejo/runner-token.age".publicKeys = users ++ [ systems.catarina ];
 
   "catarina/grafana/admin-password.age".publicKeys = users ++ [ systems.catarina ];
@@ -34,8 +33,9 @@ in
   "catarina/authelia/oidc-hmac-secret.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/authelia/oidc-issuer-private-key.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/authelia/ldap-password.age".publicKeys = users ++ [ systems.catarina ];
-  "catarina/authelia/smtp-password.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/authelia/forgejo-client-secret.age".publicKeys = users ++ [ systems.catarina ];
+
+  "catarina/smtp/noreply-password.age".publicKeys = users ++ [ systems.catarina ];
 
   "catarina/restic/password.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/restic/env.age".publicKeys = users ++ [ systems.catarina ];

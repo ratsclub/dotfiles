@@ -28,7 +28,7 @@ in
     group = cfg.group;
   };
   age.secrets.forgejo-mailer-password = {
-    file = ../../secrets/catarina/forgejo/mailer-password.age;
+    file = ../../secrets/catarina/smtp/noreply-password.age;
     owner = cfg.user;
     group = cfg.group;
   };
@@ -125,6 +125,15 @@ in
       };
     };
   };
+
+  # agenix rewrites the file behind a stable /run/agenix path, so changing a
+  # secret's *content* leaves this unit's text identical and systemd never
+  # restarts it. Forgejo would then keep serving the credentials it read at its
+  # last start. Hashing the ciphertext gives a trigger that moves only when the
+  # secret really changes, unlike its store path, which moves on every commit.
+  systemd.services.forgejo.restartTriggers = [
+    (builtins.hashFile "sha256" ../../secrets/catarina/smtp/noreply-password.age)
+  ];
 
   # setup the admin user on a new instance
   systemd.services.forgejo.preStart = lib.mkAfter (

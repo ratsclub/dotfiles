@@ -48,7 +48,7 @@ in
   age.secrets.authelia-oidc-hmac-secret.file = ../../secrets/catarina/authelia/oidc-hmac-secret.age;
   age.secrets.authelia-oidc-issuer-private-key.file = ../../secrets/catarina/authelia/oidc-issuer-private-key.age;
   age.secrets.authelia-ldap-password.file = ../../secrets/catarina/authelia/ldap-password.age;
-  age.secrets.authelia-smtp-password.file = ../../secrets/catarina/authelia/smtp-password.age;
+  age.secrets.authelia-smtp-password.file = ../../secrets/catarina/smtp/noreply-password.age;
 
   services.authelia.instances.main = {
     enable = true;
@@ -130,6 +130,11 @@ in
       ];
     };
   };
+
+  systemd.services.authelia.restartTriggers = [
+    (builtins.hashFile "sha256" ../../secrets/catarina/smtp/noreply-password.age)
+    (builtins.hashFile "sha256" ../../secrets/catarina/authelia/ldap-password.age)
+  ];
 
   systemd.services.authelia.serviceConfig.LoadCredential = [
     "ldapPassword:${config.age.secrets.authelia-ldap-password.path}"
