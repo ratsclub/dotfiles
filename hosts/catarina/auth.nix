@@ -6,7 +6,11 @@
 }:
 
 let
+  inherit (config.capivaras) baseDN domain;
+
   forgejoUrl = "https://${config.services.forgejo.settings.server.DOMAIN}";
+  minifluxUrl = config.services.miniflux.config.BASE_URL;
+  noreply = config.capivaras.email "noreply";
 in
 {
   age.secrets.lldap-env.file = ../../secrets/catarina/lldap/env.age;
@@ -25,10 +29,10 @@ in
     environment.LLDAP_LDAP_USER_PASS_FILE = "%d/user_pass";
 
     settings = {
-      ldap_base_dn = "dc=capivaras,dc=dev";
+      ldap_base_dn = baseDN;
 
       ldap_user_dn = "admin";
-      ldap_user_email = "admin@capivaras.dev";
+      ldap_user_email = config.capivaras.email "admin";
 
       force_ldap_user_pass_reset = "always";
 
@@ -77,8 +81,8 @@ in
         ldap = {
           implementation = "lldap";
           address = "ldap://[::1]:3890";
-          base_dn = "dc=capivaras,dc=dev";
-          user = "uid=authelia,ou=people,dc=capivaras,dc=dev";
+          base_dn = baseDN;
+          user = "uid=authelia,ou=people,${baseDN}";
         };
       };
 
@@ -86,8 +90,8 @@ in
 
       session.cookies = [
         {
-          domain = "capivaras.dev";
-          authelia_url = "https://auth.capivaras.dev";
+          inherit domain;
+          authelia_url = config.capivaras.oidc.issuer;
         }
       ];
 
@@ -99,13 +103,13 @@ in
 
       notifier.smtp = {
         address = "submission://smtp.purelymail.com:587";
-        sender = "Authelia <noreply@capivaras.dev>";
-        username = "noreply@capivaras.dev";
+        sender = "Authelia <${noreply}>";
+        username = noreply;
       };
 
       default_2fa_method = "totp";
-      totp.issuer = "capivaras.dev";
-      webauthn.display_name = "capivaras.dev";
+      totp.issuer = domain;
+      webauthn.display_name = domain;
 
       identity_providers.oidc.clients = [
         {
@@ -127,19 +131,47 @@ in
           grant_types = [ "authorization_code" ];
           token_endpoint_auth_method = "client_secret_basic";
         }
+        {
+          client_id = "miniflux";
+          client_name = "Miniflux";
+          client_secret = "$pbkdf2-sha512$310000$JKRVCgC0i1jOyLRX5QdhPw$arihMqYOPoxwVWiDFOkBRcFfp3SukzArixQI2RObtCAA6meeScAgmrYrpImu9SEbkVaGswNWYkBN0SJmiF1a4w";
+          public = false;
+          authorization_policy = "two_factor";
+          require_pkce = true;
+          pkce_challenge_method = "S256";
+          redirect_uris = [ "${minifluxUrl}/oauth2/oidc/callback" ];
+          scopes = [
+            "openid"
+            "email"
+            "profile"
+          ];
+          response_types = [ "code" ];
+          grant_types = [ "authorization_code" ];
+          token_endpoint_auth_method = "client_secret_basic";
+        }
       ];
     };
   };
 
-  systemd.services.authelia.restartTriggers = [
-    (builtins.hashFile "sha256" ../../secrets/catarina/smtp/noreply-password.age)
-    (builtins.hashFile "sha256" ../../secrets/catarina/authelia/ldap-password.age)
-  ];
+  systemd.services.authelia = {
+    after = [ "postgresql.service" ];
+    requires = [ "postgresql.service" ];
 
-  systemd.services.authelia.serviceConfig.LoadCredential = [
-    "ldapPassword:${config.age.secrets.authelia-ldap-password.path}"
-    "smtpPassword:${config.age.secrets.authelia-smtp-password.path}"
-  ];
+    serviceConfig.LoadCredential = [
+      "ldapPassword:${config.age.secrets.authelia-ldap-password.path}"
+      "smtpPassword:${config.age.secrets.authelia-smtp-password.path}"
+    ];
+
+    restartTriggers = [
+      (builtins.hashFile "sha256" ../../secrets/catarina/smtp/noreply-password.age)
+      (builtins.hashFile "sha256" ../../secrets/catarina/authelia/ldap-password.age)
+      (builtins.hashFile "sha256" ../../secrets/catarina/authelia/jwt-secret.age)
+      (builtins.hashFile "sha256" ../../secrets/catarina/authelia/session-secret.age)
+      (builtins.hashFile "sha256" ../../secrets/catarina/authelia/storage-encryption-key.age)
+      (builtins.hashFile "sha256" ../../secrets/catarina/authelia/oidc-hmac-secret.age)
+      (builtins.hashFile "sha256" ../../secrets/catarina/authelia/oidc-issuer-private-key.age)
+    ];
+  };
 
   services.postgresql = {
     ensureDatabases = [ "authelia" ];

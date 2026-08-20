@@ -34,6 +34,7 @@ in
   "catarina/authelia/oidc-issuer-private-key.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/authelia/ldap-password.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/authelia/forgejo-client-secret.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/authelia/miniflux-client-secret.age".publicKeys = users ++ [ systems.catarina ];
 
   "catarina/smtp/noreply-password.age".publicKeys = users ++ [ systems.catarina ];
 

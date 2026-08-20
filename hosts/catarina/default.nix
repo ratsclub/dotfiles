@@ -23,6 +23,7 @@
     ./forgejo.nix
     ./forgejo-runner.nix
     ./media.nix
+    ./miniflux.nix
     ./monitoring.nix
   ];
 

@@ -96,7 +96,7 @@ in
       oauth2_client = {
         ACCOUNT_LINKING = "login";
         ENABLE_AUTO_REGISTRATION = true;
-        USERNAME = "preferred_username";
+        USERNAME = "nickname";
       };
       "service.explore" = {
         DISABLE_USERS_PAGE = true;
@@ -126,11 +126,6 @@ in
     };
   };
 
-  # agenix rewrites the file behind a stable /run/agenix path, so changing a
-  # secret's *content* leaves this unit's text identical and systemd never
-  # restarts it. Forgejo would then keep serving the credentials it read at its
-  # last start. Hashing the ciphertext gives a trigger that moves only when the
-  # secret really changes, unlike its store path, which moves on every commit.
   systemd.services.forgejo.restartTriggers = [
     (builtins.hashFile "sha256" ../../secrets/catarina/smtp/noreply-password.age)
   ];
@@ -167,7 +162,7 @@ in
         --provider openidConnect
         --key forgejo
         --secret "$(tr -d '\n' < ${clientSecret})"
-        --auto-discover-url ${config.capivaras.url "auth"}/.well-known/openid-configuration
+        --auto-discover-url ${config.capivaras.oidc.discoveryEndpoint}
         --scopes openid --scopes email --scopes profile --scopes groups
         --skip-local-2fa
       )

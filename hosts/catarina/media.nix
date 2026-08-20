@@ -307,7 +307,7 @@ in
       jellyfin = {
         adminUsername = "victor";
         adminPassword._secret = config.age.secrets.jellyfin-admin-password.path;
-        externalHostname = "https://flix.capivaras.dev";
+        externalHostname = config.capivaras.url "flix";
       };
     };
   };
