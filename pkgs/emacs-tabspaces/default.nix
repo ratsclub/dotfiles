@@ -9,7 +9,7 @@ emacsPackages.trivialBuild (finalAttrs: {
   version = "0-unstable-2026-08-04";
 
   src = pkgs.fetchFromForgejo {
-    domain = "src.r6b.dev";
+    domain = "src.capivaras.dev";
     owner = "vendor";
     repo = "mclear-tools.tabspaces";
     rev = "ef19a5dc4147f6e69442bd2e64c00672438ebe04";

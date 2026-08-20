@@ -23,4 +23,4 @@ jobs:
         with:
           commit_message: "chore: nix flake update"
           commit_user_name: "Forgejo Actions"
-          commit_user_email: "noreply@r6b.dev"
+          commit_user_email: "noreply@capivaras.dev"

@@ -19,7 +19,7 @@ jobs:
       - name: Configure git
         run: |
           git config user.name "Forgejo Actions"
-          git config user.email "noreply@r6b.dev"
+          git config user.email "noreply@capivaras.dev"
 
       - name: CI shell check
         run: nix develop .#ci --check

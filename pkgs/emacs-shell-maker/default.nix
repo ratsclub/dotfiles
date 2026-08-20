@@ -9,7 +9,7 @@ emacsPackages.trivialBuild (finalAttrs: {
   version = "0.97.2";
 
   src = pkgs.fetchFromForgejo {
-    domain = "src.r6b.dev";
+    domain = "src.capivaras.dev";
     owner = "vendor";
     repo = "xenodium.shell-maker";
     tag = "v${finalAttrs.version}";
