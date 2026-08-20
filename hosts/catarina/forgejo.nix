@@ -7,8 +7,9 @@
 
 let
   cfg = config.services.forgejo;
-  domain = "src.r6b.dev";
-  rootDomain = "https://${domain}";
+  domain = config.capivaras.fqdn "src";
+  rootDomain = config.capivaras.url "src";
+  email = config.capivaras.email "noreply";
 in
 {
   age.secrets.forgejo-secret-key = {
@@ -42,7 +43,7 @@ in
     database.type = "postgres";
     settings = {
       DEFAULT = {
-        APP_NAME = "r6b";
+        APP_NAME = "capivaras";
         APP_SLOGAN = "personal code forge";
       };
       actions = {
@@ -105,8 +106,8 @@ in
         PROTOCOL = "smtp+starttls";
         SMTP_ADDR = "smtp.purelymail.com";
         SMTP_PORT = 587;
-        USER = "noreply@r6b.dev";
-        FROM = "Forgejo <noreply@r6b.dev>";
+        USER = email;
+        FROM = "Forgejo <${email}>";
       };
       other = {
         SHOW_FOOTER_VERSION = false;
@@ -157,7 +158,7 @@ in
         --provider openidConnect
         --key forgejo
         --secret "$(tr -d '\n' < ${clientSecret})"
-        --auto-discover-url https://auth.capivaras.dev/.well-known/openid-configuration
+        --auto-discover-url ${config.capivaras.url "auth"}/.well-known/openid-configuration
         --scopes openid --scopes email --scopes profile --scopes groups
         --skip-local-2fa
       )

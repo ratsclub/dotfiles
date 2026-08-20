@@ -5,6 +5,9 @@
   ...
 }:
 
+let
+  forgejoUrl = "https://${config.services.forgejo.settings.server.DOMAIN}";
+in
 {
   age.secrets.lldap-env.file = ../../secrets/catarina/lldap/env.age;
   age.secrets.lldap-admin-password.file = ../../secrets/catarina/lldap/admin-password.age;
@@ -113,7 +116,7 @@
           authorization_policy = "two_factor";
           require_pkce = true;
           pkce_challenge_method = "S256";
-          redirect_uris = [ "https://src.r6b.dev/user/oauth2/authelia/callback" ];
+          redirect_uris = [ "${forgejoUrl}/user/oauth2/authelia/callback" ];
           scopes = [
             "openid"
             "email"

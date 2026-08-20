@@ -12,6 +12,7 @@
     inputs.microvm.nixosModules.host
     inputs.nixflix.nixosModules.default
 
+    ../../modules/capivaras.nix
     ../../modules/common/nix.nix
     ../../modules/common/openssh.nix
     ../../modules/common/user.nix
