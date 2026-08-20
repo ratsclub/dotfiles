@@ -17,6 +17,7 @@
     ../../modules/common/user.nix
     ../../modules/node-exporter.nix
 
+    ./auth.nix
     ./blocky.nix
     ./forgejo.nix
     ./forgejo-runner.nix
