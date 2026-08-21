@@ -44,7 +44,7 @@ in
     settings = {
       DEFAULT = {
         APP_NAME = "capivaras";
-        APP_SLOGAN = "personal code forge";
+        APP_SLOGAN = "forge for a friendly community";
       };
       actions = {
         DEFAULT_ACTIONS_URL = rootDomain;
