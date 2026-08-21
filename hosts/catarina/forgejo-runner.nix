@@ -208,7 +208,7 @@ in
 
           settings = {
             runner = {
-              capacity = 2;
+              capacity = 4;
 
               labels = [
                 "docker:docker://localhost/forgejo-runner:latest"
