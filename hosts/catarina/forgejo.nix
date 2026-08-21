@@ -187,8 +187,8 @@ in
   systemd.tmpfiles.rules =
     let
       img = "${cfg.customDir}/public/assets/img";
-      logoSvg = ../../assets/img/shy-rat.svg;
-      logoPng = ../../assets/img/shy-rat.png;
+      logoSvg = ../../assets/img/capybara.svg;
+      logoPng = ../../assets/img/capybara.png;
       robotsTxt = pkgs.writeText "forgejo-robots.txt" ''
         User-agent: *
         Disallow: /
