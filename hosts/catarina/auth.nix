@@ -9,6 +9,7 @@ let
   inherit (config.capivaras) baseDN domain;
 
   forgejoUrl = "https://${config.services.forgejo.settings.server.DOMAIN}";
+  grafanaUrl = lib.removeSuffix "/" config.services.grafana.settings.server.root_url;
   minifluxUrl = config.services.miniflux.config.BASE_URL;
   noreply = config.capivaras.email "noreply";
 in
@@ -111,16 +112,39 @@ in
       totp.issuer = domain;
       webauthn.display_name = domain;
 
+      identity_providers.oidc.claims_policies.groups.id_token = [ "groups" ];
+
       identity_providers.oidc.clients = [
         {
           client_id = "forgejo";
           client_name = "Forgejo";
+          claims_policy = "groups";
           client_secret = "$pbkdf2-sha512$310000$AH8xBuL81nsKgDYZf/mtjA$RYaoDp8Tz9NcHiHq2VMiCM/fU.oe7mUn9HFdBV5T3o0leuFp9FIGrTq4a6O/TzREeZkRtujfLkxlM/feaKo0Zw";
           public = false;
           authorization_policy = "two_factor";
           require_pkce = true;
           pkce_challenge_method = "S256";
           redirect_uris = [ "${forgejoUrl}/user/oauth2/authelia/callback" ];
+          scopes = [
+            "openid"
+            "email"
+            "profile"
+            "groups"
+          ];
+          response_types = [ "code" ];
+          grant_types = [ "authorization_code" ];
+          token_endpoint_auth_method = "client_secret_basic";
+        }
+        {
+          client_id = "grafana";
+          client_name = "Grafana";
+          claims_policy = "groups";
+          client_secret = "$pbkdf2-sha512$310000$roFCTmqYWZsj0qHo5m2KyQ$O3wEp10rdGzg8HB26fHINm/Awsb8CVZkIdnIzelfC8wh97d1NeJ7UhjZqkzt.0Ew/EPVdC3Y5mfIj8KSs5xzUw";
+          public = false;
+          authorization_policy = "two_factor";
+          require_pkce = true;
+          pkce_challenge_method = "S256";
+          redirect_uris = [ "${grafanaUrl}/login/generic_oauth" ];
           scopes = [
             "openid"
             "email"

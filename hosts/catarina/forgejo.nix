@@ -165,6 +165,8 @@ in
         --auto-discover-url ${config.capivaras.oidc.discoveryEndpoint}
         --scopes openid --scopes email --scopes profile --scopes groups
         --skip-local-2fa
+        --group-claim-name groups
+        --admin-group forgejo_admin
       )
 
       # Failures here are logged, never fatal. preStart runs under "set -e", so

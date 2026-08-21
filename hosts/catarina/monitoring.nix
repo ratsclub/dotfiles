@@ -6,6 +6,8 @@
 
 let
   cfg = config.services.grafana;
+  statsUrl = config.capivaras.url "stats";
+  issuer = config.capivaras.oidc.issuer;
 in
 {
   age.secrets.grafana-admin-password = {
@@ -15,6 +17,11 @@ in
   };
   age.secrets.grafana-secret-key = {
     file = ../../secrets/catarina/grafana/secret-key.age;
+    owner = "grafana";
+    group = "grafana";
+  };
+  age.secrets.grafana-oidc-client-secret = {
+    file = ../../secrets/catarina/authelia/grafana-client-secret.age;
     owner = "grafana";
     group = "grafana";
   };
@@ -70,8 +77,34 @@ in
       server = {
         http_addr = "0.0.0.0";
         http_port = 3001;
-        domain = "catarina";
+        domain = config.capivaras.fqdn "stats";
+        root_url = "${statsUrl}/";
       };
+      auth = {
+        disable_login_form = true;
+        signout_redirect_url = "${issuer}/logout";
+      };
+      "auth.generic_oauth" = {
+        enabled = true;
+        name = "Authelia";
+        icon = "signin";
+        auto_login = true;
+        allow_sign_up = true;
+        client_id = "grafana";
+        client_secret = "$__file{${config.age.secrets.grafana-oidc-client-secret.path}}";
+        scopes = "openid email profile groups";
+        auth_url = "${issuer}/api/oidc/authorization";
+        token_url = "${issuer}/api/oidc/token";
+        api_url = "${issuer}/api/oidc/userinfo";
+        use_pkce = true;
+        login_attribute_path = "preferred_username";
+        name_attribute_path = "name";
+        groups_attribute_path = "groups";
+        role_attribute_path = "contains(groups[*], 'grafana_admin') && 'GrafanaAdmin' || contains(groups[*], 'grafana_editor') && 'Editor'";
+        allow_assign_grafana_admin = true;
+        role_attribute_strict = false;
+      };
+      users.auto_assign_org_role = "Viewer";
       security = {
         admin_user = "admin";
         # admin_password only seeds the account when the grafana DB is first
@@ -146,6 +179,10 @@ in
   systemd.services.grafana = {
     after = [ "postgresql.service" ];
     requires = [ "postgresql.service" ];
+
+    restartTriggers = [
+      (builtins.hashFile "sha256" ../../secrets/catarina/authelia/grafana-client-secret.age)
+    ];
   };
 
   services.restic.backups.grafana = {
