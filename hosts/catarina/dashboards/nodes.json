@@ -223,6 +223,72 @@
           "legendFormat": "{{instance}}"
         }
       ]
+    },
+    {
+      "id": 9,
+      "title": "Temperature",
+      "type": "timeseries",
+      "description": "Every hwmon sensor the kernel exposes. CPU package/core readings come from the coretemp chip; the rest are board, chipset and NVMe probes.",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 30 },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius",
+          "min": 0,
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 70 },
+              { "color": "red", "value": 85 }
+            ]
+          },
+          "custom": { "fillOpacity": 0, "thresholdsStyle": { "mode": "dashed" } }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull", "max"] },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "expr": "node_hwmon_temp_celsius{instance=~\"$instance\"}",
+          "legendFormat": "{{instance}} {{chip}} {{sensor}}"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Fan speed",
+      "type": "timeseries",
+      "description": "Stays empty unless a Super I/O hwmon driver (nct6775, it87, ...) is loaded — coretemp alone reports no fans.",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 30 },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "rotrpm",
+          "min": 0,
+          "color": { "mode": "palette-classic" },
+          "custom": { "fillOpacity": 0 }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull", "max"] },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "expr": "node_hwmon_fan_rpm{instance=~\"$instance\"}",
+          "legendFormat": "{{instance}} {{chip}} {{sensor}}"
+        }
+      ]
     }
   ]
 }
