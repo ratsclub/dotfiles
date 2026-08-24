@@ -43,8 +43,8 @@ in
     database.type = "postgres";
     settings = {
       DEFAULT = {
-        APP_NAME = "capivaras";
-        APP_SLOGAN = "forge for a friendly community";
+        APP_NAME = "forgejo";
+        APP_SLOGAN = "forge for the capivarian community";
       };
       actions = {
         DEFAULT_ACTIONS_URL = rootDomain;
