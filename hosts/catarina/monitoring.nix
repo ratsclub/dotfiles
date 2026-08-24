@@ -38,6 +38,10 @@ in
             targets = [ "127.0.0.1:9100" ];
             labels.instance = "catarina";
           }
+          {
+            targets = [ "gemma:9100" ];
+            labels.instance = "gemma";
+          }
         ];
       }
       {
