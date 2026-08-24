@@ -81,7 +81,7 @@ in
         # Managed by authelia
         DISABLE_REGISTRATION = false;
         ALLOW_ONLY_EXTERNAL_REGISTRATION = true;
-
+        ALLOW_DOTS_IN_USERNAMES = false;
         ENABLE_NOTIFY_MAIL = true;
         DEFAULT_KEEP_EMAIL_PRIVATE = true;
         DEFAULT_USER_VISIBILITY = "private";
