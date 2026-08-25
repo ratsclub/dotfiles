@@ -106,7 +106,10 @@ in
       ];
     in
     {
-      imports = [ ../../modules/common/openssh.nix ];
+      imports = [
+        ../../modules/common/nix.nix
+        ../../modules/common/openssh.nix
+      ];
 
       microvm = {
         hypervisor = "cloud-hypervisor";
@@ -278,10 +281,8 @@ in
         };
       };
 
-      nix.settings.experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
+      # microvm.nix rejects store optimisation on a writable store overlay.
+      nix.settings.auto-optimise-store = lib.mkForce false;
 
       # The root filesystem is tmpfs, so builds would otherwise be capped by RAM.
       systemd.services.nix-daemon.environment.TMPDIR = "/var/tmp";
