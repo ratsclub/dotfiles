@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
@@ -83,6 +84,11 @@ in
       Type = "oneshot";
       ExecStart = "${lib.getExe' pkgs.coreutils "rm"} -f ${stateDir}/${storeOverlayImage}";
     };
+  };
+
+  microvm.vms.runner.specialArgs = {
+    inherit inputs;
+    inherit (inputs) self;
   };
 
   microvm.vms.runner.config =

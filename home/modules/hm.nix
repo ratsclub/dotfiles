@@ -19,14 +19,6 @@ in
     "${config.home.homeDirectory}/.ssh/id_ed25519"
   ];
 
-  nix = {
-    package = pkgs.nixVersions.latest;
-    registry.nixpkgs.flake = nixpkgs;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
-
   home = {
     sessionPath = [
       "$HOME/.local/bin"

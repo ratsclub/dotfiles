@@ -18,6 +18,9 @@ in
       ];
     };
     modules = [ ./catarina ];
-    specialArgs = { inherit inputs; };
+    specialArgs = {
+      inherit inputs;
+      inherit (inputs) self;
+    };
   };
 }
