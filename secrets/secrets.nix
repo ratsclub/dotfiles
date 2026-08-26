@@ -36,6 +36,9 @@ in
   "catarina/authelia/forgejo-client-secret.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/authelia/grafana-client-secret.age".publicKeys = users ++ [ systems.catarina ];
   "catarina/authelia/miniflux-client-secret.age".publicKeys = users ++ [ systems.catarina ];
+  "catarina/authelia/karakeep-client-secret.age".publicKeys = users ++ [ systems.catarina ];
+
+  "catarina/karakeep/deepseek-api-key.age".publicKeys = users ++ [ systems.catarina ];
 
   "catarina/smtp/noreply-password.age".publicKeys = users ++ [ systems.catarina ];
 

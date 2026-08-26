@@ -11,6 +11,7 @@ let
   forgejoUrl = "https://${config.services.forgejo.settings.server.DOMAIN}";
   grafanaUrl = lib.removeSuffix "/" config.services.grafana.settings.server.root_url;
   minifluxUrl = config.services.miniflux.config.BASE_URL;
+  karakeepUrl = config.services.karakeep.extraEnvironment.NEXTAUTH_URL;
   noreply = config.capivaras.email "noreply";
 in
 {
@@ -114,6 +115,16 @@ in
 
       identity_providers.oidc.claims_policies.groups.id_token = [ "groups" ];
 
+      # Karakeep reads its claims straight off the ID token instead of calling
+      # the userinfo endpoint, so anything left at userinfo is invisible to it
+      # and signin dies with "Provider didn't provide an email". Authelia
+      # documents this policy as the escape hatch.
+      # https://www.authelia.com/integration/openid-connect/clients/karakeep/#configuration-escape-hatch
+      identity_providers.oidc.claims_policies.karakeep.id_token = [
+        "email"
+        "name"
+      ];
+
       identity_providers.oidc.clients = [
         {
           client_id = "forgejo";
@@ -164,6 +175,27 @@ in
           require_pkce = true;
           pkce_challenge_method = "S256";
           redirect_uris = [ "${minifluxUrl}/oauth2/oidc/callback" ];
+          scopes = [
+            "openid"
+            "email"
+            "profile"
+          ];
+          response_types = [ "code" ];
+          grant_types = [ "authorization_code" ];
+          token_endpoint_auth_method = "client_secret_basic";
+        }
+        {
+          client_id = "karakeep";
+          client_name = "Karakeep";
+          claims_policy = "karakeep";
+          client_secret = "$pbkdf2-sha512$310000$RJw5YvtN1wVDmurjMXXNiA$VWQZ2lbRuG7hTZHcxQpxsHr1yt0M5R2udN58UtWE5NbL/GT5p5y04yVdzTv8rxNUMHy26UIchLcNiYzgFhsRsQ";
+          public = false;
+          authorization_policy = "two_factor";
+          require_pkce = true;
+          pkce_challenge_method = "S256";
+          # Karakeep registers its provider under the next-auth id "custom",
+          # which is where this callback path comes from.
+          redirect_uris = [ "${karakeepUrl}/api/auth/callback/custom" ];
           scopes = [
             "openid"
             "email"
