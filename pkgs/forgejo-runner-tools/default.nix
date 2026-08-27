@@ -7,6 +7,7 @@
   gnugrep,
   gnused,
   gawk,
+  git-pages-cli,
   gnutar,
   gzip,
   bzip2,
@@ -38,6 +39,7 @@ buildEnv {
     gnugrep
     gnused
     gawk
+    git-pages-cli
     gnutar
     gzip
     bzip2

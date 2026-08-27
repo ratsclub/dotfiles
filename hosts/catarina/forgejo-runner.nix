@@ -230,6 +230,7 @@ in
                 #   git clone --depth=1 --branch "${{ forgejo.ref_name }}" \
                 #     "https://x-access-token:${{ secrets.FORGEJO_TOKEN }}@$FORGEJO_DOMAIN/${{ forgejo.repository }}" .
                 FORGEJO_DOMAIN = forgejoDomain;
+                FORGEJO_PAGES_DOMAIN = "capivaras.page";
               };
             };
 

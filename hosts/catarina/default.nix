@@ -22,6 +22,7 @@
     ./blocky.nix
     ./forgejo.nix
     ./forgejo-runner.nix
+    ./git-pages.nix
     ./karakeep.nix
     ./media.nix
     ./miniflux.nix
