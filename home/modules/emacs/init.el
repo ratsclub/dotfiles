@@ -910,6 +910,8 @@ so quitting cannot hang on a passphrase nobody can see."
   :init
   (setq agent-shell-preferred-agent-config 'claude-code)
 
+  (setq agent-shell-anthropic-default-session-mode-id "auto")
+
   ;; Transcripts and screenshots go under `user-emacs-data-directory`
   ;; not the project's folder.
   (defun p/agent-shell-dot-subdir (subdir)
