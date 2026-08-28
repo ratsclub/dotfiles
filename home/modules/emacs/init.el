@@ -400,13 +400,21 @@ face, so styling it here would leak out into everything else."
 
 (use-package tabspaces
   :preface
-  (defun p/tabspace-explore ()
+  (defun p/tabspace-explore (&optional no-select)
     "Explore the current workspace's project in treemacs.
 Reduces this tab's treemacs workspace to that one project, because
 `treemacs-tab-bar' seeds a new tab's workspace from the previous one and so
-can start out showing projects belonging to other tabspaces."
+can start out showing projects belonging to other tabspaces.
+With NO-SELECT, leave point in the window it started in."
     (interactive)
-    (treemacs-add-and-display-current-project-exclusively))
+    (if no-select
+	(save-selected-window
+	  (treemacs-add-and-display-current-project-exclusively))
+      (treemacs-add-and-display-current-project-exclusively)))
+
+  (defun p/tabspace-explore-on-open (&rest _)
+    (when (project-current nil default-directory)
+      (p/tabspace-explore t)))
 
   (defun p/tabspaces-session-file (project-root)
     "Session file for PROJECT-ROOT, under `user-emacs-data-directory'.
@@ -442,6 +450,9 @@ so a plain store directory would have ~/src/app and ~/work/app share one file
 	tabspaces-session-project-session-store #'p/tabspaces-session-file)
 
   :config
+  (advice-add 'tabspaces-open-or-create-project-and-workspace
+	      :after #'p/tabspace-explore-on-open)
+
   ;; The one buffer kind of ours that tabspaces cannot restore by itself.
   ;; Registered here, not under `ghostel': a restore runs before it is loaded.
   (tabspaces-register-buffer-kind
