@@ -55,6 +55,15 @@ in
         ];
       }
       {
+        job_name = "traefik";
+        static_configs = [
+          {
+            targets = [ "gemma:8082" ];
+            labels.instance = "gemma";
+          }
+        ];
+      }
+      {
         job_name = "caddy";
         static_configs = [
           {
