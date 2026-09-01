@@ -75,7 +75,7 @@ in
       };
       rerere.enabled = true;
       merge = {
-        conflictstyle = "diff3";
+        conflictstyle = "zdiff3";
       };
       github = {
         user = "ratsclub";
