@@ -1,8 +1,10 @@
 { pkgs, ... }:
 {
-  programs.claude-code = {
-    enable = true;
+  # Temporarily manage Claude Code outside Nix
+  programs.claude-code.enable = false;
+  home.packages = [ pkgs.claude-code ];
 
+  programs.claude-code = {
     plugins = {
       shopify-ai-toolkit = pkgs.claude-shopify-ai-toolkit;
       team = pkgs.claude-team;
