@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 let
   personal = {
@@ -7,6 +7,21 @@ let
   };
 in
 {
+  imports = [ inputs.git-ai.homeManagerModules.default ];
+
+  programs.git-ai = {
+    enable = true;
+    settings = {
+      # the real git that git-ai delegates to
+      gitPath = "${pkgs.gitFull}/bin/git";
+      # keep agent prompts in the local sqlite db, never upload them
+      promptStorage = "local";
+      telemetryOss = "off";
+      disableAutoUpdates = true;
+      disableVersionChecks = true;
+    };
+  };
+
   programs.delta = {
     enable = true;
     enableGitIntegration = true;
@@ -38,7 +53,7 @@ in
 
   programs.git = {
     enable = true;
-    package = pkgs.gitFull;
+    package = inputs.git-ai.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
     ignores = [
       # nix

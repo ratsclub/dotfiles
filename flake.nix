@@ -10,6 +10,11 @@
       inputs.nixpkgs.follows = "stable";
     };
 
+    git-ai = {
+      url = "github:git-ai-project/git-ai";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     homeManager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
