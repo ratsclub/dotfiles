@@ -71,5 +71,6 @@ in
 
   # this is needed because `programs.emacs.extraConfig` is appended to
   # `default.el`, so some things can't run there
+  home.file.".emacs.d/early-init.el".source = ./early-init.el;
   home.file.".emacs.d/init.el".source = ./init.el;
 }
