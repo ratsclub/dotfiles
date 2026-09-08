@@ -37,7 +37,6 @@ in
         avy
         consult
         corfu
-        corfu-terminal
         direnv
         eglot
         exec-path-from-shell

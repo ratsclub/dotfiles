@@ -235,11 +235,6 @@
         ("C-n" . corfu-next)
         ("C-p" . corfu-previous)))
 
-(use-package corfu-terminal
-  :if (not (display-graphic-p))
-  :config
-  (corfu-terminal-mode))
-
 (use-package consult
   :hook ((completion-list-mode . consult-preview-at-point-mode))
   :init
