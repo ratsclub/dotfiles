@@ -53,7 +53,7 @@ in
         ENABLED = true;
       };
       mirror = {
-        DEFAULT_INTERVAL = "1h";
+        DEFAULT_INTERVAL = "6h";
       };
       repository = {
         FORCE_PRIVATE = true;
