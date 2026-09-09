@@ -36,7 +36,7 @@ forAllSystems (
           { pkgs, ... }:
           {
             packages = with pkgs; [
-              typescript-go
+              typescript
               typos
             ];
             languages = {
