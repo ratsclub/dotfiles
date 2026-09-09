@@ -1,4 +1,9 @@
-{ inputs, pkgs, ... }:
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
 
 let
   personal = {
@@ -94,6 +99,11 @@ in
       };
       github = {
         user = "ratsclub";
+      };
+
+      trace2 = {
+        eventTarget = "af_unix:stream:${config.home.homeDirectory}/.git-ai/internal/daemon/trace2.sock";
+        eventNesting = 0;
       };
     };
 
