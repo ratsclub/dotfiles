@@ -2,8 +2,8 @@
   description = "My Nix configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    stable.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
+    stable.url = "https://channels.nixos.org/nixos-26.05/nixexprs.tar.zst";
 
     devenv = {
       url = "github:cachix/devenv";
