@@ -6,14 +6,14 @@
 
 emacsPackages.trivialBuild (finalAttrs: {
   pname = "tabspaces";
-  version = "0-unstable-2026-08-04";
+  version = "0-unstable-2026-09-08";
 
   src = pkgs.fetchFromForgejo {
     domain = "src.capivaras.dev";
     owner = "vendor";
     repo = "mclear-tools.tabspaces";
-    rev = "ef19a5dc4147f6e69442bd2e64c00672438ebe04";
-    hash = "sha256-kSxk6/NqDtAOLFSsuekBv2dkaZhga55RxaI1I7wLjDI=";
+    rev = "2bfb7361b8d82f660eca8bd2e131b5ca53d56916";
+    hash = "sha256-qN83yNyuLJbNIpx21qcuPwl6ExxQcSxasrAf3hzNRjc=";
   };
 
   postPatch = ''
