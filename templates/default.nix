@@ -18,4 +18,9 @@
     description = "devenv empty template";
     path = ./devenv;
   };
+
+  shell = {
+    description = "mkShell empty template";
+    path = ./shell;
+  };
 }
