@@ -12,6 +12,12 @@ let
   grafanaUrl = lib.removeSuffix "/" config.services.grafana.settings.server.root_url;
   minifluxUrl = config.services.miniflux.config.BASE_URL;
   karakeepUrl = config.services.karakeep.extraEnvironment.NEXTAUTH_URL;
+  masUrl = config.capivaras.url "mas";
+
+  # The Matrix Authentication Service identifies this provider by a ULID of its
+  # own, and puts it in the callback path. It is declared in the infra repo, in
+  # hosts/gemma/matrix.nix: change it there and this URI stops matching.
+  masProviderId = "01M2H5ZJ7K6P4XV3D941KBD7D7";
   noreply = config.capivaras.email "noreply";
 in
 {
@@ -196,6 +202,29 @@ in
           # Karakeep registers its provider under the next-auth id "custom",
           # which is where this callback path comes from.
           redirect_uris = [ "${karakeepUrl}/api/auth/callback/custom" ];
+          scopes = [
+            "openid"
+            "email"
+            "profile"
+          ];
+          response_types = [ "code" ];
+          grant_types = [ "authorization_code" ];
+          token_endpoint_auth_method = "client_secret_basic";
+        }
+        {
+          client_id = "mas";
+          client_name = "Matrix";
+          client_secret = "$pbkdf2-sha512$310000$kPJ.rxUiROgdY4zx3nuv1Q$BlJyR9S5CXYxHyWonsQEe.6Z3LFBHN.A72LNeoDwVsC.tw8BMrIvHnkXL6uIR3pLROeeBaMEixJ1l/L/c9U0IA";
+          public = false;
+          authorization_policy = "two_factor";
+          require_pkce = true;
+          pkce_challenge_method = "S256";
+
+          # Every Matrix account is created from this login: MAS keeps no
+          # password database, and Synapse refuses to authenticate anyone
+          # itself. No claims_policy, because MAS asks the userinfo endpoint
+          # rather than reading the id_token.
+          redirect_uris = [ "${masUrl}/upstream/callback/${masProviderId}" ];
           scopes = [
             "openid"
             "email"
