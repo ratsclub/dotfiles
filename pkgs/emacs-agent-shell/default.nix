@@ -6,14 +6,14 @@
 
 emacsPackages.trivialBuild (finalAttrs: {
   pname = "agent-shell";
-  version = "0.75.3";
+  version = "0.76.1";
 
   src = pkgs.fetchFromForgejo {
     domain = "src.capivaras.dev";
     owner = "vendor";
     repo = "xenodium.agent-shell";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-YXbyg65aUVtULxeXa//2DwNoOQc23P1l/dHaWyNMZ2c=";
+    hash = "sha256-XwTgzVvUVueJjRrkDMaRJN9KxtlDy6KIObcQ2pojEbE=";
   };
 
   packageRequires = [
