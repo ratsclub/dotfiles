@@ -120,7 +120,7 @@ in
       microvm = {
         hypervisor = "cloud-hypervisor";
         vcpu = 4;
-        mem = 4096;
+        mem = 12288;
         vsock.cid = 3;
 
         shares = [
@@ -169,6 +169,13 @@ in
 
         writableStoreOverlay = "/nix/.rw-store";
       };
+
+      swapDevices = [
+        {
+          device = "/var/swapfile";
+          size = 8 * 1024;
+        }
+      ];
 
       networking.nameservers = [ hostAddress ];
 
