@@ -1,4 +1,6 @@
 {
+  programs.mise.enableBashIntegration = true;
+
   programs.bash = {
     enable = true;
     historySize = 10000;

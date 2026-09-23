@@ -2,6 +2,7 @@
 
 {
   programs.direnv.enableZshIntegration = true;
+  programs.mise.enableZshIntegration = true;
   home.shell.enableZshIntegration = true;
 
   programs.zsh = {

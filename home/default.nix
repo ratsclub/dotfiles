@@ -20,6 +20,7 @@ in
       ./modules/claude-code
       ./modules/cli.nix
       ./modules/direnv.nix
+      ./modules/mise.nix
       ./modules/emacs
       ./modules/hm.nix
       ./modules/vcs.nix
@@ -45,6 +46,7 @@ in
       ./modules/claude-code
       ./modules/cli.nix
       ./modules/direnv.nix
+      ./modules/mise.nix
       ./modules/emacs
       ./modules/hm.nix
       ./modules/vcs.nix
