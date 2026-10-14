@@ -100,7 +100,10 @@ in
 
       apiKey._secret = config.age.secrets.jellyfin-api-key.path;
 
-      system.metadataCountryCode = "BR";
+      system = {
+        serverName = config.capivaras.fqdn "flix";
+        metadataCountryCode = "BR";
+      };
 
       libraries =
         let
