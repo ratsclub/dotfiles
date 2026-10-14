@@ -20,6 +20,7 @@ let
   storeOverlayImage = "nix-store-overlay.img";
 
   forgejoPort = config.services.forgejo.settings.server.HTTP_PORT;
+  forgejoRootUrl = config.services.forgejo.settings.server.ROOT_URL;
   forgejoUrl = "http://${hostAddress}:${toString forgejoPort}";
   forgejoDomain = config.services.forgejo.settings.server.DOMAIN;
   sshKeys = config.users.users.root.openssh.authorizedKeys.keys;
@@ -238,6 +239,9 @@ in
                 #     "https://x-access-token:${{ secrets.FORGEJO_TOKEN }}@$FORGEJO_DOMAIN/${{ forgejo.repository }}" .
                 FORGEJO_DOMAIN = forgejoDomain;
                 FORGEJO_PAGES_DOMAIN = "capivaras.page";
+
+                # https://codeberg.org/forgejo-contrib/forgejo-cli/issues/444
+                FJ_FALLBACK_HOST = forgejoRootUrl;
               };
             };
 
