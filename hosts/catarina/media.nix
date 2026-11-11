@@ -100,6 +100,10 @@ in
 
       apiKey._secret = config.age.secrets.jellyfin-api-key.path;
 
+      # nixflix 4.0 defaults web UIs to loopback; this stack is reached
+      # directly over the LAN/Tailscale, with no reverse proxy in front.
+      network.localNetworkAddresses = [ "0.0.0.0" ];
+
       system = {
         serverName = config.capivaras.fqdn "flix";
         metadataCountryCode = "BR";
@@ -167,6 +171,7 @@ in
       mediaDirs = [ "${config.nixflix.mediaDir}/tvshows" ];
       config = {
         apiKey._secret = config.age.secrets.sonarr-api-key.path;
+        hostConfig.bindAddress = "0.0.0.0";
         hostConfig.password._secret = config.age.secrets.sonarr-password.path;
       };
     };
@@ -175,6 +180,7 @@ in
       enable = true;
       config = {
         apiKey._secret = config.age.secrets.radarr-api-key.path;
+        hostConfig.bindAddress = "0.0.0.0";
         hostConfig.password._secret = config.age.secrets.radarr-password.path;
       };
     };
@@ -183,6 +189,7 @@ in
       enable = true;
       config = {
         apiKey._secret = config.age.secrets.prowlarr-api-key.path;
+        hostConfig.bindAddress = "0.0.0.0";
         hostConfig.password._secret = config.age.secrets.prowlarr-password.path;
         indexers = [
           {
@@ -202,6 +209,7 @@ in
 
       settings = {
         misc = {
+          host = "0.0.0.0";
           api_key._secret = config.age.secrets.sabnzbd-api-key.path;
           nzb_key._secret = config.age.secrets.sabnzbd-nzb-key.path;
           inet_exposure = "api+web (auth needed)";
